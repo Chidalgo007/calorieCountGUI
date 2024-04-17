@@ -15,11 +15,16 @@ public class LogIn extends Form implements ActionListener {
     
     public LogIn(){
         super("Log In");
+        addGUIComponents();
     }
 
+
+    private void addGUIComponents() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
     @Override
     public void actionPerformed(ActionEvent e) {
 
     }
-    
 }

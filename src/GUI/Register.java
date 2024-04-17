@@ -25,10 +25,6 @@ public class Register extends Form implements ActionListener {
         addGUIComponent();
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-    }
 
     private void addGUIComponent() {
         
@@ -52,6 +48,10 @@ public class Register extends Form implements ActionListener {
         register.setBorder(new RoundedBorder(btnRadius));
         register.addActionListener(this);
         this.add(register);
+    }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
     }
 
 }
