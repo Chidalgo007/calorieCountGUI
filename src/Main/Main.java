@@ -5,6 +5,8 @@
 package Main;
 
 import GUI.Init;
+import GUI.LogIn;
+import GUI.Register;
 
 /**
  *
@@ -16,7 +18,9 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        new Init().setVisible(true);
+        //new Init().setVisible(true);
+        //new LogIn().setVisible(true);
+        new Register().setVisible(true);
     }
     
 }

@@ -9,6 +9,7 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics;
+import java.awt.GraphicsEnvironment;
 import java.awt.Insets;
 import java.io.File;
 import java.io.IOException;
@@ -24,7 +25,7 @@ import javax.swing.border.Border;
 public class Constants {
 
     // Colors
-    public static final Color COLOR_1 = Color.decode("#191e29");
+    public static final Color COLOR_1 = Color.decode("#11520F");// dark green
     public static final Color COLOR_2 = Color.decode("#303030");// dark grey
     public static final Color COLOR_3 = Color.decode("#7F7F80");//ligh grey
     public static final Color COLOR_4 = Color.decode("#B54C00");//orange
@@ -36,8 +37,9 @@ public class Constants {
     public static Font FONT_SemiBold = loadFont("fonts/MontserratAlternates-SemiBold.ttf");
     public static Font FONT_Neon = loadFont("fonts/TiltNeon-Regular-VariableFont_XROT,YROT.ttf");
     // border
-
-
+    public static int btnRadius = 15;
+    public static int btnWidth = 200;
+    
     private static Font loadFont(String path) {
         try {
             File font = new File(path);

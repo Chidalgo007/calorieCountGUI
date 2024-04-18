@@ -5,6 +5,7 @@
 package GUI;
 
 import java.awt.Color;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 /**
@@ -12,9 +13,10 @@ import javax.swing.JFrame;
  * @author chg
  */
 public class Form extends JFrame {
-    
+    ImageIcon icon = new ImageIcon("img/logo.png");
     public Form(String title){
         super(title);
+        setIconImage(icon.getImage());
         setSize(300,500);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(null);

@@ -5,12 +5,16 @@
 package GUI;
 
 import Helper.RoundedBorder;
+import java.awt.BorderLayout;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 /**
@@ -28,35 +32,37 @@ public class Init extends Form implements ActionListener {
     }
 
     private void addGUIComponents() {
-        JLabel welcome = new JLabel("Welcome");
+        setLayout(null);
+        
+        ImageIcon icon = new ImageIcon("img/logo.png");
+        int width = (int) (icon.getIconWidth()*0.2);
+        int height = (int) (icon.getIconHeight()*0.2);
+        Image resizedImage = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        ImageIcon resizedIcon = new ImageIcon(resizedImage);
+        
+        int iconLabelCenter = (this.getWidth()-resizedIcon.getIconWidth())/2;
+        JLabel iconLabel = new JLabel(resizedIcon);
+        iconLabel.setBounds(iconLabelCenter, 100, width, height);
+        this.add(iconLabel);
+        
+        JLabel welcome = new JLabel("Calorie Tracker");
+     //   welcome.setIcon(resizedIcon);
         welcome.setBounds(0, 15, 287, 50);
         welcome.setHorizontalAlignment(SwingConstants.CENTER);
-        welcome.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, 30));
+        welcome.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, 20));
         welcome.setForeground(Constants.Constants.COLOR_3); // change color font
         //   welcome.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         this.add(welcome);
 
+
         int btnFontSize = 20;
-        int btnRadius = 15;
-        int btnWith = 200;
+        int btnRadius = Constants.Constants.btnRadius;
+        int btnWith = Constants.Constants.btnWidth;
         int btnHeight = 50;
         int centerWith = (this.getWidth() - btnWith) / 2;
 
-        logIn = new JButton("Log In");
-        logIn.setBounds(centerWith, 150, btnWith, btnHeight);
-        logIn.setHorizontalAlignment(SwingConstants.CENTER);
-        logIn.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, btnFontSize));
-        logIn.setForeground(Constants.Constants.COLOR_3); // change color font
-        logIn.setBackground(Constants.Constants.COLOR_2);
-        logIn.setFocusable(false);
-        logIn.setContentAreaFilled(false);
-        logIn.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-        logIn.setBorder(new RoundedBorder(btnRadius));
-        logIn.addActionListener(this);
-        this.add(logIn);
-
-        register = new JButton("Register");
-        register.setBounds(centerWith, 250, btnWith, btnHeight);
+        register = new JButton("Sign Up");
+        register.setBounds(centerWith, 260, btnWith, btnHeight);
         register.setHorizontalAlignment(SwingConstants.CENTER);
         register.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, btnFontSize));
         register.setForeground(Constants.Constants.COLOR_3); // change color font
@@ -67,6 +73,19 @@ public class Init extends Form implements ActionListener {
         register.setBorder(new RoundedBorder(btnRadius));
         register.addActionListener(this);
         this.add(register);
+
+        logIn = new JButton("Log In");
+        logIn.setBounds(centerWith, 330, btnWith, btnHeight);
+        logIn.setHorizontalAlignment(SwingConstants.CENTER);
+        logIn.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, btnFontSize));
+        logIn.setForeground(Constants.Constants.COLOR_3); // change color font
+        logIn.setBackground(Constants.Constants.COLOR_2);
+        logIn.setFocusable(false);
+        logIn.setContentAreaFilled(false);
+        logIn.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        logIn.setBorder(new RoundedBorder(btnRadius));
+        logIn.addActionListener(this);
+        this.add(logIn);
 
         JLabel bottom = new JLabel();
         bottom.setText("Your free Calorie Tracker...");
