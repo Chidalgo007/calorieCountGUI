@@ -46,24 +46,26 @@ public class LogIn extends Form implements ActionListener, MouseListener {
         logIn.setBounds(0, 15, 287, 50);
         logIn.setHorizontalAlignment(SwingConstants.CENTER);
         logIn.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, 30));
-        logIn.setForeground(Constants.Constants.COLOR_3); // change color font
+        logIn.setForeground(Constants.Constants.COLOR_Light_Grey); // change color font
         //   welcome.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         this.add(logIn);
 
         // username label ------------------------------------
         JLabel name = new JLabel("User Name: ");
-        name.setBounds(10, 150, 100, 50);
+        name.setBounds(10, 170, 100, 50);
         name.setHorizontalAlignment(SwingConstants.RIGHT);
         name.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, 15));
-        name.setForeground(Constants.Constants.COLOR_3); // change color font
+        name.setForeground(Constants.Constants.COLOR_Light_Grey); // change color font
         // name.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         this.add(name);
 
         // username text Field ------------------------------------
         userName = new JTextField();
-        userName.setBounds(110, 154, 140, 30);
+        userName.setBounds(110, 174, 140, 30);
         userName.setBackground(Color.BLACK);
-        userName.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Constants.Constants.COLOR_3));
+        userName.setForeground(Color.WHITE);
+        userName.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, 15));
+        userName.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Constants.Constants.COLOR_Light_Grey));
         this.add(userName);
 
         // password label ------------------------------------
@@ -71,7 +73,7 @@ public class LogIn extends Form implements ActionListener, MouseListener {
         pass.setBounds(10, 250, 100, 50);
         pass.setHorizontalAlignment(SwingConstants.RIGHT);
         pass.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, 15));
-        pass.setForeground(Constants.Constants.COLOR_3); // change color font
+        pass.setForeground(Constants.Constants.COLOR_Light_Grey); // change color font
         // pass.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         this.add(pass);
 
@@ -79,16 +81,18 @@ public class LogIn extends Form implements ActionListener, MouseListener {
         password = new JPasswordField();
         password.setBounds(110, 254, 140, 30);
         password.setBackground(Color.BLACK);
-        password.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Constants.Constants.COLOR_3));
+        password.setForeground(Color.WHITE);
+        password.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, 15));
+        password.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Constants.Constants.COLOR_Light_Grey));
         this.add(password);
 
         // log in button ------------------------------------
-        int btnWith = Constants.Constants.btnWidth/2;
+        int btnWith = Constants.Constants.btnWidth;
         int btnCenter = (this.getWidth() - btnWith) / 2;
         submit = new JButton("Log In");
         submit.setBounds(btnCenter, 340, btnWith, 50);
         submit.setFont(Constants.Constants.FONT_Light.deriveFont(Font.PLAIN, 20));
-        submit.setForeground(Constants.Constants.COLOR_3);
+        submit.setForeground(Constants.Constants.COLOR_Light_Grey);
         submit.setFocusable(false);
         submit.setContentAreaFilled(false);
         submit.setBorder(new RoundedBorder(Constants.Constants.btnRadius));
@@ -125,6 +129,7 @@ public class LogIn extends Form implements ActionListener, MouseListener {
             String password = new String(this.password.getPassword());
             System.out.println("username: "+username+" password: "+password);
             // login check with database
+            // then open OptionMenu...
         }
 
     }

@@ -5,18 +5,12 @@
 package Constants;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.FontFormatException;
-import java.awt.Graphics;
-import java.awt.GraphicsEnvironment;
-import java.awt.Insets;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.BorderFactory;
-import javax.swing.border.Border;
 
 /**
  *
@@ -25,9 +19,9 @@ import javax.swing.border.Border;
 public class Constants {
 
     // Colors
-    public static final Color COLOR_1 = Color.decode("#11520F");// dark green
+    public static final Color COLOR_Error = Color.decode("#C06565");// light red
     public static final Color COLOR_2 = Color.decode("#303030");// dark grey
-    public static final Color COLOR_3 = Color.decode("#7F7F80");//ligh grey
+    public static final Color COLOR_Light_Grey = Color.decode("#7F7F80");//ligh grey
     public static final Color COLOR_4 = Color.decode("#B54C00");//orange
 
     // Fonts

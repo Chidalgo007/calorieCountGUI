@@ -6,6 +6,7 @@ package GUI;
 
 import Helper.RoundedBorder;
 import java.awt.BorderLayout;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -16,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.event.DocumentListener;
 
 /**
  *
@@ -50,7 +52,7 @@ public class Init extends Form implements ActionListener {
         welcome.setBounds(0, 15, 287, 50);
         welcome.setHorizontalAlignment(SwingConstants.CENTER);
         welcome.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, 20));
-        welcome.setForeground(Constants.Constants.COLOR_3); // change color font
+        welcome.setForeground(Constants.Constants.COLOR_Light_Grey); // change color font
         //   welcome.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         this.add(welcome);
 
@@ -65,12 +67,13 @@ public class Init extends Form implements ActionListener {
         register.setBounds(centerWith, 260, btnWith, btnHeight);
         register.setHorizontalAlignment(SwingConstants.CENTER);
         register.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, btnFontSize));
-        register.setForeground(Constants.Constants.COLOR_3); // change color font
+        register.setForeground(Constants.Constants.COLOR_Light_Grey); // change color font
         register.setBackground(Constants.Constants.COLOR_2);
         register.setFocusable(false);
         register.setContentAreaFilled(false);
         register.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
         register.setBorder(new RoundedBorder(btnRadius));
+        register.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         register.addActionListener(this);
         this.add(register);
 
@@ -78,12 +81,13 @@ public class Init extends Form implements ActionListener {
         logIn.setBounds(centerWith, 330, btnWith, btnHeight);
         logIn.setHorizontalAlignment(SwingConstants.CENTER);
         logIn.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, btnFontSize));
-        logIn.setForeground(Constants.Constants.COLOR_3); // change color font
+        logIn.setForeground(Constants.Constants.COLOR_Light_Grey); // change color font
         logIn.setBackground(Constants.Constants.COLOR_2);
         logIn.setFocusable(false);
         logIn.setContentAreaFilled(false);
         logIn.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
         logIn.setBorder(new RoundedBorder(btnRadius));
+        logIn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         logIn.addActionListener(this);
         this.add(logIn);
 
@@ -102,12 +106,10 @@ public class Init extends Form implements ActionListener {
         if(e.getSource()== register){
             Init.this.dispose();
             new Register().setVisible(true);
-            System.out.println("register pressed");
         }
         if(e.getSource()== logIn){
                         Init.this.dispose();
             new LogIn().setVisible(true);
-            System.out.println("Log In pressed");
         }
     }
 

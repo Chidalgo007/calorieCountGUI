@@ -30,7 +30,7 @@ public class RoundedBorder implements Border {
         }
 
         public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-            g.setColor(Constants.Constants.COLOR_3); // Set the border color
+            g.setColor(Constants.Constants.COLOR_Light_Grey); // Set the border color
             g.drawRoundRect(x, y, width - 1, height - 1, this.radius, this.radius);
         }
     }
