@@ -34,10 +34,10 @@ public class LogIn extends Form implements ActionListener, MouseListener {
         addGUIComponents();
     }
 
-    private JTextField userName;
-    private JPasswordField password;
-    private JButton submit;
-    private JTextPane register;
+    private JTextField emailField;
+    private JPasswordField passwordField;
+    private JButton btnRegister;
+    private JTextPane textRegister;
 
     private void addGUIComponents() {
 
@@ -51,24 +51,24 @@ public class LogIn extends Form implements ActionListener, MouseListener {
         this.add(logIn);
 
         // username label ------------------------------------
-        JLabel name = new JLabel("User Name: ");
-        name.setBounds(10, 170, 100, 50);
-        name.setHorizontalAlignment(SwingConstants.RIGHT);
-        name.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, 15));
-        name.setForeground(Constants.Constants.COLOR_Light_Grey); // change color font
+        JLabel emailLabel = new JLabel("Email: ");
+        emailLabel.setBounds(10, 170, 100, 50);
+        emailLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        emailLabel.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, 15));
+        emailLabel.setForeground(Constants.Constants.COLOR_Light_Grey); // change color font
         // name.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-        this.add(name);
+        this.add(emailLabel);
 
         // username text Field ------------------------------------
-        userName = new JTextField();
-        userName.setBounds(110, 174, 140, 30);
-        userName.setBackground(Color.BLACK);
-        userName.setForeground(Color.WHITE);
-        userName.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, 15));
-        userName.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Constants.Constants.COLOR_Light_Grey));
-        this.add(userName);
+        emailField = new JTextField();
+        emailField.setBounds(110, 174, 140, 30);
+        emailField.setBackground(Color.BLACK);
+        emailField.setForeground(Color.WHITE);
+        emailField.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, 15));
+        emailField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Constants.Constants.COLOR_Light_Grey));
+        this.add(emailField);
 
-        // password label ------------------------------------
+        // passwordField label ------------------------------------
         JLabel pass = new JLabel("Password: ");
         pass.setBounds(10, 250, 100, 50);
         pass.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -77,63 +77,67 @@ public class LogIn extends Form implements ActionListener, MouseListener {
         // pass.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         this.add(pass);
 
-        // password textField ------------------------------------
-        password = new JPasswordField();
-        password.setBounds(110, 254, 140, 30);
-        password.setBackground(Color.BLACK);
-        password.setForeground(Color.WHITE);
-        password.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, 15));
-        password.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Constants.Constants.COLOR_Light_Grey));
-        this.add(password);
+        // passwordField textField ------------------------------------
+        passwordField = new JPasswordField();
+        passwordField.setBounds(110, 254, 140, 30);
+        passwordField.setBackground(Color.BLACK);
+        passwordField.setForeground(Color.WHITE);
+        passwordField.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, 15));
+        passwordField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Constants.Constants.COLOR_Light_Grey));
+        this.add(passwordField);
 
         // log in button ------------------------------------
         int btnWith = Constants.Constants.btnWidth;
         int btnCenter = (this.getWidth() - btnWith) / 2;
-        submit = new JButton("Log In");
-        submit.setBounds(btnCenter, 340, btnWith, 50);
-        submit.setFont(Constants.Constants.FONT_Light.deriveFont(Font.PLAIN, 20));
-        submit.setForeground(Constants.Constants.COLOR_Light_Grey);
-        submit.setFocusable(false);
-        submit.setContentAreaFilled(false);
-        submit.setBorder(new RoundedBorder(Constants.Constants.btnRadius));
-        submit.addActionListener(this);
-        submit.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        this.add(submit);
+        btnRegister = new JButton("Log In");
+        btnRegister.setBounds(btnCenter, 340, btnWith, 50);
+        btnRegister.setFont(Constants.Constants.FONT_Light.deriveFont(Font.PLAIN, 20));
+        btnRegister.setForeground(Constants.Constants.COLOR_Light_Grey);
+        btnRegister.setFocusable(false);
+        btnRegister.setContentAreaFilled(false);
+        btnRegister.setBorder(new RoundedBorder(Constants.Constants.btnRadius));
+        btnRegister.addActionListener(this);
+        btnRegister.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        this.add(btnRegister);
 
-        // register label ------------------------------------
+        // textRegister label ------------------------------------
         int registerWith = 210;
         int registerCenter = (this.getWidth() - registerWith) / 2;
-        register = new JTextPane();
-        register.setText("Don't have an account yet, register by clicking Here.");
-        register.setEditable(false);
-        register.setFocusable(false);
-        register.setBackground(Color.BLACK);
-        register.setBounds(registerCenter, 420, registerWith, 40);
-        register.setFont(Constants.Constants.FONT_Light.deriveFont(Font.PLAIN, 10));
-        register.setForeground(Constants.Constants.COLOR_4); // change color font
-        register.addMouseListener(this);
-        register.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        //   register.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        textRegister = new JTextPane();
+        textRegister.setText("Don't have an account yet, register by clicking Here.");
+        textRegister.setEditable(false);
+        textRegister.setFocusable(false);
+        textRegister.setBackground(Color.BLACK);
+        textRegister.setBounds(registerCenter, 420, registerWith, 40);
+        textRegister.setFont(Constants.Constants.FONT_Light.deriveFont(Font.PLAIN, 10));
+        textRegister.setForeground(Constants.Constants.COLOR_4); // change color font
+        textRegister.addMouseListener(this);
+        textRegister.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        //   textRegister.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         // to center the text
-        StyledDocument doc = register.getStyledDocument();
+        StyledDocument doc = textRegister.getStyledDocument();
         SimpleAttributeSet center = new SimpleAttributeSet();
         StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
         doc.setParagraphAttributes(0, doc.getLength(), center, false);
-        this.add(register);
+        this.add(textRegister);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource()==submit){
-            String username = userName.getText();
-            String password = new String(this.password.getPassword());
-            System.out.println("username: "+username+" password: "+password);
+            String email = emailField.getText();
+            String password = new String(this.passwordField.getPassword());
+        if(e.getSource()==btnRegister){
+            System.out.println("email: "+email+" password: "+password);
             // login check with database
             // then open OptionMenu...
+            if(MyJBDC.MyJDBC.validLogin(email, password)){
+                
+            }
         }
 
     }
 
+    // -------------------- mouse listener -------------------------------------
     @Override
     public void mouseClicked(MouseEvent e) {
     }
@@ -150,11 +154,11 @@ public class LogIn extends Form implements ActionListener, MouseListener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        register.setText("REGISTER.");
+        textRegister.setText("REGISTER.");
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        register.setText("Don't have an account yet, register by clicking Here.");
+        textRegister.setText("Don't have an account yet, register by clicking Here.");
     }
 }

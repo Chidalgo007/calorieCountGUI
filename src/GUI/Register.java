@@ -32,10 +32,7 @@ import javax.swing.text.StyledDocument;
  */
 public class Register extends Form implements ActionListener, MouseListener {
     
-    JTextField nameField;
-    JTextField lastNameField;
     JTextField emailField;
-    JTextField userNameField;
     JPasswordField passwordField;
     JTextPane passwordLabelCondition;
     JPasswordField rePasswordField;
@@ -46,16 +43,14 @@ public class Register extends Form implements ActionListener, MouseListener {
     int labelFontSize = 13;
     int fieldFontSize = 13;
     int fieldSpaceFontSize = 15;
-    private static final String LETTER_PATTERN = "^[A-Za-z]+$";
+    
     private static final String EMAIL_PATTERN
             = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     private static final String PASSWORD_PATTERN = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d).{6,}$";
     //--------------------------------------------------------------------------
-    String name;
-    String lastname;
+
     String email;
-    String userName;
     String password;
     String rePassword;
     
@@ -77,69 +72,6 @@ public class Register extends Form implements ActionListener, MouseListener {
         // pageName.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         this.add(pageName);
 
-        // name label ------------------------------------
-        JLabel nameLabel = new JLabel("Name: ");
-        nameLabel.setBounds(10, 70, 100, 50);
-        nameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        nameLabel.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, labelFontSize));
-        nameLabel.setForeground(Constants.Constants.COLOR_Light_Grey); // change color font
-        this.add(nameLabel);
-
-        // name Field ------------------------------------
-        nameField = new JTextField();
-        nameField.setBounds(110, 87, 140, fieldSpaceFontSize);
-        nameField.setBackground(Color.BLACK);
-        nameField.setForeground(Color.WHITE);
-        nameField.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, fieldFontSize));
-        nameField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Constants.Constants.COLOR_Light_Grey));
-        nameField.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                nameValidation();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                nameValidation();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-            }
-        });
-        this.add(nameField);
-
-        // lastName label ------------------------------------
-        JLabel lastNameLabel = new JLabel("Last Name: ");
-        lastNameLabel.setBounds(10, 110, 100, 50);
-        lastNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        lastNameLabel.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, labelFontSize));
-        lastNameLabel.setForeground(Constants.Constants.COLOR_Light_Grey); // change color font
-        this.add(lastNameLabel);
-
-        // lastName text Field ------------------------------------
-        lastNameField = new JTextField();
-        lastNameField.setBounds(110, 127, 140, fieldSpaceFontSize);
-        lastNameField.setBackground(Color.BLACK);
-        lastNameField.setForeground(Color.WHITE);
-        lastNameField.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, fieldFontSize));
-        lastNameField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Constants.Constants.COLOR_Light_Grey));
-        lastNameField.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                lastNameValidation();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                lastNameValidation();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-            }
-        });
-        this.add(lastNameField);
 
         // email label ------------------------------------
         JLabel emailLabel = new JLabel("Email: ");
@@ -173,41 +105,10 @@ public class Register extends Form implements ActionListener, MouseListener {
         });
         this.add(emailField);
 
-        // username label ------------------------------------
-        JLabel userNameLabel = new JLabel("User Name: ");
-        userNameLabel.setBounds(10, 190, 100, 50);
-        userNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        userNameLabel.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, labelFontSize));
-        userNameLabel.setForeground(Constants.Constants.COLOR_Light_Grey); // change color font
-        this.add(userNameLabel);
-
-        // username text Field ------------------------------------
-        userNameField = new JTextField();
-        userNameField.setBounds(110, 207, 140, fieldSpaceFontSize);
-        userNameField.setBackground(Color.BLACK);
-        userNameField.setForeground(Color.WHITE);
-        userNameField.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, fieldFontSize));
-        userNameField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Constants.Constants.COLOR_Light_Grey));
-        userNameField.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                userNameValidation();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                userNameValidation();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-            }
-        });
-        this.add(userNameField);
-
+      
         // passwordField label ------------------------------------
         JLabel passwordLabel = new JLabel("Password: ");
-        passwordLabel.setBounds(10, 230, 100, 50);
+        passwordLabel.setBounds(10, 210, 100, 50);
         passwordLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         passwordLabel.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, labelFontSize));
         passwordLabel.setForeground(Constants.Constants.COLOR_Light_Grey); // change color font
@@ -215,7 +116,7 @@ public class Register extends Form implements ActionListener, MouseListener {
 
         // passwordField textField ------------------------------------
         passwordField = new JPasswordField();
-        passwordField.setBounds(110, 247, 140, fieldSpaceFontSize);
+        passwordField.setBounds(110, 227, 140, fieldSpaceFontSize);
         passwordField.setBackground(Color.BLACK);
         passwordField.setForeground(Color.WHITE);
         passwordField.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, fieldFontSize));
@@ -341,10 +242,8 @@ public class Register extends Form implements ActionListener, MouseListener {
     }
     
     private boolean fieldValidation() {
-        return !(!nameValidation()||
-                !lastNameValidation()||
+        return !(
                 !emailValidation()||
-                !userNameValidation()||
                 !passwordValidation()||
                 !rePasswordValidation());
     }
@@ -374,27 +273,6 @@ public class Register extends Form implements ActionListener, MouseListener {
     }
 
 // --------------------------------------Validations ---------------------------
-    private boolean nameValidation() {
-        name = nameField.getText();
-        if (name.isEmpty() || !name.matches(LETTER_PATTERN)) {
-            nameField.setBackground(Constants.Constants.COLOR_Error);
-            return false;
-        }
-        nameField.setBackground(Color.BLACK);
-        
-        return true;
-    }
-    
-    private boolean lastNameValidation() {
-        lastname = lastNameField.getText();
-        if (lastname.isEmpty() || !lastname.matches(LETTER_PATTERN)) {
-            lastNameField.setBackground(Constants.Constants.COLOR_Error);
-            return false;
-        }
-        lastNameField.setBackground(Color.BLACK);
-        
-        return true;
-    }
     
     private boolean emailValidation() {
         email = emailField.getText();
@@ -407,16 +285,6 @@ public class Register extends Form implements ActionListener, MouseListener {
         return true;
     }
     
-    private boolean userNameValidation() {
-        userName = userNameField.getText();
-        if (userName.isEmpty() || userName.isBlank()) {
-            userNameField.setBackground(Constants.Constants.COLOR_Error);
-            return false;
-        }
-        userNameField.setBackground(Color.BLACK);
-        
-        return true;
-    }
     
     private boolean passwordValidation() {
         password = new String(this.passwordField.getPassword());

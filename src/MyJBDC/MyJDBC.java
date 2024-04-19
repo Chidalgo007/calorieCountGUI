@@ -31,13 +31,12 @@ public class MyJDBC {
             if (!checkUser(username, email)) {
                 try ( Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD); //NOSONAR
                           PreparedStatement insertUser = connection.prepareStatement(
-                                "INSERT INTO " + DB_USER_TABLE + "(NAME, LASTNAME, EMAIL, USERNAME, PASSWORD)" + " VALUES(?,?,?,?,?)"
+                                "INSERT INTO " + DB_USER_TABLE + "(NAME, LASTNAME, EMAIL, PASSWORD)" + " VALUES(?,?,?,?,?)"
                         )) {
                     insertUser.setString(1, name);
                     insertUser.setString(2, lastname);
                     insertUser.setString(3, email);
-                    insertUser.setString(4, username);
-                    insertUser.setString(5, password);
+                    insertUser.setString(4, password);
                     // update DB
                     insertUser.executeUpdate();
                 }
@@ -73,13 +72,13 @@ public class MyJDBC {
     }
 
     // get the user id
-    public static int getUserId(String username, String password) {
+    public static int getUserId(String email, String password) {
         int userId = -1; // default to indicate user not found
         try ( Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD); //NOSONAR
                   PreparedStatement checkUserExist = connection.prepareStatement(
-                        " SELECT * FROM " + DB_USER_TABLE + " WHERE BINARY USERNAME = ? AND BINARY PASSWORD = ?")) {
+                        " SELECT * FROM " + DB_USER_TABLE + " WHERE BINARY EMAIL = ? AND BINARY PASSWORD = ?")) {
 
-            checkUserExist.setString(1, username);
+            checkUserExist.setString(1, email);
             checkUserExist.setString(2, password);
 
             ResultSet resultSet = checkUserExist.executeQuery();
@@ -96,8 +95,8 @@ public class MyJDBC {
     }
 
     // check for valid user
-    public static boolean validLogin(String username, String password) {
-        int userId = getUserId(username, password);
+    public static boolean validLogin(String email, String password) {
+        int userId = getUserId(email, password);
         return userId != -1;
     }
 

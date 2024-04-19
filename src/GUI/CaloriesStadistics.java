@@ -11,15 +11,14 @@ import java.awt.event.ActionListener;
  *
  * @author chg
  */
-public class EnterCalories extends Form implements ActionListener {
+public class CaloriesStadistics extends Form implements ActionListener{
 
-    public EnterCalories(){
-        super("Enter Calories");
+    public CaloriesStadistics(){
+        super("Stadistics");
     }
     @Override
     public void actionPerformed(ActionEvent e) {
 
     }
-
     
 }
