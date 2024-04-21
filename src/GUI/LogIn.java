@@ -5,9 +5,11 @@
 package GUI;
 
 import Helper.RoundedBorder;
+import static MyJBDC.MyJDBC.getUserProfile;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -36,19 +38,38 @@ public class LogIn extends Form implements ActionListener, MouseListener {
 
     private JTextField emailField;
     private JPasswordField passwordField;
-    private JButton btnRegister;
+    private JButton logIn;
+    private JTextPane errorMessage;
     private JTextPane textRegister;
+    SimpleAttributeSet center = new SimpleAttributeSet();
 
     private void addGUIComponents() {
 
         // log in label ------------------------------------
         JLabel logIn = new JLabel("Log In");
-        logIn.setBounds(0, 15, 287, 50);
+        logIn.setBounds(0, 15, Constants.Constants.WIDTH, 50);
         logIn.setHorizontalAlignment(SwingConstants.CENTER);
         logIn.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, 30));
         logIn.setForeground(Constants.Constants.COLOR_Light_Grey); // change color font
         //   welcome.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         this.add(logIn);
+
+        // Error message----------------------------------------------
+        errorMessage = new JTextPane();
+        errorMessage.setBounds(25, 90, 250, 50);
+        errorMessage.setEditable(false);
+        errorMessage.setFocusable(false);
+        errorMessage.setBackground(Constants.Constants.COLOR_BACK);
+        errorMessage.setMargin(new Insets(0, 0, 0, 0));
+        errorMessage.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, 13));
+        errorMessage.setForeground(Constants.Constants.COLOR_Error);
+        
+                // to center the text
+        StyledDocument error = errorMessage.getStyledDocument();
+        StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+        error.setParagraphAttributes(0, error.getLength(), center, false);
+        
+        this.add(errorMessage);
 
         // username label ------------------------------------
         JLabel emailLabel = new JLabel("Email: ");
@@ -89,16 +110,16 @@ public class LogIn extends Form implements ActionListener, MouseListener {
         // log in button ------------------------------------
         int btnWith = Constants.Constants.btnWidth;
         int btnCenter = (this.getWidth() - btnWith) / 2;
-        btnRegister = new JButton("Log In");
-        btnRegister.setBounds(btnCenter, 340, btnWith, 50);
-        btnRegister.setFont(Constants.Constants.FONT_Light.deriveFont(Font.PLAIN, 20));
-        btnRegister.setForeground(Constants.Constants.COLOR_Light_Grey);
-        btnRegister.setFocusable(false);
-        btnRegister.setContentAreaFilled(false);
-        btnRegister.setBorder(new RoundedBorder(Constants.Constants.btnRadius));
-        btnRegister.addActionListener(this);
-        btnRegister.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        this.add(btnRegister);
+        this.logIn = new JButton("Log In");
+        this.logIn.setBounds(btnCenter, 340, btnWith, 50);
+        this.logIn.setFont(Constants.Constants.FONT_Light.deriveFont(Font.PLAIN, 20));
+        this.logIn.setForeground(Constants.Constants.COLOR_Light_Grey);
+        this.logIn.setFocusable(false);
+        this.logIn.setContentAreaFilled(false);
+        this.logIn.setBorder(new RoundedBorder(Constants.Constants.btnRadius));
+        this.logIn.addActionListener(this);
+        this.logIn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        this.add(this.logIn);
 
         // textRegister label ------------------------------------
         int registerWith = 210;
@@ -116,7 +137,6 @@ public class LogIn extends Form implements ActionListener, MouseListener {
         //   textRegister.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         // to center the text
         StyledDocument doc = textRegister.getStyledDocument();
-        SimpleAttributeSet center = new SimpleAttributeSet();
         StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
         doc.setParagraphAttributes(0, doc.getLength(), center, false);
         this.add(textRegister);
@@ -124,14 +144,20 @@ public class LogIn extends Form implements ActionListener, MouseListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-            String email = emailField.getText();
-            String password = new String(this.passwordField.getPassword());
-        if(e.getSource()==btnRegister){
-            System.out.println("email: "+email+" password: "+password);
+        String email = emailField.getText();
+        String password = new String(this.passwordField.getPassword());
+        if (e.getSource() == logIn) {
+            errorMessage.setText("");
+            System.out.println("email: " + email + " password: " + password);
             // login check with database
-            if(MyJBDC.MyJDBC.validLogin(email, password)){
+            UserInfo.UserProfile.setID(MyJBDC.MyJDBC.getUserId(email, password)); // setting the user ID
+
+            if (UserInfo.UserProfile.getID() != -1) { // check the user exist
+                UserInfo.UserProfile.setProfile(getUserProfile(UserInfo.UserProfile.getID()));
                 LogIn.this.dispose();
                 new OptionMenu().setVisible(true);
+            } else {
+                errorMessage.setText("Email / Password credential not valid, please try again or Sign Up below !!!");
             }
         }
 

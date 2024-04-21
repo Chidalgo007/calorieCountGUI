@@ -31,7 +31,7 @@ import javax.swing.text.StyledDocument;
  * @author chg
  */
 public class Register extends Form implements ActionListener, MouseListener {
-    
+
     JTextField emailField;
     JPasswordField passwordField;
     JTextPane passwordLabelCondition;
@@ -39,11 +39,13 @@ public class Register extends Form implements ActionListener, MouseListener {
     JLabel rePasswordLabelCondition;
     JButton registerbtn;
     JTextPane logIn;
+    JTextPane errorMessage;
     int btnFontSize = 20;
     int labelFontSize = 13;
     int fieldFontSize = 13;
     int fieldSpaceFontSize = 15;
-    
+    SimpleAttributeSet center = new SimpleAttributeSet();
+
     private static final String EMAIL_PATTERN
             = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
@@ -53,14 +55,14 @@ public class Register extends Form implements ActionListener, MouseListener {
     String email;
     String password;
     String rePassword;
-    
+
     public Register() {
         super("Register");
         addGUIComponent();
     }
-    
+
     private void addGUIComponent() {
-        
+
         int pageNameWith = 200;
         int pageNameCenter = (this.getWidth() - pageNameWith) / 2;
         // Register label
@@ -72,6 +74,22 @@ public class Register extends Form implements ActionListener, MouseListener {
         // pageName.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         this.add(pageName);
 
+        // Error message----------------------------------------------
+        errorMessage = new JTextPane();
+        errorMessage.setBounds(25, 90, 250, 50);
+        errorMessage.setEditable(false);
+        errorMessage.setFocusable(false);
+        errorMessage.setBackground(Constants.Constants.COLOR_BACK);
+        errorMessage.setMargin(new Insets(0, 0, 0, 0));
+        errorMessage.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, 13));
+        errorMessage.setForeground(Constants.Constants.COLOR_Error);
+
+        // to center the text
+        StyledDocument error = errorMessage.getStyledDocument();
+        StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+        error.setParagraphAttributes(0, error.getLength(), center, false);
+
+        this.add(errorMessage);
 
         // email label ------------------------------------
         JLabel emailLabel = new JLabel("Email: ");
@@ -105,7 +123,6 @@ public class Register extends Form implements ActionListener, MouseListener {
         });
         this.add(emailField);
 
-      
         // passwordField label ------------------------------------
         JLabel passwordLabel = new JLabel("Password: ");
         passwordLabel.setBounds(10, 210, 100, 50);
@@ -194,7 +211,7 @@ public class Register extends Form implements ActionListener, MouseListener {
         int btnWith = Constants.Constants.btnWidth;
         int btnHeight = 50;
         int centerWith = (this.getWidth() - btnWith) / 2;
-        
+
         registerbtn = new JButton("Sign In");
         registerbtn.setBounds(centerWith, 340, btnWith, btnHeight);
         registerbtn.setHorizontalAlignment(SwingConstants.CENTER);
@@ -224,56 +241,58 @@ public class Register extends Form implements ActionListener, MouseListener {
         logIn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         // to center the text
         StyledDocument doc = logIn.getStyledDocument();
-        SimpleAttributeSet center = new SimpleAttributeSet();
         StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
         doc.setParagraphAttributes(0, doc.getLength(), center, false);
         this.add(logIn);
     }
-    
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == registerbtn) {
-            
+
             if (fieldValidation()) {
-                System.out.println(fieldValidation());
+                if(MyJBDC.MyJDBC.register(email, password)){
+                Register.this.dispose();
+                new LogIn().setVisible(true);    
+                }else {
+                    errorMessage.setText("Email already register, please use another email or Log In with the Link below !!!");
+                } 
             }
         }
-        
+
     }
-    
+
     private boolean fieldValidation() {
-        return !(
-                !emailValidation()||
-                !passwordValidation()||
-                !rePasswordValidation());
+        return !(!emailValidation()
+                || !passwordValidation()
+                || !rePasswordValidation());
     }
-    
+
     @Override
     public void mouseClicked(MouseEvent e) {
     }
-    
+
     @Override
     public void mousePressed(MouseEvent e) {
         Register.this.dispose();
         new LogIn().setVisible(true);
     }
-    
+
     @Override
     public void mouseReleased(MouseEvent e) {
     }
-    
+
     @Override
     public void mouseEntered(MouseEvent e) {
         logIn.setText("Log In.");
     }
-    
+
     @Override
     public void mouseExited(MouseEvent e) {
         logIn.setText("Already have an account?, Log In by clicking Here.");
     }
 
 // --------------------------------------Validations ---------------------------
-    
     private boolean emailValidation() {
         email = emailField.getText();
         if (email.isEmpty() || !email.matches(EMAIL_PATTERN)) {
@@ -281,11 +300,10 @@ public class Register extends Form implements ActionListener, MouseListener {
             return false;
         }
         emailField.setBackground(Constants.Constants.COLOR_BACK);
-        
+
         return true;
     }
-    
-    
+
     private boolean passwordValidation() {
         password = new String(this.passwordField.getPassword());
         if (password.isEmpty() || !password.matches(PASSWORD_PATTERN)) {
@@ -295,10 +313,10 @@ public class Register extends Form implements ActionListener, MouseListener {
         }
         passwordField.setBackground(Constants.Constants.COLOR_BACK);
         passwordLabelCondition.setText("");
-        
+
         return true;
     }
-    
+
     private boolean rePasswordValidation() {
         rePassword = new String(this.rePasswordField.getPassword());
         if (!rePassword.equals(password)) {
@@ -308,8 +326,8 @@ public class Register extends Form implements ActionListener, MouseListener {
         }
         rePasswordField.setBackground(Constants.Constants.COLOR_BACK);
         rePasswordLabelCondition.setText("");
-        
+
         return true;
     }
-    
+
 }
