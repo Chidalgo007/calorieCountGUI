@@ -4,17 +4,21 @@
  */
 package GUI;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JPanel;
 
 /**
  *
  * @author chg
  */
-public class EnterCalories extends Form implements ActionListener {
+public class EnterCalories extends JPanel implements ActionListener {
 
     public EnterCalories(){
-        super("Enter Calories");
+       // super("Enter Calories");
+       this.setLayout(null);
+        setBackground(Color.BLUE);
     }
     @Override
     public void actionPerformed(ActionEvent e) {

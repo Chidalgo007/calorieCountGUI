@@ -17,6 +17,10 @@ import java.util.logging.Logger;
  * @author chg
  */
 public class Constants {
+    
+    //With and Heigh
+    public static final int WIDTH = 300;
+    public static final int HEIGHT = 500;
 
     // Colors
     public static final Color COLOR_Error = Color.decode("#C06565");// light red
@@ -24,6 +28,7 @@ public class Constants {
     public static final Color COLOR_Light_Grey = Color.decode("#7F7F80");//ligh grey
     public static final Color COLOR_4 = Color.decode("#B54C00");//orange
     public static final Color COLOR_Trans = new Color(0, 0, 0, 128);//black 50%
+    public static final Color COLOR_BACK = Color.BLACK;
     
 
     // Fonts

@@ -7,6 +7,7 @@ package Main;
 import GUI.EnterProfile;
 import GUI.Init;
 import GUI.LogIn;
+import GUI.OptionMenu;
 import GUI.Register;
 
 /**
@@ -22,7 +23,8 @@ public class Main {
         //new Init().setVisible(true);
         //new LogIn().setVisible(true);
         //new Register().setVisible(true);
-        new EnterProfile().setVisible(true);
+       // new EnterProfile().setVisible(true);
+        new OptionMenu().setVisible(true);
     }
     
 }

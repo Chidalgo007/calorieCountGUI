@@ -5,6 +5,7 @@
 package GUI;
 
 import java.awt.Color;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
@@ -17,13 +18,13 @@ public class Form extends JFrame {
     public Form(String title){
         super(title);
         setIconImage(icon.getImage());
-        setSize(300,500);
+        setSize(Constants.Constants.WIDTH,Constants.Constants.HEIGHT);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(null);
         setLocationRelativeTo(null);
         setResizable(false);
         setDefaultLookAndFeelDecorated(true);
-        getContentPane().setBackground(Color.BLACK);
+        getContentPane().setBackground(Constants.Constants.COLOR_BACK);
     }
     
 }

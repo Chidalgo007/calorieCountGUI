@@ -31,7 +31,7 @@ import net.miginfocom.swing.MigLayout;
  *
  * @author chg
  */
-public class EnterProfile extends Form implements ActionListener {
+public class EnterProfile extends JPanel implements ActionListener {
 
     JTextField nameField;
     JTextField lastNameField;
@@ -55,9 +55,11 @@ public class EnterProfile extends Form implements ActionListener {
     int height;
 
     public EnterProfile() {
-        super("Profile");
+      //  super("Profile");
         FlatMacDarkLaf.setup();
         addGUIComponent();
+        this.setLayout(null);
+        this.setBackground(Constants.Constants.COLOR_BACK);
         /*
         CREATE ACCES TO THE USER INFORMATION USER 
         GET USER EMAIL TO UPDATE INFOMRATION...
@@ -74,12 +76,12 @@ public class EnterProfile extends Form implements ActionListener {
     private void addGUIComponent() {
 
         int pageNameWith = 200;
-        int pageNameCenter = (this.getWidth() - pageNameWith) / 2;
+        int pageNameCenter = (Constants.Constants.WIDTH - pageNameWith) / 2;
         // Register label
         JLabel pageName = new JLabel("Profile");
         pageName.setBounds(pageNameCenter, 10, pageNameWith, 50);
         pageName.setHorizontalAlignment(SwingConstants.CENTER);
-        pageName.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, 30));
+        pageName.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, 20));
         pageName.setForeground(Constants.Constants.COLOR_Light_Grey); // change color font
         // pageName.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         this.add(pageName);
@@ -95,7 +97,7 @@ public class EnterProfile extends Form implements ActionListener {
         // name Field ------------------------------------
         nameField = new JTextField();
         nameField.setBounds(110, 87, 140, fieldSpaceFontSize);
-        nameField.setBackground(Color.BLACK);
+        nameField.setBackground(Constants.Constants.COLOR_BACK);
         nameField.setForeground(Color.WHITE);
         nameField.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, fieldFontSize));
         nameField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Constants.Constants.COLOR_Light_Grey));
@@ -127,7 +129,7 @@ public class EnterProfile extends Form implements ActionListener {
         // lastName Field ------------------------------------
         lastNameField = new JTextField();
         lastNameField.setBounds(110, 137, 140, fieldSpaceFontSize);
-        lastNameField.setBackground(Color.BLACK);
+        lastNameField.setBackground(Constants.Constants.COLOR_BACK);
         lastNameField.setForeground(Color.WHITE);
         lastNameField.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, fieldFontSize));
         lastNameField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Constants.Constants.COLOR_Light_Grey));
@@ -199,7 +201,7 @@ public class EnterProfile extends Form implements ActionListener {
         // weightField textField ------------------------------------
         weightField = new JTextField();
         weightField.setBounds(110, 287, 140, fieldSpaceFontSize);
-        weightField.setBackground(Color.BLACK);
+        weightField.setBackground(Constants.Constants.COLOR_BACK);
         weightField.setForeground(Color.WHITE);
         weightField.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, fieldFontSize));
         weightField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Constants.Constants.COLOR_Light_Grey));
@@ -220,7 +222,7 @@ public class EnterProfile extends Form implements ActionListener {
         });
         this.add(weightField);
 
-        // rePasswordField label--------------------------------------
+        // heightLabel label--------------------------------------
         JLabel heightLabel = new JLabel("Height: ");
         heightLabel.setBounds(10, 320, 100, 50);
         heightLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -228,10 +230,10 @@ public class EnterProfile extends Form implements ActionListener {
         heightLabel.setForeground(Constants.Constants.COLOR_Light_Grey);
         this.add(heightLabel);
 
-        // rePasswordField field ------------------------------------
+        // heightLabel field ------------------------------------
         heightField = new JTextField();
         heightField.setBounds(110, 337, 140, fieldSpaceFontSize);
-        heightField.setBackground(Color.BLACK);
+        heightField.setBackground(Constants.Constants.COLOR_BACK);
         heightField.setForeground(Color.WHITE);
         heightField.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, fieldFontSize));
         heightField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Constants.Constants.COLOR_Light_Grey));
@@ -260,11 +262,11 @@ public class EnterProfile extends Form implements ActionListener {
 
         int btnWith = greenIcon.getIconWidth();
         int btnHeight = greenIcon.getIconHeight();
-        int greenPosition = (this.getWidth() / 2 + btnWith);
+        int greenPosition = (Constants.Constants.WIDTH / 2 + btnWith);
         saveBtn = new JButton();
         saveBtn.setIcon(greenIcon);
-        saveBtn.setBounds(greenPosition, 390, btnWith, btnHeight);
-        saveBtn.setBackground(Color.BLACK);
+        saveBtn.setBounds(greenPosition, 380, btnWith, btnHeight);
+        saveBtn.setBackground(Constants.Constants.COLOR_BACK);
         saveBtn.setFocusable(false);
         saveBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         saveBtn.addActionListener(this);
@@ -278,11 +280,11 @@ public class EnterProfile extends Form implements ActionListener {
 
         int clearBtnWith = clearIcon.getIconWidth();
         int clearBtnHeight = clearIcon.getIconHeight();
-        int clearPosition = (this.getWidth() / 2 - clearBtnWith * 2);
+        int clearPosition = (Constants.Constants.WIDTH / 2 - clearBtnWith * 2);
         clearBtn = new JButton();
         clearBtn.setIcon(clearIcon);
-        clearBtn.setBounds(clearPosition, 390, clearBtnWith, clearBtnHeight);
-        clearBtn.setBackground(Color.BLACK);
+        clearBtn.setBounds(clearPosition, 380, clearBtnWith, clearBtnHeight);
+        clearBtn.setBackground(Constants.Constants.COLOR_BACK);
         clearBtn.setFocusable(false);
         clearBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         clearBtn.addActionListener(this);
@@ -320,7 +322,7 @@ public class EnterProfile extends Form implements ActionListener {
                 name = nameST;
             }
         }
-        nameField.setBackground(Color.BLACK);
+        nameField.setBackground(Constants.Constants.COLOR_BACK);
         return true;
     }
 
@@ -334,7 +336,7 @@ public class EnterProfile extends Form implements ActionListener {
                 lastname = lastnameST;
             }
         }
-        lastNameField.setBackground(Color.BLACK);
+        lastNameField.setBackground(Constants.Constants.COLOR_BACK);
         return true;
     }
 
@@ -352,7 +354,7 @@ public class EnterProfile extends Form implements ActionListener {
                 }
             }
         }
-        weightField.setBackground(Color.BLACK);
+        weightField.setBackground(Constants.Constants.COLOR_BACK);
         return true;
     }
 
@@ -370,7 +372,7 @@ public class EnterProfile extends Form implements ActionListener {
                 }
             }
         }
-        heightField.setBackground(Color.BLACK);
+        heightField.setBackground(Constants.Constants.COLOR_BACK);
         return true;
     }
 

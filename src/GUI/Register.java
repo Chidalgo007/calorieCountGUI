@@ -84,7 +84,7 @@ public class Register extends Form implements ActionListener, MouseListener {
         // email text Field ------------------------------------
         emailField = new JTextField();
         emailField.setBounds(110, 167, 140, fieldSpaceFontSize);
-        emailField.setBackground(Color.BLACK);
+        emailField.setBackground(Constants.Constants.COLOR_BACK);
         emailField.setForeground(Color.WHITE);
         emailField.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, fieldFontSize));
         emailField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Constants.Constants.COLOR_Light_Grey));
@@ -117,7 +117,7 @@ public class Register extends Form implements ActionListener, MouseListener {
         // passwordField textField ------------------------------------
         passwordField = new JPasswordField();
         passwordField.setBounds(110, 227, 140, fieldSpaceFontSize);
-        passwordField.setBackground(Color.BLACK);
+        passwordField.setBackground(Constants.Constants.COLOR_BACK);
         passwordField.setForeground(Color.WHITE);
         passwordField.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, fieldFontSize));
         passwordField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Constants.Constants.COLOR_Light_Grey));
@@ -143,7 +143,7 @@ public class Register extends Form implements ActionListener, MouseListener {
         passwordLabelCondition.setBounds(37, 263, 250, 20);
         passwordLabelCondition.setEditable(false);
         passwordLabelCondition.setFocusable(false);
-        passwordLabelCondition.setBackground(Color.BLACK);
+        passwordLabelCondition.setBackground(Constants.Constants.COLOR_BACK);
         passwordLabelCondition.setMargin(new Insets(0, 0, 0, 0));
         passwordLabelCondition.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, 8));
         passwordLabelCondition.setForeground(Constants.Constants.COLOR_Error);
@@ -160,7 +160,7 @@ public class Register extends Form implements ActionListener, MouseListener {
         // rePasswordField field ------------------------------------
         rePasswordField = new JPasswordField();
         rePasswordField.setBounds(110, 287, 140, fieldSpaceFontSize);
-        rePasswordField.setBackground(Color.BLACK);
+        rePasswordField.setBackground(Constants.Constants.COLOR_BACK);
         rePasswordField.setForeground(Color.WHITE);
         rePasswordField.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, fieldFontSize));
         rePasswordField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Constants.Constants.COLOR_Light_Grey));
@@ -216,7 +216,7 @@ public class Register extends Form implements ActionListener, MouseListener {
         logIn.setText("Already have an account?, Log In by clicking Here.");
         logIn.setEditable(false);
         logIn.setFocusable(false);
-        logIn.setBackground(Color.BLACK);
+        logIn.setBackground(Constants.Constants.COLOR_BACK);
         logIn.setBounds(logInCenter, 420, logInWith, 40);
         logIn.setFont(Constants.Constants.FONT_Light.deriveFont(Font.PLAIN, 10));
         logIn.setForeground(Constants.Constants.COLOR_4); // change color font
@@ -280,7 +280,7 @@ public class Register extends Form implements ActionListener, MouseListener {
             emailField.setBackground(Constants.Constants.COLOR_Error);
             return false;
         }
-        emailField.setBackground(Color.BLACK);
+        emailField.setBackground(Constants.Constants.COLOR_BACK);
         
         return true;
     }
@@ -293,7 +293,7 @@ public class Register extends Form implements ActionListener, MouseListener {
             passwordLabelCondition.setText("Password MUST contain at least 6 letter, 1 Uppercase, 1 Lowercase & 1 number");
             return false;
         }
-        passwordField.setBackground(Color.BLACK);
+        passwordField.setBackground(Constants.Constants.COLOR_BACK);
         passwordLabelCondition.setText("");
         
         return true;
@@ -306,7 +306,7 @@ public class Register extends Form implements ActionListener, MouseListener {
             rePasswordLabelCondition.setText("Password's DON'T match");
             return false;
         }
-        rePasswordField.setBackground(Color.BLACK);
+        rePasswordField.setBackground(Constants.Constants.COLOR_BACK);
         rePasswordLabelCondition.setText("");
         
         return true;

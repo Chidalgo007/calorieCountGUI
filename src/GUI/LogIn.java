@@ -62,7 +62,7 @@ public class LogIn extends Form implements ActionListener, MouseListener {
         // username text Field ------------------------------------
         emailField = new JTextField();
         emailField.setBounds(110, 174, 140, 30);
-        emailField.setBackground(Color.BLACK);
+        emailField.setBackground(Constants.Constants.COLOR_BACK);
         emailField.setForeground(Color.WHITE);
         emailField.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, 15));
         emailField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Constants.Constants.COLOR_Light_Grey));
@@ -80,7 +80,7 @@ public class LogIn extends Form implements ActionListener, MouseListener {
         // passwordField textField ------------------------------------
         passwordField = new JPasswordField();
         passwordField.setBounds(110, 254, 140, 30);
-        passwordField.setBackground(Color.BLACK);
+        passwordField.setBackground(Constants.Constants.COLOR_BACK);
         passwordField.setForeground(Color.WHITE);
         passwordField.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, 15));
         passwordField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Constants.Constants.COLOR_Light_Grey));
@@ -107,7 +107,7 @@ public class LogIn extends Form implements ActionListener, MouseListener {
         textRegister.setText("Don't have an account yet, register by clicking Here.");
         textRegister.setEditable(false);
         textRegister.setFocusable(false);
-        textRegister.setBackground(Color.BLACK);
+        textRegister.setBackground(Constants.Constants.COLOR_BACK);
         textRegister.setBounds(registerCenter, 420, registerWith, 40);
         textRegister.setFont(Constants.Constants.FONT_Light.deriveFont(Font.PLAIN, 10));
         textRegister.setForeground(Constants.Constants.COLOR_4); // change color font
@@ -129,9 +129,9 @@ public class LogIn extends Form implements ActionListener, MouseListener {
         if(e.getSource()==btnRegister){
             System.out.println("email: "+email+" password: "+password);
             // login check with database
-            // then open OptionMenu...
             if(MyJBDC.MyJDBC.validLogin(email, password)){
-                
+                LogIn.this.dispose();
+                new OptionMenu().setVisible(true);
             }
         }
 
