@@ -4,8 +4,10 @@
  */
 package GUI;
 
+import Constants.Constants;
 import Helper.RoundedBorder;
 import static MyJBDC.MyJDBC.getUserProfile;
+import com.formdev.flatlaf.FlatClientProperties;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
@@ -16,7 +18,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
@@ -31,96 +35,124 @@ import javax.swing.text.*;
  */
 public class LogIn extends Form implements ActionListener, MouseListener {
 
+    private JTextField emailField;
+    private JPasswordField passwordField;
+    private JButton logInBtn;
+    private JTextPane errorMessage;
+    private JTextPane textRegister;
+    SimpleAttributeSet center = new SimpleAttributeSet();
+    
     public LogIn() {
         super("Log In");
         addGUIComponents();
     }
 
-    private JTextField emailField;
-    private JPasswordField passwordField;
-    private JButton logIn;
-    private JTextPane errorMessage;
-    private JTextPane textRegister;
-    SimpleAttributeSet center = new SimpleAttributeSet();
 
     private void addGUIComponents() {
 
-        // log in label ------------------------------------
-        JLabel logIn = new JLabel("Log In");
-        logIn.setBounds(0, 15, Constants.Constants.WIDTH, 50);
-        logIn.setHorizontalAlignment(SwingConstants.CENTER);
-        logIn.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, 30));
-        logIn.setForeground(Constants.Constants.COLOR_Light_Grey); // change color font
-        //   welcome.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-        this.add(logIn);
-
         // Error message----------------------------------------------
         errorMessage = new JTextPane();
-        errorMessage.setBounds(25, 90, 250, 50);
+        errorMessage.setBounds(25, 20, 250, 50);
         errorMessage.setEditable(false);
         errorMessage.setFocusable(false);
-        errorMessage.setBackground(Constants.Constants.COLOR_BACK);
+        errorMessage.setBackground(Constants.COLOR_BACK);
         errorMessage.setMargin(new Insets(0, 0, 0, 0));
-        errorMessage.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, 13));
-        errorMessage.setForeground(Constants.Constants.COLOR_Error);
-        
-                // to center the text
+        errorMessage.setFont(Constants.FONT_Medium.deriveFont(Font.PLAIN, 13));
+        errorMessage.setForeground(Constants.COLOR_Error);
+
+        // to center the text
         StyledDocument error = errorMessage.getStyledDocument();
         StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
         error.setParagraphAttributes(0, error.getLength(), center, false);
-        
+
         this.add(errorMessage);
+// ---  CONTAINER ------------------------------------------------
+        JPanel container = new JPanel();
+        container.setLayout(null);
+        container.setBounds(20, 100, this.getWidth() - 50, 310);
+        container.setBorder(new RoundedBorder(Constants.btnRadius));
+//        container.putClientProperty(FlatClientProperties.STYLE, "arc:20");
+
+        container.setBackground(Constants.COLOR_Light_BAKG);
+
+        
+
+        // log in label ------------------------------------
+        JLabel logIn = new JLabel("Welcome Back");
+        logIn.setBounds(15, 20, Constants.WIDTH, 30);
+        logIn.setHorizontalAlignment(SwingConstants.LEFT);
+        logIn.setFont(Constants.FONT_SemiBold.deriveFont(Font.PLAIN, 20));
+        logIn.setForeground(Constants.COLOR_Light_Grey); // change color font
+        //   welcome.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        container.add(logIn);
+
+        // Log in messase ------------------------------------
+        JLabel logInmessage = new JLabel("Please sing in to access your account");
+        logInmessage.setBounds(15, 45, Constants.WIDTH, 30);
+        logInmessage.setHorizontalAlignment(SwingConstants.LEFT);
+        logInmessage.setFont(Constants.FONT_Medium.deriveFont(Font.PLAIN, 10));
+        logInmessage.setForeground(Color.WHITE); // change color font
+        //   welcome.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        container.add(logInmessage);
 
         // username label ------------------------------------
         JLabel emailLabel = new JLabel("Email: ");
-        emailLabel.setBounds(10, 170, 100, 50);
-        emailLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        emailLabel.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, 15));
-        emailLabel.setForeground(Constants.Constants.COLOR_Light_Grey); // change color font
+        emailLabel.setBounds(15, 125, 100, 20);
+        emailLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        emailLabel.setFont(Constants.FONT_Neon.deriveFont(Font.PLAIN, 15));
+        emailLabel.setForeground(Constants.COLOR_Light_Grey); // change color font
         // name.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-        this.add(emailLabel);
+        container.add(emailLabel);
 
         // username text Field ------------------------------------
         emailField = new JTextField();
-        emailField.setBounds(110, 174, 140, 30);
-        emailField.setBackground(Constants.Constants.COLOR_BACK);
+        emailField.setBounds(70, 124, 160, 20);
+        emailField.setOpaque(false);
         emailField.setForeground(Color.WHITE);
-        emailField.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, 15));
-        emailField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Constants.Constants.COLOR_Light_Grey));
-        this.add(emailField);
+        emailField.setFont(Constants.FONT_Medium.deriveFont(Font.PLAIN, 12));
+        emailField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Constants.COLOR_Light_Grey));
+        container.add(emailField);
 
         // passwordField label ------------------------------------
         JLabel pass = new JLabel("Password: ");
-        pass.setBounds(10, 250, 100, 50);
-        pass.setHorizontalAlignment(SwingConstants.RIGHT);
-        pass.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, 15));
-        pass.setForeground(Constants.Constants.COLOR_Light_Grey); // change color font
+        pass.setBounds(15, 170, 100, 30);
+        pass.setHorizontalAlignment(SwingConstants.LEFT);
+        pass.setFont(Constants.FONT_Neon.deriveFont(Font.PLAIN, 15));
+        pass.setForeground(Constants.COLOR_Light_Grey); // change color font
         // pass.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-        this.add(pass);
+        container.add(pass);
 
         // passwordField textField ------------------------------------
         passwordField = new JPasswordField();
-        passwordField.setBounds(110, 254, 140, 30);
-        passwordField.setBackground(Constants.Constants.COLOR_BACK);
+        passwordField.setBounds(100, 170, 130, 20);
+        passwordField.setOpaque(false);
         passwordField.setForeground(Color.WHITE);
-        passwordField.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, 15));
-        passwordField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Constants.Constants.COLOR_Light_Grey));
-        this.add(passwordField);
+        passwordField.setFont(Constants.FONT_Medium.deriveFont(Font.PLAIN, 12));
+        passwordField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Constants.COLOR_Light_Grey));
+        passwordField.putClientProperty(FlatClientProperties.STYLE, ""+"showRevealButton:true");
+        container.add(passwordField);
+        
+        JCheckBox rememberMe = new JCheckBox("Remember Me");
+        rememberMe.setBounds(14, 200, 200, 20);
+        container.add(rememberMe, "grow 0");
+        
 
         // log in button ------------------------------------
-        int btnWith = Constants.Constants.btnWidth;
-        int btnCenter = (this.getWidth() - btnWith) / 2;
-        this.logIn = new JButton("Log In");
-        this.logIn.setBounds(btnCenter, 340, btnWith, 50);
-        this.logIn.setFont(Constants.Constants.FONT_Light.deriveFont(Font.PLAIN, 20));
-        this.logIn.setForeground(Constants.Constants.COLOR_Light_Grey);
-        this.logIn.setFocusable(false);
-        this.logIn.setContentAreaFilled(false);
-        this.logIn.setBorder(new RoundedBorder(Constants.Constants.btnRadius));
-        this.logIn.addActionListener(this);
-        this.logIn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        this.add(this.logIn);
+        int btnWith = Constants.btnWidth;
+        int btnCenter = (container.getWidth() - btnWith) / 2;
+        logInBtn = new JButton("Login");
+        logInBtn.setBounds(btnCenter, 240, btnWith, 40);
+        logInBtn.setFont(Constants.FONT_Neon.deriveFont(Font.PLAIN, 15));
+        logInBtn.setForeground(Constants.COLOR_WHITE);
+        logInBtn.setFocusable(false);
+        logInBtn.setContentAreaFilled(false);
+        logInBtn.setBackground(Constants.COLOR_Light_Grey);
+        logInBtn.setBorder(new RoundedBorder(Constants.btnRadius));
+        logInBtn.addActionListener(this);
+        logInBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        container.add(logInBtn);
 
+        //------- OUT OF CONTAINER --------------------------------
         // textRegister label ------------------------------------
         int registerWith = 210;
         int registerCenter = (this.getWidth() - registerWith) / 2;
@@ -128,10 +160,10 @@ public class LogIn extends Form implements ActionListener, MouseListener {
         textRegister.setText("Don't have an account yet, register by clicking Here.");
         textRegister.setEditable(false);
         textRegister.setFocusable(false);
-        textRegister.setBackground(Constants.Constants.COLOR_BACK);
+        textRegister.setBackground(Constants.COLOR_BACK);
         textRegister.setBounds(registerCenter, 420, registerWith, 40);
-        textRegister.setFont(Constants.Constants.FONT_Light.deriveFont(Font.PLAIN, 10));
-        textRegister.setForeground(Constants.Constants.COLOR_4); // change color font
+        textRegister.setFont(Constants.FONT_Light.deriveFont(Font.PLAIN, 10));
+        textRegister.setForeground(Constants.COLOR_4); // change color font
         textRegister.addMouseListener(this);
         textRegister.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         //   textRegister.setBorder(BorderFactory.createLineBorder(Color.WHITE));
@@ -140,13 +172,15 @@ public class LogIn extends Form implements ActionListener, MouseListener {
         StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
         doc.setParagraphAttributes(0, doc.getLength(), center, false);
         this.add(textRegister);
+        
+        this.add(container);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         String email = emailField.getText();
         String password = new String(this.passwordField.getPassword());
-        if (e.getSource() == logIn) {
+        if (e.getSource() == logInBtn) {
             errorMessage.setText("");
             System.out.println("email: " + email + " password: " + password);
             // login check with database

@@ -217,7 +217,7 @@ public class Register extends Form implements ActionListener, MouseListener {
         registerbtn.setHorizontalAlignment(SwingConstants.CENTER);
         registerbtn.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, btnFontSize));
         registerbtn.setForeground(Constants.Constants.COLOR_Light_Grey); // change color font
-        registerbtn.setBackground(Constants.Constants.COLOR_2);
+        registerbtn.setBackground(Constants.Constants.COLOR_Light_Grey);
         registerbtn.setFocusable(false);
         registerbtn.setContentAreaFilled(false);
         registerbtn.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));

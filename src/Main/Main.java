@@ -9,6 +9,8 @@ import GUI.Init;
 import GUI.LogIn;
 import GUI.OptionMenu;
 import GUI.Register;
+import com.formdev.flatlaf.themes.FlatMacDarkLaf;
+import java.awt.EventQueue;
 
 /**
  *
@@ -20,11 +22,15 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        new Init().setVisible(true);
-        //new LogIn().setVisible(true);
-        //new Register().setVisible(true);
-       // new EnterProfile().setVisible(true);
-//        new OptionMenu().setVisible(true);
+        FlatMacDarkLaf.setup();
+  //      EventQueue.invokeLater(()->
+        //new Init().setVisible(true)
+        new LogIn().setVisible(true);
+//        new Register().setVisible(true);
+       // new EnterProfile().setVisible(true)
+//        new OptionMenu().setVisible(true)
+
+     //       );
     }
     
 }

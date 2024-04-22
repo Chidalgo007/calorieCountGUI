@@ -68,7 +68,7 @@ public class Init extends Form implements ActionListener {
         register.setHorizontalAlignment(SwingConstants.CENTER);
         register.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, btnFontSize));
         register.setForeground(Constants.Constants.COLOR_Light_Grey); // change color font
-        register.setBackground(Constants.Constants.COLOR_2);
+        register.setBackground(Constants.Constants.COLOR_Light_Grey);
         register.setFocusable(false);
         register.setContentAreaFilled(false);
         register.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
@@ -82,7 +82,7 @@ public class Init extends Form implements ActionListener {
         logIn.setHorizontalAlignment(SwingConstants.CENTER);
         logIn.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, btnFontSize));
         logIn.setForeground(Constants.Constants.COLOR_Light_Grey); // change color font
-        logIn.setBackground(Constants.Constants.COLOR_2);
+        logIn.setBackground(Constants.Constants.COLOR_Light_Grey);
         logIn.setFocusable(false);
         logIn.setContentAreaFilled(false);
         logIn.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));

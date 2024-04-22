@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 
 /**
  *
@@ -36,7 +37,7 @@ public class MyJDBC {
             if (!checkUser(email)) {
                 try ( Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD); //NOSONAR
                           PreparedStatement insertUser = connection.prepareStatement(
-                                "INSERT INTO " + DB_USER_TABLE + "(EMAIL, PASSWORD)" + " VALUES(?,?)"
+                                "INSERT INTO " + DB_USER_TABLE + "(EMAIL, PASSWORD) VALUES(?,?)"
                         )) {
 
                     insertUser.setString(1, email);
@@ -95,6 +96,48 @@ public class MyJDBC {
         }
 
         return userId;
+    }
+
+    public static void insertUserProfile(String name, String lastName, String gender, LocalDate date, String weight, String height, int ID) {
+        Date DOB = Date.valueOf(date);
+        String checkUser = "SELECT COUNT(*) FROM " + DB_USER_PROFILE + " WHERE USERID = ?";
+        String inserInfo = "INSERT INTO " + DB_USER_PROFILE + " VALUES(?,?,?,?,?,?,?)";
+        String updateInfo = "UPDATE " + DB_USER_PROFILE + " SET NAME=?,LASTNAME=?,GENDER=?,DOB=?,WEIGHT=?,HEIGHT=? WHERE USERID = ?";
+        try ( Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);//NOSONAR
+                  PreparedStatement checkUserProfile = connection.prepareStatement(checkUser);//NOSONAR
+                  PreparedStatement insertIntoProfile = connection.prepareStatement(inserInfo);//NOSONAR
+                  PreparedStatement updateIntoProfile = connection.prepareStatement(updateInfo)) {
+
+            checkUserProfile.setInt(1, ID);
+            ResultSet resultSet = checkUserProfile.executeQuery();
+            resultSet.next();
+            int rowCount = resultSet.getInt(1);
+
+            if (rowCount == 0) {
+
+                insertIntoProfile.setInt(1, ID);
+                insertIntoProfile.setString(2, name);
+                insertIntoProfile.setString(3, lastName);
+                insertIntoProfile.setString(4, gender);
+                insertIntoProfile.setDate(5, DOB);
+                insertIntoProfile.setString(6, weight);
+                insertIntoProfile.setString(7, height);
+
+                insertIntoProfile.executeUpdate();
+            } else {
+                updateIntoProfile.setString(1, name);
+                updateIntoProfile.setString(2, lastName);
+                updateIntoProfile.setString(3, gender);
+                updateIntoProfile.setDate(4, DOB);
+                updateIntoProfile.setString(5, weight);
+                updateIntoProfile.setString(6, height);
+                updateIntoProfile.setInt(7, ID);
+
+                updateIntoProfile.executeUpdate();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MyJDBC.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public static Map<String, String> getUserProfile(int ID) {

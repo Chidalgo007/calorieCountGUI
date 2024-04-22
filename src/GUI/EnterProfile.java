@@ -4,6 +4,7 @@
  */
 package GUI;
 
+import UserInfo.UserProfile;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -12,6 +13,8 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -50,14 +53,15 @@ public class EnterProfile extends JPanel implements ActionListener {
     String name = "";
     String lastname = "";
     String gender;
-    Date DOB;
-    float weight;
-    int height;
+    LocalDate DOB;
+    String weight;
+    String height;
 
     public EnterProfile() {
-      //  super("Profile");
-        FlatMacDarkLaf.setup();
+        //  super("Profile");
+        
         addGUIComponent();
+        addUserInformation();
         this.setLayout(null);
         this.setBackground(Constants.Constants.COLOR_BACK);
         /*
@@ -65,12 +69,42 @@ public class EnterProfile extends JPanel implements ActionListener {
         GET USER EMAIL TO UPDATE INFOMRATION...
         addUserInformation();
         FILL THE FIELDS WITH THE USER INFORMATION IF AVAILABLE
-        */
+         */
     }
-    private void addUserInformation(){
-        
-        // ADD INFORMATION TO FIELDS....
-        
+
+    private void addUserInformation() {
+        String[] fields = {"name", "lastName", "DOB", "weight", "height"};
+
+        for (String field : fields) {
+            if (UserInfo.UserProfile.getProfile().containsKey(field)) {
+                String st = UserInfo.UserProfile.getProfile().get(field);
+                switch (field) {
+                    case "name":
+                        nameField.setText(st);
+                        break;
+                    case "lastName":
+                        lastNameField.setText(st);
+                        break;
+                    case "DOB":
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                        try {
+                            LocalDate date = LocalDate.parse(st, formatter);
+
+                            datePicker.setSelectedDate(date);
+                        } catch (DateTimeParseException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case "weight":
+                        weightField.setText(st);
+                        break;
+                    case "height":
+                        heightField.setText(st);
+                        break;
+                }
+            }
+
+        }
     }
 
     private void addGUIComponent() {
@@ -160,6 +194,7 @@ public class EnterProfile extends JPanel implements ActionListener {
 
         // gender field ------------------------------------
         genderField = new JComboBox();
+        genderField.addItem("");
         genderField.addItem("Male");
         genderField.addItem("Female");
         genderField.setBounds(110, 182, 120, 30);
@@ -180,7 +215,7 @@ public class EnterProfile extends JPanel implements ActionListener {
         // email text Field ------------------------------------
         JPanel date = new JPanel();
         date.setBounds(110, 230, 120, 30);
-        date.setLayout(new MigLayout("fill, insets 0"));
+        date.setLayout(new MigLayout("fill, insets 0","[center]"));
         datePicker = new DatePicker();
         JFormattedTextField editor = new JFormattedTextField();
         editor.setFocusable(false);
@@ -295,18 +330,17 @@ public class EnterProfile extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == saveBtn) {
-
-//            if (fieldValidation()) {
-//                System.out.println(fieldValidation());
-//            }
+            gender = (String) this.genderField.getSelectedItem();
+            DOB = datePicker.getSelectedDate();
+            MyJBDC.MyJDBC.insertUserProfile(name, lastname, gender, DOB, weight, height, UserProfile.getID());
         }
         if (e.getSource() == clearBtn) {
-             nameField.setText("");
-             lastNameField.setText("");
-             genderField.setSelectedIndex(0);
-             datePicker.clearSelectedDate();
-             weightField.setText("");
-             heightField.setText("");
+            nameField.setText("");
+            lastNameField.setText("");
+            genderField.setSelectedIndex(0);
+            datePicker.clearSelectedDate();
+            weightField.setText("");
+            heightField.setText("");
         }
 
     }
@@ -347,11 +381,7 @@ public class EnterProfile extends JPanel implements ActionListener {
                 weightField.setBackground(Constants.Constants.COLOR_Error);
                 return false;
             } else {
-                try {
-                    weight = Float.parseFloat(weightST);
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                }
+                weight = weightST;
             }
         }
         weightField.setBackground(Constants.Constants.COLOR_BACK);
@@ -365,11 +395,7 @@ public class EnterProfile extends JPanel implements ActionListener {
                 heightField.setBackground(Constants.Constants.COLOR_Error);
                 return false;
             } else {
-                try {
-                    height = Integer.parseInt(heightST);
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                }
+                height = heightST;
             }
         }
         heightField.setBackground(Constants.Constants.COLOR_BACK);
