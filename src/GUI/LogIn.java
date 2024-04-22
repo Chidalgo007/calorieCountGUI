@@ -10,6 +10,7 @@ import static MyJBDC.MyJDBC.getUserProfile;
 import com.formdev.flatlaf.FlatClientProperties;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -39,7 +40,8 @@ public class LogIn extends Form implements ActionListener, MouseListener {
     private JPasswordField passwordField;
     private JButton logInBtn;
     private JTextPane errorMessage;
-    private JTextPane textRegister;
+    private JLabel signUp;
+    private JLabel signUpLink;
     SimpleAttributeSet center = new SimpleAttributeSet();
     
     public LogIn() {
@@ -50,6 +52,7 @@ public class LogIn extends Form implements ActionListener, MouseListener {
 
     private void addGUIComponents() {
 
+        
         // Error message----------------------------------------------
         errorMessage = new JTextPane();
         errorMessage.setBounds(25, 20, 250, 50);
@@ -69,13 +72,10 @@ public class LogIn extends Form implements ActionListener, MouseListener {
 // ---  CONTAINER ------------------------------------------------
         JPanel container = new JPanel();
         container.setLayout(null);
-        container.setBounds(20, 100, this.getWidth() - 50, 310);
+        container.setBounds(20, 110, this.getWidth() - 50, 310);
         container.setBorder(new RoundedBorder(Constants.btnRadius));
 //        container.putClientProperty(FlatClientProperties.STYLE, "arc:20");
-
         container.setBackground(Constants.COLOR_Light_BAKG);
-
-        
 
         // log in label ------------------------------------
         JLabel logIn = new JLabel("Welcome Back");
@@ -154,26 +154,23 @@ public class LogIn extends Form implements ActionListener, MouseListener {
 
         //------- OUT OF CONTAINER --------------------------------
         // textRegister label ------------------------------------
-        int registerWith = 210;
-        int registerCenter = (this.getWidth() - registerWith) / 2;
-        textRegister = new JTextPane();
-        textRegister.setText("Don't have an account yet, register by clicking Here.");
-        textRegister.setEditable(false);
-        textRegister.setFocusable(false);
-        textRegister.setBackground(Constants.COLOR_BACK);
-        textRegister.setBounds(registerCenter, 420, registerWith, 40);
-        textRegister.setFont(Constants.FONT_Light.deriveFont(Font.PLAIN, 10));
-        textRegister.setForeground(Constants.COLOR_4); // change color font
-        textRegister.addMouseListener(this);
-        textRegister.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        //   textRegister.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-        // to center the text
-        StyledDocument doc = textRegister.getStyledDocument();
-        StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
-        doc.setParagraphAttributes(0, doc.getLength(), center, false);
-        this.add(textRegister);
-        
+
+        JPanel jSignUp = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        jSignUp.setOpaque(false);
+        jSignUp.setBounds(0, 430, Constants.WIDTH, 20);
+        signUp = new JLabel("Don't have and account?, ");
+        signUp.setFont(Constants.FONT_Light.deriveFont(Font.PLAIN, 10));
+        signUp.setForeground(Constants.COLOR_4);
+        jSignUp.add(signUp);
+        signUpLink = new JLabel("<html>Sign Up.</html>");
+        signUpLink.setFont(Constants.FONT_Light.deriveFont(Font.PLAIN, 10));
+        signUpLink.setForeground(Constants.COLOR_4);
+        signUpLink.addMouseListener(this);
+        signUpLink.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        jSignUp.add(signUpLink);
+
         this.add(container);
+        this.add(jSignUp);
     }
 
     @Override
@@ -182,7 +179,6 @@ public class LogIn extends Form implements ActionListener, MouseListener {
         String password = new String(this.passwordField.getPassword());
         if (e.getSource() == logInBtn) {
             errorMessage.setText("");
-            System.out.println("email: " + email + " password: " + password);
             // login check with database
             UserInfo.UserProfile.setID(MyJBDC.MyJDBC.getUserId(email, password)); // setting the user ID
 
@@ -214,11 +210,11 @@ public class LogIn extends Form implements ActionListener, MouseListener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        textRegister.setText("REGISTER.");
+        signUpLink.setText("<html><i><b>Sign Up.<b></i></html>");
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        textRegister.setText("Don't have an account yet, register by clicking Here.");
+        signUpLink.setText("<html>Sign Up.</html>");
     }
 }

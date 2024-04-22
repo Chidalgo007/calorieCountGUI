@@ -5,7 +5,6 @@
 package GUI;
 
 import UserInfo.UserProfile;
-import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
@@ -15,7 +14,6 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -59,17 +57,12 @@ public class EnterProfile extends JPanel implements ActionListener {
 
     public EnterProfile() {
         //  super("Profile");
-        
+
         addGUIComponent();
         addUserInformation();
         this.setLayout(null);
         this.setBackground(Constants.Constants.COLOR_BACK);
-        /*
-        CREATE ACCES TO THE USER INFORMATION USER 
-        GET USER EMAIL TO UPDATE INFOMRATION...
-        addUserInformation();
-        FILL THE FIELDS WITH THE USER INFORMATION IF AVAILABLE
-         */
+
     }
 
     private void addUserInformation() {
@@ -204,18 +197,19 @@ public class EnterProfile extends JPanel implements ActionListener {
         genderField.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, fieldFontSize));
         this.add(genderField);
 
-        // age label ------------------------------------
-        JLabel ageLabel = new JLabel("Age: ");
-        ageLabel.setBounds(10, 220, 100, 50);
-        ageLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        ageLabel.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, labelFontSize));
-        ageLabel.setForeground(Constants.Constants.COLOR_Light_Grey); // change color font
-        this.add(ageLabel);
+        // DOB label ------------------------------------
+        JLabel DOBLabel = new JLabel("Date of Birth: ");
+        DOBLabel.setBounds(10, 220, 100, 50);
+        DOBLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        DOBLabel.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, labelFontSize));
+        DOBLabel.setForeground(Constants.Constants.COLOR_Light_Grey); // change color font
+        this.add(DOBLabel);
 
-        // email text Field ------------------------------------
+        // DOB Field ------------------------------------
         JPanel date = new JPanel();
+        date.setOpaque(false);
         date.setBounds(110, 230, 120, 30);
-        date.setLayout(new MigLayout("fill, insets 0","[center]"));
+        date.setLayout(new MigLayout("fill, insets 0"));
         datePicker = new DatePicker();
         JFormattedTextField editor = new JFormattedTextField();
         editor.setFocusable(false);
@@ -330,9 +324,13 @@ public class EnterProfile extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == saveBtn) {
-            gender = (String) this.genderField.getSelectedItem();
-            DOB = datePicker.getSelectedDate();
-            MyJBDC.MyJDBC.insertUserProfile(name, lastname, gender, DOB, weight, height, UserProfile.getID());
+            if (UserProfile.getID() != -1) {
+                gender = (String) this.genderField.getSelectedItem();
+                DOB = datePicker.getSelectedDate();
+                MyJBDC.MyJDBC.insertUserProfile(name, lastname, gender, DOB, weight, height, UserProfile.getID());
+            }else{
+                System.out.println("user not exist = -1 ?..."+UserProfile.getID());
+            }
         }
         if (e.getSource() == clearBtn) {
             nameField.setText("");

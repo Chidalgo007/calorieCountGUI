@@ -12,6 +12,7 @@ import java.awt.event.FocusListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import net.miginfocom.swing.MigLayout;
 
 /**
  *
@@ -43,7 +44,8 @@ public class OptionMenu extends Form implements ActionListener {
         // buttons ------------------------------------------
 //        int btnWid = Constants.Constants.WIDTH / 3;
         int btnWid = 90;
-        JPanel master = new JPanel(new FlowLayout(FlowLayout.LEFT));
+//        JPanel master = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel master = new JPanel(new MigLayout("fillx, insets 0"));
         master.setBackground(Constants.Constants.COLOR_BACK);
 //        master.setBorder(null);
         master.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
