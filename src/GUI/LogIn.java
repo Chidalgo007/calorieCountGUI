@@ -6,7 +6,7 @@ package GUI;
 
 import Constants.Constants;
 import Helper.RoundedBorder;
-import static MyJBDC.MyJDBC.getUserProfile;
+import MyJBDC.MyJDBC;
 import com.formdev.flatlaf.FlatClientProperties;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -160,11 +160,11 @@ public class LogIn extends Form implements ActionListener, MouseListener {
         jSignUp.setBounds(0, 430, Constants.WIDTH, 20);
         signUp = new JLabel("Don't have and account?, ");
         signUp.setFont(Constants.FONT_Light.deriveFont(Font.PLAIN, 10));
-        signUp.setForeground(Constants.COLOR_4);
+        signUp.setForeground(Constants.COLOR_ORANGE);
         jSignUp.add(signUp);
         signUpLink = new JLabel("<html>Sign Up.</html>");
         signUpLink.setFont(Constants.FONT_Light.deriveFont(Font.PLAIN, 10));
-        signUpLink.setForeground(Constants.COLOR_4);
+        signUpLink.setForeground(Constants.COLOR_ORANGE);
         signUpLink.addMouseListener(this);
         signUpLink.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         jSignUp.add(signUpLink);
@@ -180,10 +180,10 @@ public class LogIn extends Form implements ActionListener, MouseListener {
         if (e.getSource() == logInBtn) {
             errorMessage.setText("");
             // login check with database
-            UserInfo.UserProfile.setID(MyJBDC.MyJDBC.getUserId(email, password)); // setting the user ID
+            UserInfo.UserProfile.setID(MyJDBC.getUserId(email, password)); // setting the user ID
 
             if (UserInfo.UserProfile.getID() != -1) { // check the user exist
-                UserInfo.UserProfile.setProfile(getUserProfile(UserInfo.UserProfile.getID()));
+                UserInfo.UserProfile.setProfile(MyJDBC.getUserProfile(UserInfo.UserProfile.getID()));
                 LogIn.this.dispose();
                 new OptionMenu().setVisible(true);
             } else {

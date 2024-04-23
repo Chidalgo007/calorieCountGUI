@@ -4,11 +4,10 @@
  */
 package GUI;
 
+import UserInfo.UserProfile;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -42,27 +41,11 @@ public class OptionMenu extends Form implements ActionListener {
         container.add(stadistics, "stadistics");
 
         // buttons ------------------------------------------
-//        int btnWid = Constants.Constants.WIDTH / 3;
         int btnWid = 90;
 //        JPanel master = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JPanel master = new JPanel(new MigLayout("fillx, insets 0"));
         master.setBackground(Constants.Constants.COLOR_BACK);
-//        master.setBorder(null);
         master.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-
-        FocusListener focus = new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                ((JButton) e.getSource()).setBackground(Constants.Constants.COLOR_4);
-                ((JButton) e.getSource()).setFont(Constants.Constants.FONT_SemiBold.deriveFont(Font.BOLD, 10));
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                ((JButton) e.getSource()).setBackground(Constants.Constants.COLOR_BACK);
-                ((JButton) e.getSource()).setFont(Constants.Constants.FONT_Light.deriveFont(Font.PLAIN, 10));
-            }
-        };
 
         profileBtn = new JButton("Profile");
         profileBtn.setPreferredSize(new Dimension(btnWid, 20));
@@ -71,7 +54,7 @@ public class OptionMenu extends Form implements ActionListener {
         profileBtn.setFont(Constants.Constants.FONT_Light.deriveFont(Font.PLAIN, 10));
         profileBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         profileBtn.setBorder(null);
-        profileBtn.addFocusListener(focus);
+//        profileBtn.addFocusListener(focus);
         profileBtn.setFocusPainted(false);
         profileBtn.addActionListener(this);
 
@@ -82,8 +65,7 @@ public class OptionMenu extends Form implements ActionListener {
         caloriesBtn.setFont(Constants.Constants.FONT_Light.deriveFont(Font.PLAIN, 10));
         caloriesBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         caloriesBtn.setBorder(null);
-        caloriesBtn.addFocusListener(focus);
-        caloriesBtn.setFocusPainted(false);
+//        caloriesBtn.setFocusPainted(false);
         caloriesBtn.addActionListener(this);
 
         stadisticsBtn = new JButton("Stadistics");
@@ -93,8 +75,7 @@ public class OptionMenu extends Form implements ActionListener {
         stadisticsBtn.setFont(Constants.Constants.FONT_Light.deriveFont(Font.PLAIN, 10));
         stadisticsBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         stadisticsBtn.setBorder(null);
-        stadisticsBtn.addFocusListener(focus);
-        stadisticsBtn.setFocusPainted(false);
+//        stadisticsBtn.setFocusPainted(false);
         stadisticsBtn.addActionListener(this);
 
         master.add(profileBtn);
@@ -111,12 +92,34 @@ public class OptionMenu extends Form implements ActionListener {
 
         if (e.getSource() == profileBtn) {
             cardLayout.show(container, "profile");
+            profileBtn.setBackground(Constants.Constants.COLOR_ORANGE);
+            profileBtn.setFont(Constants.Constants.FONT_SemiBold.deriveFont(Font.BOLD, 10));
+
+            caloriesBtn.setBackground(Constants.Constants.COLOR_BACK);
+            caloriesBtn.setFont(Constants.Constants.FONT_Light.deriveFont(Font.PLAIN, 10));
+            stadisticsBtn.setBackground(Constants.Constants.COLOR_BACK);
+            stadisticsBtn.setFont(Constants.Constants.FONT_Light.deriveFont(Font.PLAIN, 10));
         }
         if (e.getSource() == caloriesBtn) {
             cardLayout.show(container, "calories");
+            caloriesBtn.setBackground(Constants.Constants.COLOR_ORANGE);
+            caloriesBtn.setFont(Constants.Constants.FONT_SemiBold.deriveFont(Font.BOLD, 10));
+            enterCalories.name.setText(UserProfile.getProfile().get("name"));
+
+            profileBtn.setBackground(Constants.Constants.COLOR_BACK);
+            profileBtn.setFont(Constants.Constants.FONT_Light.deriveFont(Font.PLAIN, 10));
+            stadisticsBtn.setBackground(Constants.Constants.COLOR_BACK);
+            stadisticsBtn.setFont(Constants.Constants.FONT_Light.deriveFont(Font.PLAIN, 10));
         }
         if (e.getSource() == stadisticsBtn) {
             cardLayout.show(container, "stadistics");
+            stadisticsBtn.setBackground(Constants.Constants.COLOR_ORANGE);
+            stadisticsBtn.setFont(Constants.Constants.FONT_SemiBold.deriveFont(Font.BOLD, 10));
+
+            caloriesBtn.setBackground(Constants.Constants.COLOR_BACK);
+            caloriesBtn.setFont(Constants.Constants.FONT_Light.deriveFont(Font.PLAIN, 10));
+            profileBtn.setBackground(Constants.Constants.COLOR_BACK);
+            profileBtn.setFont(Constants.Constants.FONT_Light.deriveFont(Font.PLAIN, 10));
         }
     }
 

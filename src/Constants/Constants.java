@@ -26,10 +26,11 @@ public class Constants {
     public static final Color COLOR_Error = Color.decode("#C06565");// light red
     public static final Color COLOR_Light_BAKG = Color.decode("#181818");// dark grey
     public static final Color COLOR_Light_Grey = Color.decode("#7F7F80");//ligh grey
-    public static final Color COLOR_4 = Color.decode("#B54C00");//orange
+    public static final Color COLOR_ORANGE = Color.decode("#B54C00");//orange
     public static final Color COLOR_Trans = new Color(0, 0, 0, 128);//black 50%
     public static final Color COLOR_BACK = Color.BLACK;
     public static final Color COLOR_WHITE = Color.WHITE;
+    public static final Color COLOR_BLUE = Color.decode("#0347E4");
     
 
     // Fonts

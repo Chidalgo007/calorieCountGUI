@@ -236,11 +236,11 @@ public class Register extends Form implements ActionListener, MouseListener {
         jLogin.setOpaque(false);
         logIn = new JLabel("Already have an account?, ");
         logIn.setFont(Constants.FONT_Light.deriveFont(Font.PLAIN, 10));
-        logIn.setForeground(Constants.COLOR_4);
+        logIn.setForeground(Constants.COLOR_ORANGE);
         jLogin.add(logIn);
         logInLink = new JLabel("<html>Sing In.</html>");
         logInLink.setFont(Constants.FONT_Light.deriveFont(Font.PLAIN, 10));
-        logInLink.setForeground(Constants.COLOR_4);
+        logInLink.setForeground(Constants.COLOR_ORANGE);
         logInLink.addMouseListener(this);
         logInLink.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         jLogin.add(logInLink);

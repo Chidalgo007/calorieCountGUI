@@ -12,11 +12,11 @@ import java.util.Map;
  * @author chg
  */
 public class UserProfile {
+
     private static int ID;
-    private static Map<String,String> profile = new HashMap();
+    private static Map<String, String> profile = new HashMap();
 
     public UserProfile() {
-        
     }
 
     /**
@@ -36,19 +36,28 @@ public class UserProfile {
     /**
      * @return the profile
      */
-    public static Map<String,String> getProfile() {
+    public static Map<String, String> getProfile() {
         return profile;
     }
 
     /**
      * @param aProfile the profile to set
      */
-    public static void setProfile(Map<String,String> aProfile) {
+    public static void setProfile(Map<String, String> aProfile) {
         profile = aProfile;
+        titleStyle();
     }
-    
-    
-    
-    
-    
+
+    private static void titleStyle() {
+        String[] names = {"name", "lastName"};
+        for (String st : names) {
+            if (profile.containsKey(st)) {
+                String toTitle = profile.get(st);
+                String newTitleStyle=toTitle.substring(0,1).toUpperCase()+toTitle.substring(1).toLowerCase();
+                
+                profile.put(st, newTitleStyle);
+            }
+        }
+    }
+
 }

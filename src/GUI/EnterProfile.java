@@ -4,6 +4,7 @@
  */
 package GUI;
 
+import MyJBDC.MyJDBC;
 import UserInfo.UserProfile;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -66,7 +67,7 @@ public class EnterProfile extends JPanel implements ActionListener {
     }
 
     private void addUserInformation() {
-        String[] fields = {"name", "lastName", "DOB", "weight", "height"};
+        String[] fields = {"name", "lastName", "gender", "DOB", "weight", "height"};
 
         for (String field : fields) {
             if (UserInfo.UserProfile.getProfile().containsKey(field)) {
@@ -77,6 +78,9 @@ public class EnterProfile extends JPanel implements ActionListener {
                         break;
                     case "lastName":
                         lastNameField.setText(st);
+                        break;
+                    case "gender":
+                        genderField.setSelectedItem(st);
                         break;
                     case "DOB":
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -327,9 +331,10 @@ public class EnterProfile extends JPanel implements ActionListener {
             if (UserProfile.getID() != -1) {
                 gender = (String) this.genderField.getSelectedItem();
                 DOB = datePicker.getSelectedDate();
-                MyJBDC.MyJDBC.insertUserProfile(name, lastname, gender, DOB, weight, height, UserProfile.getID());
-            }else{
-                System.out.println("user not exist = -1 ?..."+UserProfile.getID());
+                MyJDBC.insertUserProfile(name, lastname, gender, DOB, weight, height, UserProfile.getID());
+                UserInfo.UserProfile.setProfile(MyJDBC.getUserProfile(UserInfo.UserProfile.getID()));
+            } else {
+                System.out.println("user not exist = -1 ?..." + UserProfile.getID());
             }
         }
         if (e.getSource() == clearBtn) {

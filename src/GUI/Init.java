@@ -96,7 +96,7 @@ public class Init extends Form implements ActionListener {
         bottom.setBounds(0, 400, 287, 50);
         bottom.setHorizontalAlignment(SwingConstants.CENTER);
         bottom.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, 10));
-        bottom.setForeground(Constants.Constants.COLOR_4); // change color font
+        bottom.setForeground(Constants.Constants.COLOR_ORANGE); // change color font
         //   welcome.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         this.add(bottom);
     }

@@ -10,8 +10,10 @@ import GUI.MealGUI.Dinner;
 import GUI.MealGUI.Lunch;
 import GUI.MealGUI.Snaks;
 import UserInfo.UserProfile;
+import com.raven.datechooser.DateChooser;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -21,12 +23,20 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.time.LocalDate;
 import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 import net.miginfocom.swing.MigLayout;
 import raven.datetime.component.date.DatePicker;
+import java.awt.Dimension;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import javax.swing.BorderFactory;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 /**
  *
@@ -35,6 +45,11 @@ import raven.datetime.component.date.DatePicker;
 public class EnterCalories extends JPanel implements ActionListener {
 
     DatePicker datePicker;
+    DateChooser date;
+    JTextField text;
+    JPanel header;
+    JLabel name = new JLabel();
+
     // meal multi panel container ---------------------------
     private final JPanel MEAL_CONTAINER = new JPanel();
     private final CardLayout CARDLAYOUT = new CardLayout();
@@ -58,26 +73,63 @@ public class EnterCalories extends JPanel implements ActionListener {
         setLayout(new BorderLayout());
         setBackground(Constants.COLOR_BACK);
 
-        JPanel header = new JPanel(new FlowLayout());
+        header = new JPanel(new FlowLayout(FlowLayout.LEFT));
         header.setBackground(Constants.COLOR_BACK);
-        JLabel welcome = new JLabel("Welcome, ");
+        JLabel welcome = new JLabel("Welcome ");
         welcome.setFont(Constants.FONT_Medium.deriveFont(15));
-        JLabel name = new JLabel(UserProfile.getProfile().get("name"));
+        
+        name.setFont(Constants.FONT_SemiBold.deriveFont(17));
+
+        // datechooser -------------------
+        date = new DateChooser();
+        date.setForeground(Constants.COLOR_BLUE);
+
+        text = new JTextField();
+        date.setTextRefernce(text);// this set the date in the textfield
+        text.setPreferredSize(new Dimension(80, 20));
+        text.setBackground(Constants.COLOR_BACK);
+        text.setBorder(null);
+        text.setFocusable(false);
+        text.addActionListener(this);
+        text.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                String dateSelected = text.getText();
+                DateTimeFormatter df = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                LocalDate todayDate = LocalDate.parse(dateSelected, df);
+                if (todayDate.isAfter(LocalDate.now())) {
+
+                    LocalDate localDate = LocalDate.now();
+                    // Convert the LocalDate object to a Date object
+                    Instant instant = localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
+                    Date today = Date.from(instant);
+
+                    SwingUtilities.invokeLater(() -> {
+                        date.setSelectedDate(today);
+                    });
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+            }
+        });
+
+//        datePicker = new DatePicker();
+//        JFormattedTextField editor = new JFormattedTextField();
+//        editor.setBorder(null);
+//        editor.setOpaque(false);
+//        datePicker.setEditor(editor);
+//        datePicker.setSelectedDate(LocalDate.now());
+//        datePicker.doLayout();
+//        datePicker.setDateSelectionAble((LocalDate LocalDate) -> !LocalDate.isAfter(LocalDate.now()));
+        header.add(text);
         header.add(welcome);
         header.add(name);
-        JPanel date = new JPanel();
-        date.setLayout(new MigLayout());
-        date.setOpaque(false);
-        datePicker = new DatePicker();
-        datePicker.setBounds(-50, 20, 250, 250);
-        JFormattedTextField editor = new JFormattedTextField();
-        editor.setBorder(null);
-        editor.setOpaque(false);
-        datePicker.setEditor(editor);
-        datePicker.setSelectedDate(LocalDate.now());
-        datePicker.setDateSelectionAble((LocalDate LocalDate) -> !LocalDate.isAfter(LocalDate.now()));
-        date.add(editor);
-        header.add(date);
         // -------- middle components panel ---------------------
         MEAL_CONTAINER.setLayout(CARDLAYOUT);
         MEAL_CONTAINER.add(bfast, "breakfast");
@@ -157,6 +209,9 @@ public class EnterCalories extends JPanel implements ActionListener {
         }
         if (e.getSource() == snaksBtn) {
             CARDLAYOUT.show(MEAL_CONTAINER, "snaks");
+        }
+        if (e.getSource() == text) {
+            date.showPopup();
         }
     }
 
