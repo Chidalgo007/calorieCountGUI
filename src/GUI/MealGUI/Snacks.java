@@ -14,9 +14,9 @@ import javax.swing.JPanel;
  *
  * @author chg
  */
-public class Snaks extends JPanel implements ActionListener {
+public class Snacks extends JPanel implements ActionListener {
 
-    public Snaks() {
+    public Snacks() {
         setLayout(null);
         setBackground(Color.green);
     }

@@ -8,31 +8,26 @@ import Constants.Constants;
 import GUI.MealGUI.Breakfast;
 import GUI.MealGUI.Dinner;
 import GUI.MealGUI.Lunch;
-import GUI.MealGUI.Snaks;
-import UserInfo.UserProfile;
+import GUI.MealGUI.Snacks;
 import com.raven.datechooser.DateChooser;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.time.LocalDate;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
-import raven.datetime.component.date.DatePicker;
 import java.awt.Dimension;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
@@ -44,29 +39,35 @@ import javax.swing.event.DocumentListener;
  */
 public class EnterCalories extends JPanel implements ActionListener {
 
-    DatePicker datePicker;
-    DateChooser date;
-    JTextField text;
-    JPanel header;
-    JLabel name = new JLabel();
+    //private DatePicker datePicker;
+    private DateChooser date;
+    private JTextField textDate;
+    private JPanel header;
+    final JLabel name = new JLabel();
 
     // meal multi panel container ---------------------------
     private final JPanel MEAL_CONTAINER = new JPanel();
     private final CardLayout CARDLAYOUT = new CardLayout();
 
-    Breakfast bfast = new Breakfast();
-    Lunch lunch = new Lunch();
-    Dinner dinner = new Dinner();
-    Snaks snack = new Snaks();
+    private final Breakfast bfast = new Breakfast();
+    private final Lunch lunch = new Lunch();
+    private final Dinner dinner = new Dinner();
+    private final Snacks snack = new Snacks();
 
-    JButton bFastBtn;
-    JButton lunchBtn;
-    JButton dinnerBtn;
-    JButton snaksBtn;
+    private JButton bFastBtn;
+    private JButton lunchBtn;
+    private JButton dinnerBtn;
+    private JButton snacksBtn;
+
+    JButton[] btnFieldsArray = {};
+
+    private final ImageIcon bfastIcon = new ImageIcon("./img/bfast.png");
+    private final ImageIcon lunchIcon = new ImageIcon("./img/lunch.png");
+    private final ImageIcon dinnerIcon = new ImageIcon("./img/dinner.png");
+    private final ImageIcon snackIcon = new ImageIcon("./img/snack.png");
 
     public EnterCalories() {
         addGUIComponents();
-
     }
 
     private void addGUIComponents() {
@@ -77,24 +78,25 @@ public class EnterCalories extends JPanel implements ActionListener {
         header.setBackground(Constants.COLOR_BACK);
         JLabel welcome = new JLabel("Welcome ");
         welcome.setFont(Constants.FONT_Medium.deriveFont(15));
-        
+
         name.setFont(Constants.FONT_SemiBold.deriveFont(17));
 
         // datechooser -------------------
         date = new DateChooser();
-        date.setForeground(Constants.COLOR_BLUE);
+        date.setForeground(Constants.COLOR_ORANGE);
 
-        text = new JTextField();
-        date.setTextRefernce(text);// this set the date in the textfield
-        text.setPreferredSize(new Dimension(80, 20));
-        text.setBackground(Constants.COLOR_BACK);
-        text.setBorder(null);
-        text.setFocusable(false);
-        text.addActionListener(this);
-        text.getDocument().addDocumentListener(new DocumentListener() {
+        textDate = new JTextField();
+        date.setTextRefernce(textDate);// this set the date in the textfield
+        textDate.setPreferredSize(new Dimension(80, 20));
+        textDate.setBackground(Constants.COLOR_BACK);
+        textDate.setBorder(null);
+        textDate.setFocusable(false);
+        textDate.addActionListener(this);
+        textDate.getDocument().addDocumentListener(new DocumentListener() {
             @Override
+            // check date is not after today date
             public void insertUpdate(DocumentEvent e) {
-                String dateSelected = text.getText();
+                String dateSelected = textDate.getText();
                 DateTimeFormatter df = DateTimeFormatter.ofPattern("dd-MM-yyyy");
                 LocalDate todayDate = LocalDate.parse(dateSelected, df);
                 if (todayDate.isAfter(LocalDate.now())) {
@@ -127,7 +129,7 @@ public class EnterCalories extends JPanel implements ActionListener {
 //        datePicker.setSelectedDate(LocalDate.now());
 //        datePicker.doLayout();
 //        datePicker.setDateSelectionAble((LocalDate LocalDate) -> !LocalDate.isAfter(LocalDate.now()));
-        header.add(text);
+        header.add(textDate);
         header.add(welcome);
         header.add(name);
         // -------- middle components panel ---------------------
@@ -135,58 +137,57 @@ public class EnterCalories extends JPanel implements ActionListener {
         MEAL_CONTAINER.add(bfast, "breakfast");
         MEAL_CONTAINER.add(lunch, "lunch");
         MEAL_CONTAINER.add(dinner, "dinner");
-        MEAL_CONTAINER.add(snack, "snaks");
+        MEAL_CONTAINER.add(snack, "snacks");
 
-        //buttons for middle components--------------------------
-        JPanel mealBtn = new JPanel(new MigLayout("fillx, insets 0", "[center]", "[bottom]"));
+        //buttons for middle components panel--------------------------
+        JPanel mealBtn = new JPanel(new MigLayout("fillx, insets 0", "[center]", "[center]"));
         mealBtn.setOpaque(false);
-        FocusListener focus = new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                ((JButton) e.getSource()).setBackground(Constants.COLOR_Light_BAKG);
-            }
 
-            @Override
-            public void focusLost(FocusEvent e) {
-                ((JButton) e.getSource()).setBackground(Constants.COLOR_BACK);
-            }
-        };
-        bFastBtn = new JButton("bfast");
-        bFastBtn.setFont(Constants.FONT_Light.deriveFont(Font.PLAIN, 10));
-        bFastBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        bFastBtn.setBorder(null);
-        bFastBtn.addFocusListener(focus);
-        bFastBtn.setFocusPainted(false);
-        bFastBtn.addActionListener(this);
+        bFastBtn = new JButton();
+        lunchBtn = new JButton();
+        dinnerBtn = new JButton();
+        snacksBtn = new JButton();
+        btnFieldsArray = new JButton[]{bFastBtn, lunchBtn, dinnerBtn, snacksBtn};
 
-        lunchBtn = new JButton("lunch");
-        lunchBtn.setFont(Constants.FONT_Light.deriveFont(Font.PLAIN, 10));
-        lunchBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        lunchBtn.setBorder(null);
-        lunchBtn.addFocusListener(focus);
-        lunchBtn.setFocusPainted(false);
-        lunchBtn.addActionListener(this);
+        for (JButton btn : btnFieldsArray) {
+            btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            btn.setBackground(Constants.COLOR_BACK);
+            btn.setPreferredSize(new Dimension((int) (mealBtn.getWidth() - 20) / 4, 57));
+            btn.setLayout(new BorderLayout());
+            btn.addActionListener(this);
+            btn.setBorder(null);
+            mealBtn.add(btn);
+        }
 
-        dinnerBtn = new JButton("dinner");
-        dinnerBtn.setFont(Constants.FONT_Light.deriveFont(Font.PLAIN, 10));
-        dinnerBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        dinnerBtn.setBorder(null);
-        dinnerBtn.addFocusListener(focus);
-        dinnerBtn.setFocusPainted(false);
-        dinnerBtn.addActionListener(this);
+        JLabel iconBF = new JLabel(bfastIcon);
+        JLabel iconLCH = new JLabel(lunchIcon);
+        JLabel iconDN = new JLabel(dinnerIcon);
+        JLabel iconSK = new JLabel(snackIcon);
 
-        snaksBtn = new JButton("snaks");
-        snaksBtn.setFont(Constants.FONT_Light.deriveFont(Font.PLAIN, 10));
-        snaksBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        snaksBtn.setBorder(null);
-        snaksBtn.addFocusListener(focus);
-        snaksBtn.setFocusPainted(false);
-        snaksBtn.addActionListener(this);
+        JLabel labelBF = new JLabel("Breakfast");
+        JLabel labelLCH = new JLabel("Lunch");
+        JLabel labelDN = new JLabel("Dinner");
+        JLabel labelSK = new JLabel("Snack");
 
-        mealBtn.add(bFastBtn);
-        mealBtn.add(lunchBtn);
-        mealBtn.add(dinnerBtn);
-        mealBtn.add(snaksBtn);
+        JLabel[] labelFieldsArray = {labelBF, labelLCH, labelDN, labelSK};
+        
+        for (JLabel label : labelFieldsArray) {
+            label.setFont(Constants.FONT_Medium.deriveFont(Font.PLAIN, 10));
+            label.setHorizontalTextPosition(JButton.CENTER);
+            label.setHorizontalAlignment(JButton.CENTER);
+        }
+
+        bFastBtn.add(iconBF, BorderLayout.NORTH);
+        bFastBtn.add(labelBF, BorderLayout.SOUTH);
+
+        lunchBtn.add(iconLCH, BorderLayout.NORTH);
+        lunchBtn.add(labelLCH, BorderLayout.SOUTH);
+
+        dinnerBtn.add(iconDN, BorderLayout.NORTH);
+        dinnerBtn.add(labelDN, BorderLayout.SOUTH);
+
+        snacksBtn.add(iconSK, BorderLayout.NORTH);
+        snacksBtn.add(labelSK, BorderLayout.SOUTH);
 
         this.add(header, BorderLayout.NORTH);
         this.add(MEAL_CONTAINER, BorderLayout.CENTER);
@@ -207,10 +208,10 @@ public class EnterCalories extends JPanel implements ActionListener {
         if (e.getSource() == dinnerBtn) {
             CARDLAYOUT.show(MEAL_CONTAINER, "dinner");
         }
-        if (e.getSource() == snaksBtn) {
-            CARDLAYOUT.show(MEAL_CONTAINER, "snaks");
+        if (e.getSource() == snacksBtn) {
+            CARDLAYOUT.show(MEAL_CONTAINER, "snacks");
         }
-        if (e.getSource() == text) {
+        if (e.getSource() == textDate) {
             date.showPopup();
         }
     }
