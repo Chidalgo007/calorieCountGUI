@@ -19,8 +19,8 @@ import java.util.logging.Logger;
 public class Constants {
     
     //With and Heigh
-    public static final int WIDTH = 300;
-    public static final int HEIGHT = 500;
+    public static final int WIDTH = 320;
+    public static final int HEIGHT = 520;
 
     // Colors
     public static final Color COLOR_Error = Color.decode("#C06565");// light red

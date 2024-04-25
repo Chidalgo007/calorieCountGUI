@@ -5,14 +5,10 @@
 package GUI.MealGUI;
 
 import Constants.Constants;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+import Helper.AddLine;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
@@ -21,43 +17,46 @@ import net.miginfocom.swing.MigLayout;
  *
  * @author chg
  */
-public class Breakfast extends JPanel implements ActionListener{
+public class Breakfast extends JPanel implements ActionListener {
+
+    JLabel caloBF;
 
     public Breakfast() {
         addGUIComponents();
-        setLayout(new MigLayout("wrap, fillx","[]","[]"));
+        setLayout(new MigLayout("wrap, fillx", "[]", "[]"));
         this.setBackground(Constants.COLOR_BACK);
     }
-    
-    
 
     private void addGUIComponents() {
 
         JLabel breakfast = new JLabel("Breakfast");
-        breakfast.setFont(Constants.FONT_Medium.deriveFont(Font.PLAIN,15));
-        
+        breakfast.setFont(Constants.FONT_Medium.deriveFont(Font.PLAIN, 15));
+
         JLabel caloLabel = new JLabel("Calories: ");
-        caloLabel.setFont(Constants.FONT_Medium.deriveFont(Font.PLAIN,15));
-        
-        JLabel caloBF = new JLabel();
-        caloBF.setFont(Constants.FONT_Medium.deriveFont(Font.PLAIN,15));
-        
-        JPanel header = new JPanel(new MigLayout("fillx, insets 0"));
+        caloLabel.setFont(Constants.FONT_Medium.deriveFont(Font.PLAIN, 15));
+
+        caloBF = new JLabel();
+        caloBF.setFont(Constants.FONT_Medium.deriveFont(Font.PLAIN, 15));
+        caloBF.setText("1230");
+
+        JPanel header = new JPanel(new MigLayout("fillx, insets 0", "[][grow,fill][]", "[]"));
         header.setOpaque(false);
-        JPanel calorie = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        calorie.setPreferredSize(new Dimension((int)(Constants.WIDTH*0.5),20));
-        calorie.setBorder(BorderFactory.createLineBorder(Color.yellow));
-        calorie.setOpaque(false);
-        
-        calorie.add(caloLabel);
-        calorie.add(caloBF);
-        header.add(breakfast);
-        header.add(calorie, "gap 40");
+
+        header.add(breakfast, "growx, pushx, spany 2");
+        header.add(caloLabel, "grow 0");
+        header.add(caloBF, "grow 0");
+
         this.add(header);
+
+        // ---center panel calories -------------------------------------------
+        AddLine line = new AddLine();
+        this.add(line.getMiddleContent());
+
+        // ----- macros ------------------------------------------------------
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
     }
 }
