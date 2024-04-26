@@ -42,7 +42,7 @@ public class Breakfast extends JPanel implements ActionListener {
         caloBF.setFont(Constants.FONT_Medium.deriveFont(Font.PLAIN, 15));
         caloBF.setText("1230");
         
-        String num= String.valueOf(Constants.WIDTH*0.55);
+        String num= String.valueOf(Constants.WIDTH*0.40);
         JPanel header = new JPanel(new MigLayout("fillx, insets 0", "["+num+"!][][]", "[]"));
         header.setOpaque(false);
 
