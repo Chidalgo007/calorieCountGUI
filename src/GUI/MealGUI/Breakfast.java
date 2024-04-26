@@ -21,7 +21,8 @@ import net.miginfocom.swing.MigLayout;
  */
 public class Breakfast extends JPanel implements ActionListener {
 
-    JLabel caloBF;
+    private JLabel caloBF;
+    public AddLine line;
 
     public Breakfast() {
         addGUIComponents();
@@ -52,7 +53,7 @@ public class Breakfast extends JPanel implements ActionListener {
         this.add(header);
 
         // ---center panel calories -------------------------------------------
-        AddLine line = new AddLine();
+        line = new AddLine();
         this.add(line.getMiddleContent());
 
         // ----- macros ------------------------------------------------------

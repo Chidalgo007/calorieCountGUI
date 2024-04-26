@@ -9,6 +9,7 @@ import GUI.MealGUI.Breakfast;
 import GUI.MealGUI.Dinner;
 import GUI.MealGUI.Lunch;
 import GUI.MealGUI.Snacks;
+import com.formdev.flatlaf.FlatClientProperties;
 import com.raven.datechooser.DateChooser;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -41,7 +42,7 @@ public class EnterCalories extends JPanel implements ActionListener {
 
     //private DatePicker datePicker;
     private DateChooser date;
-    private JTextField textDate;
+    private static JTextField textDate;
     private JPanel header;
     final JLabel name = new JLabel();
 
@@ -86,17 +87,17 @@ public class EnterCalories extends JPanel implements ActionListener {
         date.setForeground(Constants.COLOR_ORANGE);
 
         textDate = new JTextField();
-        date.setTextRefernce(textDate);// this set the date in the textfield
-        textDate.setPreferredSize(new Dimension(80, 20));
-        textDate.setBackground(Constants.COLOR_BACK);
-        textDate.setBorder(null);
-        textDate.setFocusable(false);
-        textDate.addActionListener(this);
-        textDate.getDocument().addDocumentListener(new DocumentListener() {
+        date.setTextRefernce(getTextDate());// this set the date in the textfield
+        getTextDate().setPreferredSize(new Dimension(80, 20));
+        getTextDate().setBackground(Constants.COLOR_BACK);
+        getTextDate().setBorder(null);
+        getTextDate().setFocusable(false);
+        getTextDate().addActionListener(this);
+        getTextDate().getDocument().addDocumentListener(new DocumentListener() {
             @Override
             // check date is not after today date
             public void insertUpdate(DocumentEvent e) {
-                String dateSelected = textDate.getText();
+                String dateSelected = getTextDate().getText();
                 DateTimeFormatter df = DateTimeFormatter.ofPattern("dd-MM-yyyy");
                 LocalDate todayDate = LocalDate.parse(dateSelected, df);
                 if (todayDate.isAfter(LocalDate.now())) {
@@ -129,7 +130,7 @@ public class EnterCalories extends JPanel implements ActionListener {
 //        datePicker.setSelectedDate(LocalDate.now());
 //        datePicker.doLayout();
 //        datePicker.setDateSelectionAble((LocalDate LocalDate) -> !LocalDate.isAfter(LocalDate.now()));
-        header.add(textDate);
+        header.add(getTextDate());
         header.add(welcome);
         header.add(name);
         // -------- middle components panel ---------------------
@@ -140,7 +141,7 @@ public class EnterCalories extends JPanel implements ActionListener {
         MEAL_CONTAINER.add(snack, "snacks");
 
         //buttons for middle components panel--------------------------
-        JPanel mealBtn = new JPanel(new MigLayout("fillx, insets 0", "[center]", "[center]"));
+        JPanel mealBtn = new JPanel(new MigLayout("wrap,fillx, insets 0", "0[grow, fill]0[grow, fill]0[grow, fill]0[grow, fill]0", "[center]"));
         mealBtn.setOpaque(false);
 
         bFastBtn = new JButton();
@@ -152,12 +153,14 @@ public class EnterCalories extends JPanel implements ActionListener {
         for (JButton btn : btnFieldsArray) {
             btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             btn.setBackground(Constants.COLOR_BACK);
-            btn.setPreferredSize(new Dimension((int) (mealBtn.getWidth() - 20) / 4, 57));
             btn.setLayout(new BorderLayout());
+            btn.putClientProperty(FlatClientProperties.STYLE, ""+"arc:30");
+            btn.setFocusable(false);
             btn.addActionListener(this);
-            btn.setBorder(null);
-            mealBtn.add(btn);
+//            btn.setBorder(null);
+            mealBtn.add(btn,"growy");
         }
+        bFastBtn.setBackground(Constants.COLOR_ORANGE);
 
         JLabel iconBF = new JLabel(bfastIcon);
         JLabel iconLCH = new JLabel(lunchIcon);
@@ -170,7 +173,7 @@ public class EnterCalories extends JPanel implements ActionListener {
         JLabel labelSK = new JLabel("Snack");
 
         JLabel[] labelFieldsArray = {labelBF, labelLCH, labelDN, labelSK};
-        
+
         for (JLabel label : labelFieldsArray) {
             label.setFont(Constants.FONT_Medium.deriveFont(Font.PLAIN, 10));
             label.setHorizontalTextPosition(JButton.CENTER);
@@ -201,19 +204,46 @@ public class EnterCalories extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == bFastBtn) {
             CARDLAYOUT.show(MEAL_CONTAINER, "breakfast");
+            bFastBtn.setBackground(Constants.COLOR_ORANGE);
+            lunchBtn.setBackground(Constants.COLOR_BACK);
+            dinnerBtn.setBackground(Constants.COLOR_BACK);
+            snacksBtn.setBackground(Constants.COLOR_BACK);
+
+            if (bfast.line.getLineArray().isEmpty()) {
+                bfast.line.createLine();
+            }
         }
         if (e.getSource() == lunchBtn) {
             CARDLAYOUT.show(MEAL_CONTAINER, "lunch");
+            lunchBtn.setBackground(Constants.COLOR_ORANGE);
+            bFastBtn.setBackground(Constants.COLOR_BACK);
+            dinnerBtn.setBackground(Constants.COLOR_BACK);
+            snacksBtn.setBackground(Constants.COLOR_BACK);
         }
         if (e.getSource() == dinnerBtn) {
             CARDLAYOUT.show(MEAL_CONTAINER, "dinner");
+            dinnerBtn.setBackground(Constants.COLOR_ORANGE);
+            lunchBtn.setBackground(Constants.COLOR_BACK);
+            bFastBtn.setBackground(Constants.COLOR_BACK);
+            snacksBtn.setBackground(Constants.COLOR_BACK);
         }
         if (e.getSource() == snacksBtn) {
             CARDLAYOUT.show(MEAL_CONTAINER, "snacks");
+            snacksBtn.setBackground(Constants.COLOR_ORANGE);
+            dinnerBtn.setBackground(Constants.COLOR_BACK);
+            lunchBtn.setBackground(Constants.COLOR_BACK);
+            bFastBtn.setBackground(Constants.COLOR_BACK);
         }
-        if (e.getSource() == textDate) {
+        if (e.getSource() == getTextDate()) {
             date.showPopup();
         }
+    }
+
+    /**
+     * @return the textDate
+     */
+    public static JTextField getTextDate() {
+        return textDate;
     }
 
 }

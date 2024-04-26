@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Iterator;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -29,6 +30,10 @@ public final class AddLine implements ActionListener {
 
     public JPanel getMiddleContent() {
         return middleContent;
+    }
+
+    public JPanel getScrollablemiddleContent() {
+        return scrollablemiddleContent;
     }
 
     public JTextField getQ() {
@@ -79,14 +84,18 @@ public final class AddLine implements ActionListener {
     private final List<JButton> deleteBtnArray = new ArrayList<>();
     private final List<JPanel> lineArray = new ArrayList<>();
 
-    private final JPanel middleContent = new JPanel(new MigLayout("wrap, fillx, insets 0"));
+    private final JPanel middleContent = new JPanel(new MigLayout("wrap,insets 0", "[]"));
+    private final JPanel scrollablemiddleContent = new JPanel(new MigLayout("wrap, insets 0", "[]"));
 
     public AddLine() {
 
-        JScrollPane scroll = new JScrollPane(getMiddleContent());
-        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        JScrollPane scroll = new JScrollPane(getScrollablemiddleContent());
         scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scroll.setBorder(BorderFactory.createEmptyBorder());
 
+        getMiddleContent().add(scroll);
+        
         createLine();
     }
 
@@ -137,8 +146,8 @@ public final class AddLine implements ActionListener {
         calorieArray.add(calorie);
         deleteBtnArray.add(delete);
         saveBtnArray.add(save);
-        lineArray.add(line);
-        getMiddleContent().add(line);
+        getLineArray().add(line);
+        getScrollablemiddleContent().add(line);
         FlatLaf.revalidateAndRepaintAllFramesAndDialogs();
     }
 
@@ -154,8 +163,8 @@ public final class AddLine implements ActionListener {
             JButton delete = iterator.next();
             if (e.getSource() == delete) {
                 int index = deleteBtnArray.indexOf(delete);
-                JPanel deletedLine = lineArray.remove(index);
-                middleContent.remove(deletedLine);
+                JPanel deletedLine = getLineArray().remove(index);
+                getScrollablemiddleContent().remove(deletedLine);
                 iterator.remove(); // Remove the current element using the iterator
                 FlatLaf.revalidateAndRepaintAllFramesAndDialogs();
                 break; // Exit the loop after removing the line
@@ -178,10 +187,17 @@ public final class AddLine implements ActionListener {
                 itemArray.get(index).setFocusable(false);
 //            String calorie = calorieArray.get(index).getText();
                 System.out.println(Quan + QnType + " " + item);
-                SwingUtilities.invokeLater(()->createLine());
+                SwingUtilities.invokeLater(() -> createLine());
                 return;
             }
         }
+    }
+
+    /**
+     * @return the lineArray
+     */
+    public List<JPanel> getLineArray() {
+        return lineArray;
     }
 
 }
