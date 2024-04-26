@@ -6,9 +6,11 @@ package GUI.MealGUI;
 
 import Constants.Constants;
 import Helper.AddLine;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
@@ -38,13 +40,14 @@ public class Breakfast extends JPanel implements ActionListener {
         caloBF = new JLabel();
         caloBF.setFont(Constants.FONT_Medium.deriveFont(Font.PLAIN, 15));
         caloBF.setText("1230");
-
-        JPanel header = new JPanel(new MigLayout("fillx, insets 0", "[][grow,fill][]", "[]"));
+        
+        String num= String.valueOf(Constants.WIDTH*0.55);
+        JPanel header = new JPanel(new MigLayout("fillx, insets 0", "["+num+"!][][]", "[]"));
         header.setOpaque(false);
 
-        header.add(breakfast, "growx, pushx, spany 2");
-        header.add(caloLabel, "grow 0");
-        header.add(caloBF, "grow 0");
+        header.add(breakfast);
+        header.add(caloLabel);
+        header.add(caloBF);
 
         this.add(header);
 

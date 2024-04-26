@@ -4,19 +4,21 @@
  */
 package Helper;
 
-import Constants.Constants;
 import com.formdev.flatlaf.FlatLaf;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -65,9 +67,7 @@ public final class AddLine implements ActionListener {
     private JComboBox<String> Qn;
     private JTextField item;
     private JTextField calorie;
-    private JButton more;
     private JButton save;
-    private JButton edit;
     private JButton delete;
     private JPanel line;
 
@@ -75,9 +75,7 @@ public final class AddLine implements ActionListener {
     private final List<JComboBox<String>> QnArray = new ArrayList<>();
     private final List<JTextField> itemArray = new ArrayList<>();
     private final List<JTextField> calorieArray = new ArrayList<>();
-    private final List<JButton> moreBtnArray = new ArrayList<>();
     private final List<JButton> saveBtnArray = new ArrayList<>();
-    private final List<JButton> editBtnArray = new ArrayList<>();
     private final List<JButton> deleteBtnArray = new ArrayList<>();
     private final List<JPanel> lineArray = new ArrayList<>();
 
@@ -115,24 +113,15 @@ public final class AddLine implements ActionListener {
 
         JLabel kcal = new JLabel("Kcal");
 
-        more = new JButton("(+)");
-        more.addActionListener(this);
-
-        delete = new JButton("(-)");
+        delete = new JButton("Delete (-)");
         delete.addActionListener(this);
-
-        edit = new JButton("Edit");
-        edit.addActionListener(this);
 
         save = new JButton("Save");
         save.addActionListener(this);
 
-        JPanel btnPanel = new JPanel(new MigLayout("center, insets 0", "[center]"));
-        btnPanel.add(more, "width 50!, height 20!");
+        JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         btnPanel.add(delete, "width 50!, height 20!");
-        btnPanel.add(edit, "width 60!, height 20!");
         btnPanel.add(save, "width 60!, height 20!");
-
 
         line.add(getQ(), "width 40!, height 20!");
         line.add(getQn(), "width 50!, height 20!");
@@ -140,15 +129,13 @@ public final class AddLine implements ActionListener {
         line.add(separator);
         line.add(getCalorie());
         line.add(kcal);
-        line.add(btnPanel, "center, spany 6");
+        line.add(btnPanel);
 
         QArray.add(Q);
         QnArray.add(Qn);
         itemArray.add(item);
         calorieArray.add(calorie);
-        moreBtnArray.add(more);
         deleteBtnArray.add(delete);
-        editBtnArray.add(edit);
         saveBtnArray.add(save);
         lineArray.add(line);
         getMiddleContent().add(line);
@@ -162,26 +149,22 @@ public final class AddLine implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if (e.getSource() == more) {
-            createLine();
+        Iterator<JButton> iterator = deleteBtnArray.iterator();
+        while (iterator.hasNext()) {
+            JButton delete = iterator.next();
+            if (e.getSource() == delete) {
+                int index = deleteBtnArray.indexOf(delete);
+                JPanel deletedLine = lineArray.remove(index);
+                middleContent.remove(deletedLine);
+                iterator.remove(); // Remove the current element using the iterator
+                FlatLaf.revalidateAndRepaintAllFramesAndDialogs();
+                break; // Exit the loop after removing the line
+            }
         }
 
-        for (JButton delete : deleteBtnArray) {
-            if (e.getSource() == delete) {
-                int index = deleteBtnArray.indexOf((JButton) e.getSource());
-                lineArray.remove(index);
-                FlatLaf.revalidateAndRepaintAllFramesAndDialogs();
-            }
-        }
-        for (JButton edit : editBtnArray) {
-            if (e.getSource() == edit) {
-                int index = editBtnArray.indexOf((JButton) e.getSource());
-                QArray.get(index).setEditable(true);
-                QnArray.get(index).setEditable(true);
-                itemArray.get(index).setEditable(true);
-            }
-        }
-        for (JButton save : saveBtnArray) {
+        Iterator<JButton> saveIterator = saveBtnArray.iterator();
+        while (saveIterator.hasNext()) {
+            JButton save = saveIterator.next();
             if (e.getSource() == save) {
                 int index = saveBtnArray.indexOf((JButton) e.getSource());
                 String Quan = QArray.get(index).getText();
@@ -195,9 +178,10 @@ public final class AddLine implements ActionListener {
                 itemArray.get(index).setFocusable(false);
 //            String calorie = calorieArray.get(index).getText();
                 System.out.println(Quan + QnType + " " + item);
+                SwingUtilities.invokeLater(()->createLine());
+                return;
             }
         }
-
     }
 
 }
