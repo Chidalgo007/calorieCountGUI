@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -37,24 +38,17 @@ public class fetchAPI {
             String wrongIng = ing.replaceAll("%20", " ");
 
             // Construct the request URL with query parameters
-            String requestUrl = apiUrl + "?app_id=" + appId + "&app_key=" + appKey + "&ingr=" + ingr;
-
-            //        System.out.println(requestUrl);
+            String requestUrl = apiUrl + "?app_id=" + appId + "&app_key=" + appKey + "&nutrition-type=logging&ingr=" + ingr;
             // Send the POST request
             URL url = new URL(requestUrl);
-
             // Open connection to the URL
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
             // Set the reuest method to GET
             connection.setRequestMethod("GET");
-
             // Set the accepted header
             connection.setRequestProperty("accept", "application/json");
-
             // Get the response code
             int responseCode = connection.getResponseCode();
-
             // Check if the response code is HTTP OK (200)
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 StringBuilder response;
@@ -64,64 +58,79 @@ public class fetchAPI {
                     response = new StringBuilder();
                     while ((inputLine = read.readLine()) != null) {
                         response.append(inputLine);
-                    }
+                    }            
                 }
-                //-------------------------------------------
+                //---------------------getting food itemame ------------------------------------------
                 // Parse the JSON response
                 JSONParser parser = new JSONParser();
                 JSONObject resultJsonObj;
                 try {
                     resultJsonObj = (JSONObject) parser.parse(response.toString());
-
                     // Get the total nutrients object
-                    JSONObject totalNutrients = (JSONObject) resultJsonObj.get("totalNutrients");
-                    if (totalNutrients != null) {
+                     JSONArray ingArray = (JSONArray) resultJsonObj.get("ingredients");
 
-                        // Get the calories object
-                        JSONObject caloriesObj = (JSONObject) totalNutrients.get("ENERC_KCAL");
-                        JSONObject fatObj = (JSONObject) totalNutrients.get("FAT_KCAL");
-                        JSONObject carbObj = (JSONObject) totalNutrients.get("CHOCDF_KCAL");
-                        JSONObject proteObj = (JSONObject) totalNutrients.get("PROCNT_KCAL");
+                    if (ingArray != null&&!ingArray.isEmpty()) {
+                        JSONObject firstArrayItem = (JSONObject) ingArray.get(0);
+                        JSONArray parsedArray = (JSONArray) firstArrayItem.get("parsed");
+                        
+                        if(parsedArray!=null&&!parsedArray.isEmpty()){
+                            JSONObject parsedFirstArrayItem = (JSONObject) parsedArray.get(0);
+                            String food = (String) parsedFirstArrayItem.get("food");
+                            
+                            calories.put("food", food);
+
+                        }else{
+                            System.out.println("error getting food name");
+                        }
+                    }else{
+                        System.out.println("error getting ingrdients array");
+                    }
+                  // ------------------ calories and Macros--------------------------------------------  
+                    JSONObject totalNutrientsKCal = (JSONObject) resultJsonObj.get("totalNutrientsKCal");
+                    if (totalNutrientsKCal != null) {
+                        // Get the calo, fat, carb, protein objects
+                        JSONObject caloriesObj = (JSONObject) totalNutrientsKCal.get("ENERC_KCAL");
+                        JSONObject proteObj = (JSONObject) totalNutrientsKCal.get("PROCNT_KCAL");
+                        JSONObject fatObj = (JSONObject) totalNutrientsKCal.get("FAT_KCAL");
+                        JSONObject carbObj = (JSONObject) totalNutrientsKCal.get("CHOCDF_KCAL");
 
                         if (caloriesObj != null) {
-
                             // Extract the calories value
                             Object calObj = caloriesObj.get("quantity");
-                            Object fObj = fatObj.get("quantity");
-                            Object cObj = carbObj.get("quantity");
-                            Object pObj = proteObj.get("quantity");
-                            if (calObj != null) {
-
-//                                int cal = ((Number) calObj).intValue();
-//                                int fat = ((Number) fObj).intValue();
-//                                int carb = ((Number) cObj).intValue();
-//                                int prot = ((Number) pObj).intValue();
-                                String cal = calObj.toString();
-                                String fat = fObj.toString();
-                                String carb = cObj.toString();
-                                String prot = pObj.toString();
-
-                                calories.put("calories", cal);
-                                calories.put("fat", fat);
-                                calories.put("carbs", carb);
-                                calories.put("protein", prot);
-
-                                return calories;
-                            } else {
-                                System.out.println("Sorry I can find those calories of " + wrongIng + ", please refrase");
-                                calories.put("calories", "-1");
-                                return calories;
-                            }
+                            String cal = calObj.toString();
+                            calories.put("calories", cal);
                         } else {
-                            System.out.println("Sorry I can compute " + wrongIng + " :(   try with another one");
+                            System.out.println("wrong items ... " + wrongIng + ", refrase");
                             calories.put("calories", "-1");
                             return calories;
                         }
+                        if (proteObj != null) {
+                            Object pObj = proteObj.get("quantity");
+                            String prot = pObj.toString();
+                            calories.put("protein", prot);
+                        } else {
+                            System.out.println("protien error");
+                        }
+                        if (fatObj != null) {
+                            Object fObj = fatObj.get("quantity");
+                            String fat = fObj.toString();
+                            calories.put("fat", fat);
+                        } else {
+                            System.out.println("fat error");
+                        }
+                        if (carbObj != null) {
+                            Object cObj = carbObj.get("quantity");
+                            String carbs = cObj.toString();
+                            calories.put("cabs", carbs);
+                        } else {
+                            System.out.println("Carbs error");
+                        }
                     } else {
-                        System.out.println("Sorry " + wrongIng + " doesn't show in my records, plese refrase");
+                        System.out.println("Sorry I can compute " + wrongIng + " :(   try with another one");
                         calories.put("calories", "-1");
                         return calories;
                     }
+
                     //-------------------------------------------
                 } catch (ParseException ex) {
                     Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -136,7 +145,6 @@ public class fetchAPI {
         } catch (IOException e) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
         }
-        calories.put("calories", "-1");
         return calories;
     }
 }

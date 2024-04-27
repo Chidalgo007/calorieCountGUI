@@ -263,7 +263,7 @@ public final class AddLine implements ActionListener {
     }
 
     public void createLine() {
-        line = new JPanel(new MigLayout("wrap 6, insets 0", "[40!][50!][90!][8!][40!][40!]", "[][center]"));
+        line = new JPanel(new MigLayout("wrap 6, insets 0", "[40!][50!][90!]3[5!]2[50!]2[40!]", "[][center]"));
 
         setItemID(new JLabel());
         setFat(new JLabel());
@@ -312,7 +312,7 @@ public final class AddLine implements ActionListener {
             }
         });
 
-        JLabel separator = new JLabel(" | ");
+        JLabel separator = new JLabel("|");
         separator.setBorder(null);
 
         setCalorie(new JTextField(4));
@@ -416,11 +416,13 @@ public final class AddLine implements ActionListener {
                     if (fieldValidationCalorie()) {
                         // get fat, prot, and carb from Map
                         String f = caloriesInfo.get("fat");
-                        fatArray.get(index).setText(String.valueOf(f));
+                        fatArray.get(index).setText(f);
                         String c = caloriesInfo.get("carbs");
-                        carbsArray.get(index).setText(String.valueOf(c));
+                        carbsArray.get(index).setText(c);
                         String p = caloriesInfo.get("calories");
-                        proteinArray.get(index).setText(String.valueOf(p));
+                        proteinArray.get(index).setText(p);
+                        String food = caloriesInfo.get("food");
+                        itemArray.get(index).setText(food);
 
                         // set elements no editable nor fucusable
                         itemArray.get(index).setEditable(false);
