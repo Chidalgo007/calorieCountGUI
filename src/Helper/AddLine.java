@@ -6,6 +6,7 @@ package Helper;
 
 import API.fetchAPI;
 import Constants.Constants;
+import static GUI.MealGUI.Breakfast.refreshValue;
 import com.formdev.flatlaf.FlatLaf;
 import java.awt.Dimension;
 import java.util.List;
@@ -124,52 +125,19 @@ public final class AddLine implements ActionListener {
         return line;
     }
 
-    /**
-     * @return the totalCal
-     */
-    public String getTotalCal() {
+    public int getTotalCal() {
         return totalCal;
     }
 
-    /**
-     * @param totalCal the totalCal to set
-     */
-    public void setTotalCal(String totalCal) {
-        this.totalCal = totalCal;
-    }
-
-    /**
-     * @return the totalFat
-     */
-    public String getTotalFat() {
+    public int getTotalFat() {
         return totalFat;
     }
 
-    /**
-     * @param totalFat the totalFat to set
-     */
-    public void setTotalFat(String totalFat) {
-        this.totalFat = totalFat;
-    }
-
-    /**
-     * @return the totalCarb
-     */
-    public String getTotalCarb() {
+    public int getTotalCarb() {
         return totalCarb;
     }
 
-    /**
-     * @param totalCarb the totalCarb to set
-     */
-    public void setTotalCarb(String totalCarb) {
-        this.totalCarb = totalCarb;
-    }
-
-    /**
-     * @return the totalProtein
-     */
-    public String getTotalProtein() {
+    public int getTotalProtein() {
         return totalProtein;
     }
 
@@ -216,10 +184,10 @@ public final class AddLine implements ActionListener {
     public void setCalorie(JTextField calorie) {
         this.calorie = calorie;
     }
-    private String totalCal;
-    private String totalFat;
-    private String totalCarb;
-    private String totalProtein;
+    private int totalCal;
+    private int totalFat;
+    private int totalCarb;
+    private int totalProtein;
 
     private JLabel itemID;
     private JLabel fat;
@@ -411,15 +379,14 @@ public final class AddLine implements ActionListener {
                     calorieArray.get(index).setText(String.valueOf(cal));
 
                     // wait for iterator to finish before create another line box
-                    String calorie = calorieArray.get(index).getText();
-
+                    //String calorie = calorieArray.get(index).getText();
                     if (fieldValidationCalorie()) {
                         // get fat, prot, and carb from Map
                         String f = caloriesInfo.get("fat");
                         fatArray.get(index).setText(f);
                         String c = caloriesInfo.get("carbs");
                         carbsArray.get(index).setText(c);
-                        String p = caloriesInfo.get("calories");
+                        String p = caloriesInfo.get("protein");
                         proteinArray.get(index).setText(p);
                         String food = caloriesInfo.get("food");
                         itemArray.get(index).setText(food);
@@ -432,6 +399,7 @@ public final class AddLine implements ActionListener {
                         QnArray.get(index).setEditable(false);
                         QnArray.get(index).setFocusable(false);
                         calculateMacro();
+
                         SwingUtilities.invokeLater(() -> createLine());
                     }
                 }
@@ -479,19 +447,24 @@ public final class AddLine implements ActionListener {
 
     //========================================================================
     private void calculateMacro() {
+        totalCal = 0;
+        totalFat = 0;
+        totalCarb = 0;
+        totalProtein = 0;
+
         for (JTextField C : calorieArray) {
-            setTotalCal(getTotalCal() + C.getText());
+            totalCal += Integer.parseInt(C.getText());
         }
         for (JLabel C : fatArray) {
-            setTotalFat(getTotalFat() + C.getText());
+            totalFat += Integer.parseInt(C.getText());
         }
         for (JLabel C : carbsArray) {
-            setTotalCarb(getTotalCarb() + C.getText());
+            totalCarb += Integer.parseInt(C.getText());
         }
         for (JLabel C : proteinArray) {
-            totalProtein += C.getText();
+            totalProtein += Integer.parseInt(C.getText());
         }
-        
+        refreshValue(); // parent window, breakfast, lunch, dinner, snacks
     }
 
 }

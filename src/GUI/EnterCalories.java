@@ -154,11 +154,11 @@ public class EnterCalories extends JPanel implements ActionListener {
             btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             btn.setBackground(Constants.COLOR_BACK);
             btn.setLayout(new BorderLayout());
-            btn.putClientProperty(FlatClientProperties.STYLE, ""+"arc:30");
+            btn.putClientProperty(FlatClientProperties.STYLE, "" + "arc:30");
             btn.setFocusable(false);
             btn.addActionListener(this);
 //            btn.setBorder(null);
-            mealBtn.add(btn,"growy");
+            mealBtn.add(btn, "growy");
         }
         bFastBtn.setBackground(Constants.COLOR_ORANGE);
 
@@ -202,6 +202,7 @@ public class EnterCalories extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+
         if (e.getSource() == bFastBtn) {
             CARDLAYOUT.show(MEAL_CONTAINER, "breakfast");
             bFastBtn.setBackground(Constants.COLOR_ORANGE);
@@ -209,8 +210,8 @@ public class EnterCalories extends JPanel implements ActionListener {
             dinnerBtn.setBackground(Constants.COLOR_BACK);
             snacksBtn.setBackground(Constants.COLOR_BACK);
 
-            if (bfast.line.getLineArray().isEmpty()) {
-                bfast.line.createLine();
+            if (bfast.getLine().getLineArray().isEmpty()) {
+                bfast.getLine().createLine();
             }
         }
         if (e.getSource() == lunchBtn) {
@@ -219,6 +220,10 @@ public class EnterCalories extends JPanel implements ActionListener {
             bFastBtn.setBackground(Constants.COLOR_BACK);
             dinnerBtn.setBackground(Constants.COLOR_BACK);
             snacksBtn.setBackground(Constants.COLOR_BACK);
+
+//            if (lunch.getLine().getLineArray().isEmpty()) {
+//                lunch.getLine().createLine();
+//            }
         }
         if (e.getSource() == dinnerBtn) {
             CARDLAYOUT.show(MEAL_CONTAINER, "dinner");
@@ -226,6 +231,10 @@ public class EnterCalories extends JPanel implements ActionListener {
             lunchBtn.setBackground(Constants.COLOR_BACK);
             bFastBtn.setBackground(Constants.COLOR_BACK);
             snacksBtn.setBackground(Constants.COLOR_BACK);
+
+//            if (dinner.getLine().getLineArray().isEmpty()) {
+//                dinner.getLine().createLine();
+//            }
         }
         if (e.getSource() == snacksBtn) {
             CARDLAYOUT.show(MEAL_CONTAINER, "snacks");
@@ -233,15 +242,16 @@ public class EnterCalories extends JPanel implements ActionListener {
             dinnerBtn.setBackground(Constants.COLOR_BACK);
             lunchBtn.setBackground(Constants.COLOR_BACK);
             bFastBtn.setBackground(Constants.COLOR_BACK);
+
+//            if (snacks.getLine().getLineArray().isEmpty()) {
+//                snacks.getLine().createLine();
+//            }
         }
         if (e.getSource() == getTextDate()) {
             date.showPopup();
         }
     }
-
-    /**
-     * @return the textDate
-     */
+// -------------------------------- get date -----------------------------------
     public static JTextField getTextDate() {
         return textDate;
     }

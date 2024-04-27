@@ -121,7 +121,7 @@ public class fetchAPI {
                         if (carbObj != null) {
                             Object cObj = carbObj.get("quantity");
                             String carbs = cObj.toString();
-                            calories.put("cabs", carbs);
+                            calories.put("carbs", carbs);
                         } else {
                             System.out.println("Carbs error");
                         }
