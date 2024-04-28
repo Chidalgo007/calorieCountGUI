@@ -50,10 +50,10 @@ public class EnterCalories extends JPanel implements ActionListener {
     private final JPanel MEAL_CONTAINER = new JPanel();
     private final CardLayout CARDLAYOUT = new CardLayout();
 
-    private final Breakfast bfast = new Breakfast();
-    private final Lunch lunch = new Lunch();
-    private final Dinner dinner = new Dinner();
-    private final Snacks snack = new Snacks();
+    private final Breakfast bfast;
+    private final Lunch lunch;
+    private final Dinner dinner;
+    private final Snacks snack;
 
     private JButton bFastBtn;
     private JButton lunchBtn;
@@ -68,6 +68,12 @@ public class EnterCalories extends JPanel implements ActionListener {
     private final ImageIcon snackIcon = new ImageIcon("./img/snack.png");
 
     public EnterCalories() {
+//        textDate.setText(LocalDate.now().toString());
+        bfast = new Breakfast();
+        lunch = new Lunch();
+        dinner = new Dinner();
+        snack = new Snacks();
+
         addGUIComponents();
     }
 
@@ -95,7 +101,7 @@ public class EnterCalories extends JPanel implements ActionListener {
         getTextDate().addActionListener(this);
         getTextDate().getDocument().addDocumentListener(new DocumentListener() {
             @Override
-            // check date is not after today date
+// check date is not after today date
             public void insertUpdate(DocumentEvent e) {
                 String dateSelected = getTextDate().getText();
                 DateTimeFormatter df = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -122,14 +128,6 @@ public class EnterCalories extends JPanel implements ActionListener {
             }
         });
 
-//        datePicker = new DatePicker();
-//        JFormattedTextField editor = new JFormattedTextField();
-//        editor.setBorder(null);
-//        editor.setOpaque(false);
-//        datePicker.setEditor(editor);
-//        datePicker.setSelectedDate(LocalDate.now());
-//        datePicker.doLayout();
-//        datePicker.setDateSelectionAble((LocalDate LocalDate) -> !LocalDate.isAfter(LocalDate.now()));
         header.add(getTextDate());
         header.add(welcome);
         header.add(name);
@@ -252,6 +250,7 @@ public class EnterCalories extends JPanel implements ActionListener {
         }
     }
 // -------------------------------- get date -----------------------------------
+
     public static JTextField getTextDate() {
         return textDate;
     }

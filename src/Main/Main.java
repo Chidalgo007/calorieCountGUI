@@ -7,6 +7,7 @@ package Main;
 import GUI.EnterProfile;
 import GUI.Init;
 import GUI.LogIn;
+import GUI.MealGUI.Breakfast;
 import GUI.OptionMenu;
 import GUI.Register;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
@@ -24,12 +25,13 @@ public class Main {
     public static void main(String[] args) {
         FlatMacDarkLaf.setup();
         EventQueue.invokeLater(()->
-//        new Init().setVisible(true)
+        new Init().setVisible(true)
 //        new LogIn().setVisible(true)
 //        new Register().setVisible(true)
-        new OptionMenu().setVisible(true)
+//        new OptionMenu().setVisible(true)
 
             );
+        Breakfast.constructInsertion();
     }
     
 }
