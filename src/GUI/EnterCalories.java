@@ -68,7 +68,7 @@ public class EnterCalories extends JPanel implements ActionListener {
     private final ImageIcon snackIcon = new ImageIcon("./img/snack.png");
 
     public EnterCalories() {
-//        textDate.setText(LocalDate.now().toString());
+
         bfast = new Breakfast();
         lunch = new Lunch();
         dinner = new Dinner();
@@ -208,9 +208,9 @@ public class EnterCalories extends JPanel implements ActionListener {
             dinnerBtn.setBackground(Constants.COLOR_BACK);
             snacksBtn.setBackground(Constants.COLOR_BACK);
 
-            if (bfast.getLine().getLineArray().isEmpty()) {
-                bfast.getLine().createLine();
-            }
+//            if (bfast.getLine().getLineArray().isEmpty()) {
+//                bfast.getLine().createLine();
+//            }
         }
         if (e.getSource() == lunchBtn) {
             CARDLAYOUT.show(MEAL_CONTAINER, "lunch");

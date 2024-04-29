@@ -4,7 +4,6 @@
  */
 package MyJBDC;
 
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -16,6 +15,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
@@ -192,67 +192,74 @@ public class MyJDBC {
 
     public static int insertIntoItems(String itemsId, int userID, String dates, String meal, String items, String quantity,
             String qtype, String calorie, String carbs, String fat, String protein) {
-        int itemsID = Integer.parseInt(itemsId);
-        Date date = Date.valueOf(dates);
-        int generatedId = -1; // Default value in case insertion fails
+        try {
+            int itemsID = Integer.parseInt(itemsId);
+            SimpleDateFormat dateforamt = new SimpleDateFormat("dd-MM-yyyy");
+            java.util.Date utilDate = dateforamt.parse(dates);
+            Date sqlDate = new Date(utilDate.getTime());
+            int generatedId = -1; // Default value in case insertion fails
 
-        String inserCal = "INSERT INTO " + DB_ITEMS_TABLE + ""
-                + " (userID, date, meal, items, quantity, qtype, calorie, fat, carbs, protein) "
-                + " VALUES(?,?,?,?,?,?,?,?,?,?)";
-        String updateCal = "UPDATE " + DB_ITEMS_TABLE + " "
-                + "SET DATE=?,MEAL=?, ITEMS=?, QUANTITY=?,QTYPE=?, CALORIE=?,FAT=?,CARBS=?,PROTEIN=?"
-                + " WHERE ITEMSID=? AND USERID = ?";
+            String inserCal = "INSERT INTO " + DB_ITEMS_TABLE + ""
+                    + " (userID, date, meal, items, quantity, qtype, calorie, fat, carbs, protein) "
+                    + " VALUES(?,?,?,?,?,?,?,?,?,?)";
+            String updateCal = "UPDATE " + DB_ITEMS_TABLE + " "
+                    + "SET DATE=?,MEAL=?, ITEMS=?, QUANTITY=?,QTYPE=?, CALORIE=?,FAT=?,CARBS=?,PROTEIN=?"
+                    + " WHERE ITEMSID=? AND USERID = ?";
 
-        try ( Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);//NOSONAR
-                  PreparedStatement inserCalo = connection.prepareStatement(inserCal, Statement.RETURN_GENERATED_KEYS);//NOSONAR
-                  PreparedStatement updateCalo = connection.prepareStatement(updateCal)) {
+            try ( Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);//NOSONAR
+                      PreparedStatement inserCalo = connection.prepareStatement(inserCal, Statement.RETURN_GENERATED_KEYS);//NOSONAR
+                      PreparedStatement updateCalo = connection.prepareStatement(updateCal)) {
 
-            if (itemsID > -1) {
-                inserCalo.setDate(1, date);
-                inserCalo.setString(2, meal);
-                inserCalo.setString(3, items);
-                inserCalo.setString(4, quantity);
-                inserCalo.setString(5, qtype);
-                inserCalo.setString(6, calorie);
-                inserCalo.setString(7, fat);
-                inserCalo.setString(8, carbs);
-                inserCalo.setString(9, protein);
-                inserCalo.setInt(10, itemsID);
-                inserCalo.setInt(11, userID);
+                if (itemsID > -1) {
+                    inserCalo.setDate(1, sqlDate);
+                    inserCalo.setString(2, meal);
+                    inserCalo.setString(3, items);
+                    inserCalo.setString(4, quantity);
+                    inserCalo.setString(5, qtype);
+                    inserCalo.setString(6, calorie);
+                    inserCalo.setString(7, fat);
+                    inserCalo.setString(8, carbs);
+                    inserCalo.setString(9, protein);
+                    inserCalo.setInt(10, itemsID);
+                    inserCalo.setInt(11, userID);
 
-                updateCalo.executeUpdate();
-            } else {
-                inserCalo.setInt(1, userID);
-                inserCalo.setDate(2, date);
-                inserCalo.setString(3, meal);
-                inserCalo.setString(4, items);
-                inserCalo.setString(5, quantity);
-                inserCalo.setString(6, qtype);
-                inserCalo.setString(7, calorie);
-                inserCalo.setString(8, fat);
-                inserCalo.setString(9, carbs);
-                inserCalo.setString(10, protein);
-
-                int rowsAffected = inserCalo.executeUpdate();
-
-                if (rowsAffected > 0) {
-                    try ( ResultSet generatedKeys = inserCalo.getGeneratedKeys()) {
-                        if (generatedKeys.next()) {
-                            generatedId = generatedKeys.getInt(1);
-                        } else {
-                            throw new SQLException("Failed to retrieve generated ID.");
-                        }
-                    }
+                    updateCalo.executeUpdate();
                 } else {
-                    throw new SQLException("Insertion failed, no rows affected.");
+                    inserCalo.setInt(1, userID);
+                    inserCalo.setDate(2, sqlDate);
+                    inserCalo.setString(3, meal);
+                    inserCalo.setString(4, items);
+                    inserCalo.setString(5, quantity);
+                    inserCalo.setString(6, qtype);
+                    inserCalo.setString(7, calorie);
+                    inserCalo.setString(8, fat);
+                    inserCalo.setString(9, carbs);
+                    inserCalo.setString(10, protein);
+
+                    int rowsAffected = inserCalo.executeUpdate();
+
+                    if (rowsAffected > 0) {
+                        try ( ResultSet generatedKeys = inserCalo.getGeneratedKeys()) {
+                            if (generatedKeys.next()) {
+                                generatedId = generatedKeys.getInt(1);
+                            } else {
+                                throw new SQLException("Failed to retrieve generated ID.");
+                            }
+                        }
+                    } else {
+                        throw new SQLException("Insertion failed, no rows affected.");
+                    }
                 }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(MyJDBC.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-        } catch (SQLException ex) {
+            return generatedId;
+        } catch (ParseException ex) {
             Logger.getLogger(MyJDBC.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        return generatedId;
+        return -1;
     }
 
 }

@@ -15,8 +15,10 @@ import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -39,46 +41,46 @@ public final class AddLine implements ActionListener {
     public List<JLabel> getItemIDArray() {
         return itemIDArray;
     }
+//
+//    public List<JTextField> getItemArray() {
+//        return itemArray;
+//    }
+//
+//    public List<JTextField> getQArray() {
+//        return QArray;
+//    }
+//
+//    public List<JComboBox<String>> getQnArray() {
+//        return QnArray;
+//    }
 
-    public List<JTextField> getItemArray() {
-        return itemArray;
-    }
-
-    public List<JTextField> getQArray() {
-        return QArray;
-    }
-
-    public List<JComboBox<String>> getQnArray() {
-        return QnArray;
-    }
-
-    public List<String> getCalorieArray() {
-        return calorieArray;
-    }
-
-    public List<String> getCarbsArray() {
-        return carbsArray;
-    }
-
-    public List<String> getFatArray() {
-        return fatArray;
-    }
-
-    public List<String> getProteinArray() {
-        return proteinArray;
-    }
+//    public List<String> getCalorieArray() {
+//        return calorieArray;
+//    }
+//
+//    public List<String> getCarbsArray() {
+//        return carbsArray;
+//    }
+//
+//    public List<String> getFatArray() {
+//        return fatArray;
+//    }
+//
+//    public List<String> getProteinArray() {
+//        return proteinArray;
+//    }
 
     public JLabel getItemID() {
         return itemID;
     }
 
-    public JButton getSave() {
-        return save;
-    }
-
-    public JButton getDelete() {
-        return delete;
-    }
+//    public JButton getSave() {
+//        return save;
+//    }
+//
+//    public JButton getDelete() {
+//        return delete;
+//    }
 
     public JPanel getLine() {
         return line;
@@ -139,73 +141,62 @@ public final class AddLine implements ActionListener {
     public String getProtein() {
         return protein;
     }
-
-    public boolean getReadyToInsert() {
-        return readyToInsert;
-    }
-
-    public void setReadyToInsert(boolean B) {
-        readyToInsert = B;
-    }
-
+// for cal of macros
     private int totalCal;
     private int totalFat;
     private int totalCarb;
     private int totalProtein;
-
+// to receive info from API
     private String fat;
     private String carbs;
     private String protein;
-
+    private JTextField calorie;
+// to assign from DB
     private JLabel itemID;
-    // user ID
-    // date
+// to input info
     private JTextField item;
     private JTextField Q;
     private JComboBox<String> Qn;
-    private JTextField calorie;
-
+// to handl actions
     private JButton save;
     private JButton delete;
+    // container of all labels...etc 
     private JPanel line;
 
-    private final List<JLabel> itemIDArray = new ArrayList<>();
-    private final List<JTextField> itemArray = new ArrayList<>();
-    private final List<JTextField> QArray = new ArrayList<>();
-    private final List<JComboBox<String>> QnArray = new ArrayList<>();
+    // to store info and iterrate over on deletion
+    private final List<JLabel> itemIDArray = new LinkedList<>();
+    private final List<JTextField> itemArray = new LinkedList<>();
+    private final List<JTextField> QArray = new LinkedList<>();
+    private final List<JComboBox<String>> QnArray = new LinkedList<>();
 
-    private List<String> calorieArray;// = new ArrayList<>();
-    private List<String> carbsArray;// = new ArrayList<>();
-    private List<String> fatArray;// = new ArrayList<>();
-    private List<String> proteinArray;// = new ArrayList<>();
+    private final List<String> calorieArray;
+    private final List<String> carbsArray;
+    private final List<String> fatArray;
+    private final List<String> proteinArray;
 
-    private final List<JButton> saveBtnArray = new ArrayList<>();
-    private final List<JButton> deleteBtnArray = new ArrayList<>();
-    private final List<JPanel> lineArray = new ArrayList<>();
+    // to access indexed button
+    // save button doenst need itteration as stop working when new line is created
+    private final List<JButton> deleteBtnArray = new LinkedList<>();
+    private final List<JPanel> lineArray = new LinkedList<>();
 
     private final JPanel middleContent = new JPanel(new MigLayout("wrap,insets 0", "[]"));
     private final JPanel scrollablemiddleContent = new JPanel(new MigLayout("wrap, insets 0", "[]"));
 
-    private Map<String, String> caloriesInfo = new HashMap<>(); // come from API
-    private boolean readyToInsert = false;
+    // to receive info from API
+    private Map<String, String> caloriesInfo = new HashMap<>();
 
     public AddLine() {
 
-        calorieArray = new ArrayList<>();
-        carbsArray = new ArrayList<>();
-        fatArray = new ArrayList<>();
-        proteinArray = new ArrayList<>();
+        calorieArray = new LinkedList<>();
+        carbsArray = new LinkedList<>();
+        fatArray = new LinkedList<>();
+        proteinArray = new LinkedList<>();
 
         JScrollPane scroll = new JScrollPane(getScrollablemiddleContent());
-
         scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-
         scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-
         scroll.setBorder(BorderFactory.createEmptyBorder());
-
-        getMiddleContent()
-                .add(scroll);
+        getMiddleContent().add(scroll);
 
         createLine();
     }
@@ -216,9 +207,9 @@ public final class AddLine implements ActionListener {
         itemID = new JLabel();
 
         Q = new JTextField(3);
-        getQ().setOpaque(false);
+        Q.setOpaque(false);
 
-        getQ().getDocument().addDocumentListener(new DocumentListener() {
+        Q.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
                 fieldValidationQ();
@@ -276,30 +267,25 @@ public final class AddLine implements ActionListener {
         String num = String.valueOf(Constants.WIDTH * 0.34);
         JPanel btnPanel = new JPanel(new MigLayout("fillx, insets 0", "[" + num + "!][]", "[]"));
         btnPanel.add(new JLabel(), "grow");
-        btnPanel.add(getDelete(), "split 2, width 80!, height 20!");
-        btnPanel.add(getSave(), "width 80!, height 20!");
+        btnPanel.add(delete, "split 2, width 80!, height 20!");
+        btnPanel.add(save, "width 80!, height 20!");
 
-        line.add(getQ(), "width 40!, height 20!");
-        line.add(getQn(), "width 50!, height 20!");
-        line.add(getItem());
+        line.add(Q, "width 40!, height 20!");
+        line.add(Qn, "width 50!, height 20!");
+        line.add(item);
         line.add(separator);
-        line.add(getCalorie());
+        line.add(calorie);
         line.add(kcal, "width 40!, height 20!");
         line.add(btnPanel);
 
-        // need it for DB dont need to add to line box
-        itemIDArray.add(getItemID());
-
         // need it for DB & API
-        getQArray().add(getQ());
-        getQnArray().add(getQn());
-        getItemArray().add(getItem());
-        getCalorieArray().add(calorie.getText());
+        QArray.add(Q);
+        QnArray.add(Qn);
+        itemArray.add(item);
         // buttons
-        deleteBtnArray.add(getDelete());
-        saveBtnArray.add(getSave());
+        deleteBtnArray.add(delete);
         // line box
-        getLineArray().add(line);
+        lineArray.add(line);
         // container w/ scroll
         getScrollablemiddleContent().add(line);
         // refresh container
@@ -310,104 +296,97 @@ public final class AddLine implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        Iterator<JButton> iterator = deleteBtnArray.iterator();
-        while (iterator.hasNext()) {
-            JButton delete = iterator.next();
-            if (e.getSource() == delete) {
-                // select index of btn pressed
-                int index = deleteBtnArray.indexOf(delete);
-                // remove macros
-                getFatArray().remove(index);
-                getCarbsArray().remove(index);
-                getProteinArray().remove(index);
-                getCalorieArray().remove(index);
-                // select line w/ index to be deleted
-                JPanel deletedLine = getLineArray().remove(index);
-                //check if items come from the DB to delete directly or are only local stored
-                String item_ID = getItemIDArray().get(index).getText();
+        // get the index of the button clicked
+        int index = -1;
+        for (int i = 0; i < deleteBtnArray.size(); i++) {
+            if (e.getSource() == deleteBtnArray.get(i)) {
+                index = i;
+                break;
+            }
+        }
+        //check if items come from the DB to delete directly or are only local stored
+        if (index != -1) {
+
+            if (!itemIDArray.isEmpty()) {
+                String item_ID = itemIDArray.get(index).getText();
                 if (!item_ID.equals("-1")) {
                     MyJDBC.deleteRow(item_ID);
                 }
-                // remove line box from conteiner
-                getScrollablemiddleContent().remove(deletedLine);
-                iterator.remove(); // Remove the current(it self) element using the iterator
-                // refresh container after removing the lone box to reflect the changes
-                FlatLaf.revalidateAndRepaintAllFramesAndDialogs();
-                calculateMacro();
-                break; // Exit the loop after removing the line
             }
+
+            // remove line box from conteiner
+            JPanel lineToRemove = lineArray.get(index);
+            getScrollablemiddleContent().remove(lineToRemove);
+
+            List<List<?>> allArrays = Arrays.asList(lineArray, itemIDArray, QArray, QnArray, itemArray,
+                    calorieArray, fatArray, carbsArray, proteinArray);
+
+            for (List<?> array : allArrays) {
+                array.remove(index);
+            }
+
+            // refresh container after removing the lone box to reflect the changes
+            FlatLaf.revalidateAndRepaintAllFramesAndDialogs();
+            calculateMacro();
         }
 
-        Iterator<JButton> saveIterator = saveBtnArray.iterator();
-        while (saveIterator.hasNext()) {
-            JButton save = saveIterator.next();
-            if (e.getSource() == save) {
-                int index = saveBtnArray.indexOf((JButton) e.getSource());
-                String QnType = (String) getQnArray().get(index).getSelectedItem();
-                String Quan = getQArray().get(index).getText();
-                String item = getItemArray().get(index).getText();
-                if (fieldValidationQ() && fieldValidationItem()) {
+        if (e.getSource() == save) {
 
-                    String ing;
-                    String ingM;
-                    if (QnType.equalsIgnoreCase("un")) {
-                        ing = Quan + " " + item;
-                        ingM = ing.replaceAll(" ", "%20");
-                    } else {
-                        ing = Quan + QnType + " " + item;
-                        ingM = ing.replaceAll(" ", "%20");
-                    }
-                    // storing the API info in the Map
-                    caloriesInfo.clear();
-                    caloriesInfo = fetchAPI.fetchAPISingleCalories(ingM);
-                    //calories - fat - carbs - protein
-                    String cal = caloriesInfo.get("calories");
-                    calorie.setText(cal);
+            String items = item.getText();
+            String Quan = Q.getText();
+            String QnType = Qn.getSelectedItem().toString();
+            if (fieldValidationQ() && fieldValidationItem()) {
+                // calling the API    
+                String ing;
+                String ingM;
+                ing = Quan + QnType + " " + items;
+                ingM = ing.replaceAll(" ", "%20");
 
-                    // wait for iterator to finish before create another line box
-                    if (fieldValidationCalorie()) {
-                        // get fat, prot, and carb from Map
-                        fat = caloriesInfo.get("fat"); // getting from MYJDBC Map
-                        fatArray.add(fat); // adding to Calculate percentage
-                        carbs = caloriesInfo.get("carbs");
-                        carbsArray.add(carbs);
-                        protein = caloriesInfo.get("protein");
-                        proteinArray.add(protein);
-                        String food = caloriesInfo.get("food");
-                        // add them to the arrays
-                        fatArray.add(fat);
-                        carbsArray.add(carbs);
-                        proteinArray.add(protein);
-//                        getItemArray().get(index).setText(food);
-                        getItem().setText(food);
+                // storing the API info in the Map
+                caloriesInfo.clear();
+                caloriesInfo = fetchAPI.fetchAPISingleCalories(ingM);
+                //calories - fat - carbs - protein
+                String cal = caloriesInfo.get("calories");
+                calorie.setText(cal);
+                calorieArray.add(cal);
 
-                        // set elements no editable nor fucusable
-                        getItemArray().get(index).setEditable(false);
-                        getItemArray().get(index).setFocusable(false);
-                        getQArray().get(index).setEditable(false);
-                        getQArray().get(index).setFocusable(false);
-                        getQnArray().get(index).setEditable(false);
-                        getQnArray().get(index).setFocusable(false);
-                        readyToInsert = true;
-                        calculateMacro();
+                if (fieldValidationCalorie()) {
+                    // get fat, prot, and carb from Map
+                    fat = caloriesInfo.get("fat"); // getting from MYJDBC Map
+                    carbs = caloriesInfo.get("carbs");
+                    protein = caloriesInfo.get("protein");
+                    String food = caloriesInfo.get("food");
+                    // add them to the arrays
+                    fatArray.add(fat);
+                    carbsArray.add(carbs);
+                    proteinArray.add(protein);
+                    getItem().setText(food.replaceAll("[-'.,/]", " "));
 
-                        SwingUtilities.invokeLater(() -> createLine());
-                    }
+                    item.setEditable(false);
+                    item.setFocusable(false);
+                    Q.setEditable(false);
+                    Q.setFocusable(false);
+                    Qn.setEditable(false);
+                    Qn.setFocusable(false);
+
+                    calculateMacro();
+                    Breakfast.constructInsertion(); // find general way to action this
+                    SwingUtilities.invokeLater(() -> createLine());
                 }
-                return;
             }
         }
+
     }
-    // ==================== validation ===================================
+// ==================== validation ===================================
 
     private boolean fieldValidationQ() {
-        String inputQ = getQ().getText();
+        String inputQ = Q.getText();
         if (inputQ.isEmpty() || !inputQ.matches("^\\d{1,3}$")) {
-            getQ().setBackground(Constants.COLOR_Error);
+            Q.setBackground(Constants.COLOR_Error);
             return false;
         } else {
-            getQ().setOpaque(false);
-            getQ().setBackground(null);
+            Q.setOpaque(false);
+            Q.setBackground(null);
         }
         return true;
     }
@@ -436,39 +415,28 @@ public final class AddLine implements ActionListener {
         return true;
     }
 
-    //========================================================================
+    //========================= Macros =========================================
     private void calculateMacro() {
         totalCal = 0;
         totalFat = 0;
         totalCarb = 0;
         totalProtein = 0;
 
-//        calorieArray.removeIf(s -> s.isEmpty());
-//        fatArray.removeIf(s -> s.isEmpty());
-//        carbsArray.removeIf(s -> s.isEmpty());
-//        proteinArray.removeIf(s -> s.isEmpty());
         for (String s : calorieArray) {
-            if (!s.isEmpty()) {
-                totalCal += Integer.parseInt(s);
-            }
+            totalCal += Integer.parseInt(s);
+            System.out.println("Calories " + s);
         }
         for (String s : fatArray) {
-            if (!s.isEmpty()) {
-                totalFat += Integer.parseInt(s);
-            }
+            totalFat += Integer.parseInt(s);
         }
 
         for (String s : carbsArray) {
-            if (!s.isEmpty()) {
-                totalCarb += Integer.parseInt(s);
-            }
+            totalCarb += Integer.parseInt(s);
         }
         for (String s : proteinArray) {
-            if (!s.isEmpty()) {
-                totalProtein += Integer.parseInt(s);
-            }
+            totalProtein += Integer.parseInt(s);
         }
-        refreshValue(); // parent window, breakfast, lunch, dinner, snacks
+        Breakfast.refreshValue(); // parent window, breakfast, lunch, dinner, snacks
     }
 
 }

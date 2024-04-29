@@ -15,6 +15,7 @@ import java.awt.Font;
 import java.time.LocalDate;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -23,7 +24,6 @@ import net.miginfocom.swing.MigLayout;
  */
 public class Breakfast extends JPanel {
 
-    private static String date;
     private static AddLine addLine;
     private static AddMacros macros;
 
@@ -31,13 +31,6 @@ public class Breakfast extends JPanel {
         addGUIComponents();
         setLayout(new MigLayout("wrap, fillx", "[]", "[]"));
         this.setBackground(Constants.COLOR_BACK);
-//        date = LocalDate.now().toString();
-//        while (true) {
-//            if (addLine.getReadyToInsert()) {
-//                constructInsertion();
-//                addLine.setReadyToInsert(false);
-//            }
-//        }
     }
 
     private void addGUIComponents() {
@@ -88,7 +81,8 @@ public class Breakfast extends JPanel {
 
     // ----------------- construct Array to insert into MyJDBC -----------------
     public static void constructInsertion() {
-        date = getTextDate().getText();
+        String date = getTextDate().getText();
+        System.out.println("date"+date);
         String itemid = addLine.getItemID().getText().isEmpty() ? "-1" : addLine.getItemID().getText();
         int userid = UserProfile.getID();
         // date
@@ -104,6 +98,7 @@ public class Breakfast extends JPanel {
         int id = MyJDBC.insertIntoItems(itemid, userid, date, meal, item, quantity, qtype, calorie, carbs, fat, protein);
         if (id != -1) {
             addLine.getItemID().setText(String.valueOf(id));
+            addLine.getItemIDArray().add(addLine.getItemID());
         }
 
     }
