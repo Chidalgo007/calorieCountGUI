@@ -4,8 +4,6 @@
  */
 package Helper;
 
-import GUI.MealGUI.Breakfast;
-import com.formdev.flatlaf.FlatLaf;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,7 +12,6 @@ import java.util.List;
  * @author chg
  */
 public class MacrosCalculations {
-
 
     public String getStCalMacro() {
         return stCalMacro;
@@ -78,7 +75,7 @@ public class MacrosCalculations {
         totalFat = 0;
         totalCarb = 0;
         totalProtein = 0;
-
+        System.out.println("macro.CalculateMacro called");
         for (String s : calorieArray) {
             totalCal += Integer.parseInt(s);
         }
@@ -96,7 +93,7 @@ public class MacrosCalculations {
     }
 
     private void refreshValue() {
-
+        System.out.println("refreshVal called");
         float cal = totalCal;
         float f = totalFat;
         float c = totalCarb;
@@ -106,13 +103,12 @@ public class MacrosCalculations {
             float cabsPercentage = (c / cal) * 100;
             float proPercentage = (p / cal) * 100;
 
-            stCalMacro = String.format("%.1f%%", fatPercentage);
-            stFatMacro = String.format("%.1f%%", cabsPercentage);
-            stCarbsMacro = String.format("%.1f%%", proPercentage);
-            stProteinMacro = String.valueOf(totalCal);
+            stFatMacro = String.format("%.1f%%", fatPercentage);
+            stCarbsMacro = String.format("%.1f%%", cabsPercentage);
+            stProteinMacro = String.format("%.1f%%", proPercentage);
+            stCalMacro = String.valueOf(totalCal);
 
         }
-        FlatLaf.revalidateAndRepaintAllFramesAndDialogs();
     }
 
 }

@@ -57,6 +57,7 @@ public final class AddLine implements ActionListener {
     public JButton getDelete() {
         return delete;
     }
+
     public List<JButton> getDeleteBtnArray() {
         return deleteBtnArray;
     }
@@ -95,8 +96,6 @@ public final class AddLine implements ActionListener {
         return QnArray;
     }
 
-
-
     // to assign from DB
     private JLabel itemID;
 // to input info
@@ -116,10 +115,7 @@ public final class AddLine implements ActionListener {
     private final List<JTextField> QArray;
     private final List<JComboBox<String>> QnArray;
 
-   
-
     // to access indexed button
-    // save button doenst need itteration as stop working when new line is created
     private final List<JButton> deleteBtnArray;
     private final List<JPanel> lineArray;
 
@@ -127,8 +123,11 @@ public final class AddLine implements ActionListener {
     private final JPanel middleContent;
     private final JPanel scrollablemiddleContent;
 
-    public AddLine() {
+    private final AddLineManager manager;
 
+    public AddLine(AddLineManager managerLine) {
+
+        manager = managerLine;
         itemIDArray = new LinkedList<>();
         itemArray = new LinkedList<>();
         QArray = new LinkedList<>();
@@ -201,11 +200,27 @@ public final class AddLine implements ActionListener {
         calorie = new JTextField(4);
         calorie.setEditable(false);
         calorie.setFocusable(false);
+        calorie.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                enableDisableDeleteBtn();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                enableDisableDeleteBtn();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+            }
+        });
 
         JLabel kcal = new JLabel("Kcal");
 
         delete = new JButton("Delete (-)");
-        delete.addActionListener(this);
+        delete.putClientProperty("linePanel", line);
+//        delete.addActionListener(this);
 
         save = new JButton("Save");
         save.addActionListener(this);
@@ -264,9 +279,21 @@ public final class AddLine implements ActionListener {
         return true;
     }
 
+    public boolean enableDisableDeleteBtn() {
+        String inputCalorie = getCalorie().getText().trim();
+        if (inputCalorie.equals("-1") || inputCalorie.equals("0") || inputCalorie.isEmpty()) {
+            delete.setEnabled(false);
+            return false;
+        } else {
+            delete.setEnabled(true);
+            delete.addActionListener(this);
+        }
+        return true;
+    }
+
     public boolean fieldValidationCalorie() {
         String inputCalorie = getCalorie().getText().trim();
-        if (inputCalorie.equals("-1") || inputCalorie.equals("0")) {
+        if (inputCalorie.equals("-1") || inputCalorie.equals("0") || inputCalorie.isEmpty()) {
             getCalorie().setBackground(Constants.COLOR_Error);
             return false;
         } else {
@@ -278,6 +305,16 @@ public final class AddLine implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == save) {
+            manager.handleSaveButtonAction(e);
+        } else if (e.getSource() instanceof JButton) {
+            JButton deleteButton = (JButton) e.getSource();
+            if (deleteButton.isEnabled()) {
+
+                JPanel lineToRemove = (JPanel) deleteButton.getClientProperty("linePanel");
+                manager.handleDeleteButtonAction(lineToRemove);
+            }
+        }
     }
 
 }

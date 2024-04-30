@@ -55,7 +55,6 @@ public class API_DB_InfoManager {
             caloriesInfo.clear();
             caloriesInfo = fetchAPI.fetchAPISingleCalories(ingM);
             //calories - fat - carbs - protein
-
     }
 
     // ----------------- construct Array to insert into MyJDBC -----------------

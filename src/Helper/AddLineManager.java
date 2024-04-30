@@ -17,12 +17,13 @@ import javax.swing.SwingUtilities;
  *
  * @author chg
  */
-public final class AddLineManager implements ActionListener {
-    
-    public AddLine getLine(){
+public final class AddLineManager {
+
+    public AddLine getLine() {
         return line;
     }
-    public AddMacros getMacros(){
+
+    public AddMacros getMacros() {
         return addMacros;
     }
 
@@ -36,28 +37,18 @@ public final class AddLineManager implements ActionListener {
         meal = mealType;
         macroCal = new MacrosCalculations();
         addMacros = new AddMacros();
-        line = new AddLine();
+        line = new AddLine(this);
         api = new API_DB_InfoManager();
 
     }
 
 // ---------------------- ACTION LISTENER --------------------------------------
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-        // get the index of the button clicked
-        int index = -1;
-        for (int i = 0; i < line.getDeleteBtnArray().size(); i++) {
-            if (e.getSource() == line.getDeleteBtnArray().get(i)) {
-                index = i;
-                break;
-            }
-        }
-        //check if items come from the DB to delete directly or are only local stored
+    public void handleDeleteButtonAction(JPanel lineToRemove) {
+        int index = line.getLineArray().indexOf(lineToRemove);
         if (index != -1) {
-
-            if (!line.getItemArray().isEmpty()) {
-                String item_ID = line.getItemArray().get(index).getText();
+            //check if items come from the DB to delete directly or are only local stored
+            if (!line.getItemIDArray().isEmpty()) {
+                String item_ID = line.getItemIDArray().get(index).getText();
                 if (!item_ID.equals("-1")) {
                     MyJDBC.deleteRow(item_ID);
                 }
@@ -66,7 +57,7 @@ public final class AddLineManager implements ActionListener {
             // remvoe btnDelete from itself
             line.getDeleteBtnArray().remove(index);
             // remove line box from conteiner
-            JPanel lineToRemove = line.getLineArray().get(index);
+//            JPanel lineToRemove = line.getLineArray().get(index);
             line.getScrollablemiddleContent().remove(lineToRemove);
 
             List<List<?>> allArrays = Arrays.asList(line.getLineArray(), line.getItemIDArray(), line.getQArray(), line.getQnArray(), line.getItemArray(),
@@ -82,37 +73,38 @@ public final class AddLineManager implements ActionListener {
             refresh();
         }
 
-        if (e.getSource() == line.getSave()) {
+    }
 
-            String items = line.getItem().getText();
-            String Quan = line.getQ().getText();
-            String QnType = line.getQn().getSelectedItem().toString();
+    public void handleSaveButtonAction(ActionEvent e) {
 
-            if (line.fieldValidationQ() && line.fieldValidationItem()) {
-                api.getAPIinfo(Quan, QnType, items);
-                String cal = api.getCaloriesInfo().get("calories");
-                line.getCalorie().setText(cal);
-                macroCal.getCalorieArray().add(cal);
-            }
+        String items = line.getItem().getText();
+        String Quan = line.getQ().getText();
+        String QnType = line.getQn().getSelectedItem().toString();
 
-            if (line.fieldValidationCalorie()) {
-                // get fat, prot, and carb from API Map
-                String food = api.getCaloriesInfo().get("food");
-                // add them to the arrays
-                macroCal.getFatArray().add(api.getCaloriesInfo().get("fat"));
-                macroCal.getCarbsArray().add(api.getCaloriesInfo().get("carbs"));
-                macroCal.getProteinArray().add(api.getCaloriesInfo().get("protein"));
-                line.getItem().setText(food.replaceAll("[-'.,/]", " "));
+        if (line.fieldValidationQ() && line.fieldValidationItem()) {
+            api.getAPIinfo(Quan, QnType, items);
+            String cal = api.getCaloriesInfo().get("calories");
+            line.getCalorie().setText(cal);
+            macroCal.getCalorieArray().add(cal);
+        }
 
-                line.getItem().setFocusable(false);
-                line.getQ().setFocusable(false);
-                line.getQn().setFocusable(false);
+        if (line.fieldValidationCalorie()) {
+            // get fat, prot, and carb from API Map
+            String food = api.getCaloriesInfo().get("food");
+            // add them to the arrays
+            macroCal.getFatArray().add(api.getCaloriesInfo().get("fat"));
+            macroCal.getCarbsArray().add(api.getCaloriesInfo().get("carbs"));
+            macroCal.getProteinArray().add(api.getCaloriesInfo().get("protein"));
+            line.getItem().setText(food.replaceAll("[-'.,/]", " "));
 
-                macroCal.calculateMacro();
-                refresh();
-                insertMyJSBC();
-                SwingUtilities.invokeLater(() -> line.createLine());
-            }
+            line.getItem().setFocusable(false);
+            line.getQ().setFocusable(false);
+            line.getQn().setFocusable(false);
+
+            macroCal.calculateMacro();
+            refresh();
+            insertMyJSBC();
+            SwingUtilities.invokeLater(() -> line.createLine());
         }
     }
 

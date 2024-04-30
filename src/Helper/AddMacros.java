@@ -5,6 +5,7 @@
 package Helper;
 
 import Constants.Constants;
+import com.formdev.flatlaf.FlatLaf;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import javax.swing.JLabel;
@@ -96,10 +97,12 @@ public class AddMacros {
 
     // need set values for this in the AddLineManager
     public void setInfoValues(String stFat, String stCarbs, String stProtein, String stCal) {
+        System.out.println("Addmacro.setValues called"+stFat+" "+stCal);
         fat.setText(stFat);
         carbs.setText(stCarbs);
         protein.setText(stProtein);
         caloTotal.setText(stCal);
+        FlatLaf.revalidateAndRepaintAllFramesAndDialogs();
     }
 
 }

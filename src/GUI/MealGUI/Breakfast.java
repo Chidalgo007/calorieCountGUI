@@ -5,17 +5,11 @@
 package GUI.MealGUI;
 
 import Constants.Constants;
-import static GUI.EnterCalories.getTextDate;
 import Helper.AddLineManager;
 import Helper.AddMacros;
-import MyJBDC.MyJDBC;
-import UserInfo.UserProfile;
-import com.formdev.flatlaf.FlatLaf;
 import java.awt.Font;
-import java.time.LocalDate;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -55,9 +49,6 @@ public class Breakfast extends JPanel {
 
     }
 
-//    public AddLineManager getLine() {
-//        return addLine;
-//    }
 
     
 }
