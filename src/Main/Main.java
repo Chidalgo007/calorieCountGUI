@@ -31,7 +31,6 @@ public class Main {
 //        new OptionMenu().setVisible(true)
 
             );
-        Breakfast.constructInsertion();
     }
     
 }

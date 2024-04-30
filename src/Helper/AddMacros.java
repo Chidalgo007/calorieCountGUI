@@ -16,24 +16,7 @@ import net.miginfocom.swing.MigLayout;
  * @author chg
  */
 public class AddMacros {
-
-    public JLabel getCaloTotal() {
-        return caloTotal;
-    }
-
-    public JLabel getFat() {
-        return fat;
-    }
-
-    public JLabel getCarbs() {
-        return carbs;
-    }
-
-    public JLabel getProtein() {
-        return protein;
-    }
-
-    public JPanel getCaloContainer() {
+    public JPanel getCaloContainer(){
         return caloContainer;
     }
 
@@ -41,7 +24,6 @@ public class AddMacros {
     private JLabel fat;
     private JLabel carbs;
     private JLabel protein;
-
     private JPanel caloContainer;
 
     public AddMacros() {
@@ -69,7 +51,7 @@ public class AddMacros {
         fat.setFont(Constants.FONT_Medium.deriveFont(Font.PLAIN, 15));
 
         fatContainer.add(fatLabel, BorderLayout.NORTH);
-        fatContainer.add(getFat(), BorderLayout.SOUTH);
+        fatContainer.add(fat, BorderLayout.SOUTH);
         caloContainer.add(fatContainer);
 
         // individual container
@@ -99,7 +81,7 @@ public class AddMacros {
         protein.setFont(Constants.FONT_Medium.deriveFont(Font.PLAIN, 15));
 
         proteinCont.add(proLabel, BorderLayout.NORTH);
-        proteinCont.add(getProtein(), BorderLayout.SOUTH);
+        proteinCont.add(protein, BorderLayout.SOUTH);
         caloContainer.add(proteinCont);
 
         //commun properties for food label fat, carbs and protein
@@ -110,7 +92,14 @@ public class AddMacros {
             L.setHorizontalAlignment(JLabel.CENTER);
             L.setOpaque(false);
         }
+    }
 
+    // need set values for this in the AddLineManager
+    public void setInfoValues(String stFat, String stCarbs, String stProtein, String stCal) {
+        fat.setText(stFat);
+        carbs.setText(stCarbs);
+        protein.setText(stProtein);
+        caloTotal.setText(stCal);
     }
 
 }
