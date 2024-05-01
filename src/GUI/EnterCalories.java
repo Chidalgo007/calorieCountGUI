@@ -9,6 +9,7 @@ import GUI.MealGUI.Breakfast;
 import GUI.MealGUI.Dinner;
 import GUI.MealGUI.Lunch;
 import GUI.MealGUI.Snacks;
+import UserInfo.UserProfile;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.raven.datechooser.DateChooser;
 import java.awt.BorderLayout;
@@ -24,15 +25,22 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
 import java.awt.Dimension;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.EventListener;
 import javax.swing.ImageIcon;
+import javax.swing.JFormattedTextField;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import raven.datetime.component.date.DateEvent;
+import raven.datetime.component.date.DatePicker;
+import raven.datetime.component.date.DateSelectionListener;
 
 /**
  *
@@ -43,14 +51,15 @@ public class EnterCalories extends JPanel implements ActionListener {
     public JTextField getTextDate() {
         return textDate;
     }
+
     public JLabel getNameF() {
         return nameF;
     }
-   
-    
-    //private DatePicker datePicker;
-    private DateChooser date;
+
+    private DatePicker datePicker;
+//    private DateChooser date;
     private JTextField textDate;
+    public String shareDate; // assigning dateText to here
     private JPanel header;
     private JLabel nameF;
 
@@ -94,47 +103,31 @@ public class EnterCalories extends JPanel implements ActionListener {
         JLabel welcome = new JLabel("Welcome ");
         welcome.setFont(Constants.FONT_Medium.deriveFont(15));
 
+        nameF.setText(UserProfile.getProfile().get("name"));
         nameF.setFont(Constants.FONT_SemiBold.deriveFont(17));
 
-        // datechooser -------------------
-        date = new DateChooser();
-        date.setForeground(Constants.COLOR_ORANGE);
-        date.setTextRefernce(textDate);// this set the date in the textfield
-        textDate.setPreferredSize(new Dimension(80, 20));
-        textDate.setBackground(Constants.COLOR_BACK);
-        textDate.setBorder(null);
-        textDate.setFocusable(false);
-        textDate.addActionListener(this);
-        textDate.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-// check date is not after today date
-            public void insertUpdate(DocumentEvent e) {
-                String dateSelected = getTextDate().getText();
-                DateTimeFormatter df = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-                LocalDate todayDate = LocalDate.parse(dateSelected, df);
-                if (todayDate.isAfter(LocalDate.now())) {
-
-                    LocalDate localDate = LocalDate.now();
-                    // Convert the LocalDate object to a Date object
-                    Instant instant = localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
-                    Date today = Date.from(instant);
-
-                    SwingUtilities.invokeLater(() -> {
-                        date.setSelectedDate(today);
-                    });
-                }
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
+// ---- datepicker ------------------
+        JFormattedTextField date = new JFormattedTextField();
+        date.setFocusable(false);
+        date.setOpaque(false);
+        date.setBorder(null);
+        datePicker = new DatePicker();
+        datePicker.setEditor(date);
+        datePicker.setCloseAfterSelected(true);
+        datePicker.setSelectedDate(LocalDate.now());
+        datePicker.setDateSelectionAble((LocalDate LocalDate) -> !LocalDate.isAfter(LocalDate.now()));
+        datePicker.addDateSelectionListener((DateEvent e) -> {
+            if (!datePicker.isDateSelected()) {
+                datePicker.setSelectedDate(LocalDate.now());
             }
         });
+        DateTimeFormatter  dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate temp = datePicker.getSelectedDate();
+        shareDate = temp.format(dateFormat);
 
-        header.add(textDate);
+        System.out.println("dateEnterCalo " + shareDate);
+
+        header.add(date);
         header.add(welcome);
         header.add(nameF);
         // -------- middle components panel ---------------------
@@ -213,10 +206,6 @@ public class EnterCalories extends JPanel implements ActionListener {
             lunchBtn.setBackground(Constants.COLOR_BACK);
             dinnerBtn.setBackground(Constants.COLOR_BACK);
             snacksBtn.setBackground(Constants.COLOR_BACK);
-
-//            if (bfast.getLine().getLineArray().isEmpty()) {
-//                bfast.getLine().createLine();
-//            }
         }
         if (e.getSource() == lunchBtn) {
             CARDLAYOUT.show(MEAL_CONTAINER, "lunch");
@@ -224,10 +213,6 @@ public class EnterCalories extends JPanel implements ActionListener {
             bFastBtn.setBackground(Constants.COLOR_BACK);
             dinnerBtn.setBackground(Constants.COLOR_BACK);
             snacksBtn.setBackground(Constants.COLOR_BACK);
-
-//            if (lunch.getLine().getLineArray().isEmpty()) {
-//                lunch.getLine().createLine();
-//            }
         }
         if (e.getSource() == dinnerBtn) {
             CARDLAYOUT.show(MEAL_CONTAINER, "dinner");
@@ -235,10 +220,6 @@ public class EnterCalories extends JPanel implements ActionListener {
             lunchBtn.setBackground(Constants.COLOR_BACK);
             bFastBtn.setBackground(Constants.COLOR_BACK);
             snacksBtn.setBackground(Constants.COLOR_BACK);
-
-//            if (dinner.getLine().getLineArray().isEmpty()) {
-//                dinner.getLine().createLine();
-//            }
         }
         if (e.getSource() == snacksBtn) {
             CARDLAYOUT.show(MEAL_CONTAINER, "snacks");
@@ -246,14 +227,12 @@ public class EnterCalories extends JPanel implements ActionListener {
             dinnerBtn.setBackground(Constants.COLOR_BACK);
             lunchBtn.setBackground(Constants.COLOR_BACK);
             bFastBtn.setBackground(Constants.COLOR_BACK);
-
-//            if (snacks.getLine().getLineArray().isEmpty()) {
-//                snacks.getLine().createLine();
-//            }
-        }
-        if (e.getSource() == getTextDate()) {
-            date.showPopup();
         }
     }
 
+    public void setDateIfEmpty() {
+        if (!datePicker.isDateSelected()) {
+            datePicker.setSelectedDate(LocalDate.now());
+        }
+    }
 }

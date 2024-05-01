@@ -5,6 +5,7 @@
 package GUI;
 
 import Constants.Constants;
+import static Helper.RetrieveOneWeekInfo.retrieveOneWeekInfo;
 import Helper.RoundedBorder;
 import MyJBDC.MyJDBC;
 import com.formdev.flatlaf.FlatClientProperties;
@@ -186,6 +187,7 @@ public class LogIn extends Form implements ActionListener, MouseListener {
                 UserInfo.UserProfile.setProfile(MyJDBC.getUserProfile(UserInfo.UserProfile.getID()));
                 LogIn.this.dispose();
                 new OptionMenu().setVisible(true);
+                retrieveOneWeekInfo(); // call database to retrive one week of info.
             } else {
                 errorMessage.setText("Email / Password credential not valid, please try again or Sign Up below !!!");
             }

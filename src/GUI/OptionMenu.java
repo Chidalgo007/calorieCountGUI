@@ -84,7 +84,7 @@ public class OptionMenu extends Form implements ActionListener {
 
         this.add(master, BorderLayout.NORTH);
         this.add(container, BorderLayout.CENTER);
-        cardLayout.show(container, "profile");
+        cardLayout.show(container, "calories");
     }
 
     @Override

@@ -20,15 +20,17 @@ import net.miginfocom.swing.MigLayout;
 public class Breakfast extends JPanel {
 
     private AddLineManager addLine;
-//    private final EnterCalories EC; // truing to pass the date
+    private final EnterCalories EC; // truing to pass the date
 
     public Breakfast(EnterCalories enterCalorie) {
-//        EC = enterCalorie;
-//        String dateST = EC.getTextDate().getText();
-        addLine = new AddLineManager("Breakfast");//, dateST);
+        EC = enterCalorie;
+//        String dateST = EC.shareDate;
+//        System.out.println("date "+ dateST);
+        addLine = new AddLineManager("Breakfast", EC);//, dateST);
         addGUIComponents();
         setLayout(new MigLayout("wrap, fillx", "[]", "[]"));
         this.setBackground(Constants.COLOR_BACK);
+        
     }
 
     private void addGUIComponents() {

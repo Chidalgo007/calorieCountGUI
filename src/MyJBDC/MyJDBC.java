@@ -18,6 +18,9 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  *
@@ -262,4 +265,51 @@ public class MyJDBC {
         return -1;
     }
 
+    public static Map<String, List< Map<String, String>>> retrieveOneWeek(int userID) {
+
+        Map<String, List<Map<String, String>>> dateItemsInfo = new LinkedHashMap<>();
+
+//        LocalDate DateToday = LocalDate.now();
+//        LocalDate localDateWeekAgo = DateToday.minusDays(7);
+        try ( Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD); //NOSONAR
+                  PreparedStatement retriveInfo = connection.prepareStatement(
+                        "SELECT * FROM " + DB_ITEMS_TABLE + " WHERE USERID = ? ")) {
+
+            retriveInfo.setInt(1, userID);
+//            retriveInfo.setObject(2, localDateWeekAgo); // instead of changin date to SQLDATE
+
+            String[] items = {"itemsID", "meal", "items", "quantity", "qtype", "calorie", "fat", "carbs", "protein"};
+            try ( ResultSet result = retriveInfo.executeQuery()) {
+
+                while (result.next()) {
+                    // assign date for grouped Map (first map)
+                    Date dbDate = result.getDate("date");
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                    String date = dateFormat.format(dbDate);
+
+                    // Get or create the list for the current date
+                    List<Map<String, String>> listItems = dateItemsInfo.getOrDefault(date, new LinkedList<>());
+                    // make map with information
+                    Map<String, String> itemsInfo = new LinkedHashMap<>();
+
+                    for (String st : items) {
+                        String value = result.getString(st);
+                        if (st.equals("itemsID")) {
+                            value = String.valueOf(result.getInt(st));
+                        }
+                        itemsInfo.put(st, value);
+                    }
+                    listItems.add(itemsInfo);
+
+                    dateItemsInfo.put(date, listItems);
+
+                }
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MyJDBC.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return dateItemsInfo;
+    }
 }

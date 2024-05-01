@@ -26,9 +26,9 @@ public class Main {
         FlatMacDarkLaf.setup();
         EventQueue.invokeLater(()->
 //        new Init().setVisible(true)
-        new LogIn().setVisible(true)
+//        new LogIn().setVisible(true)
 //        new Register().setVisible(true)
-//        new OptionMenu().setVisible(true)
+        new OptionMenu().setVisible(true)
 
             );
     }

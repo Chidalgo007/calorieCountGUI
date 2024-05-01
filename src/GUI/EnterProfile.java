@@ -217,6 +217,7 @@ public class EnterProfile extends JPanel implements ActionListener {
         datePicker = new DatePicker();
         JFormattedTextField editor = new JFormattedTextField();
         editor.setFocusable(false);
+        datePicker.setCloseAfterSelected(true);
         datePicker.setEditor(editor);
         datePicker.setDateSelectionAble((LocalDate LocalDate) -> !LocalDate.isAfter(LocalDate.now()));
 

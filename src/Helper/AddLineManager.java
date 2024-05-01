@@ -32,11 +32,12 @@ public final class AddLineManager {
     private AddLine line;
     private API_DB_InfoManager api;
     private final String meal;
-//    private String date;
+    private EnterCalories EC;
+    private String date;
 
-    public AddLineManager(String mealType) {
+    public AddLineManager(String mealType, EnterCalories enterCal) {
         meal = mealType; // mealType (breakfast, lunch...etc)
-//        date = dateST;
+        EC = enterCal;
         // panel managed
         macroCal = new MacrosCalculations();
         addMacros = new AddMacros();
@@ -71,7 +72,6 @@ public final class AddLineManager {
             macroCal.getFatArray().remove(index);
             macroCal.getCarbsArray().remove(index);
             macroCal.getProteinArray().remove(index);
-            
 
             // refresh container after removing the lone box to reflect the changes
             FlatLaf.revalidateAndRepaintAllFramesAndDialogs();
@@ -110,11 +110,12 @@ public final class AddLineManager {
 
             macroCal.calculateMacro();
             refresh();
-            insertMyJSBC();
+            insertMyJDBC();
             SwingUtilities.invokeLater(() -> line.createLine());
         }
     }
 
+//================================ UPDATE MACRO VALUES ================================
     private void refresh() {
         String stCalMacro = macroCal.getStCalMacro();
         String stFatMacro = macroCal.getStFatMacro();
@@ -122,9 +123,12 @@ public final class AddLineManager {
         String stProteinMacro = macroCal.getStProteinMacro();
         addMacros.setInfoValues(stFatMacro, stCarbsMacro, stProteinMacro, stCalMacro);
     }
+//================================= INSERT INTO DB ====================================
 
-    private void insertMyJSBC() {
-        String date = "30-04-2024";
+    private void insertMyJDBC() {
+        date = EC.shareDate;
+        System.out.println("date "+date);
+   
         String itemid = line.getItemID().getText().isEmpty() ? "-1" : line.getItemID().getText();
         String item = line.getItem().getText();
         String Quan = line.getQ().getText();
@@ -141,4 +145,6 @@ public final class AddLineManager {
             line.getItemIDArray().add(line.getItemID());
         }
     }
+//=============================== POPULATE LINES ======================================
+
 }
