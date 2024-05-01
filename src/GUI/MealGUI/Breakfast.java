@@ -5,11 +5,12 @@
 package GUI.MealGUI;
 
 import Constants.Constants;
+import GUI.EnterCalories;
 import Helper.AddLineManager;
-import Helper.AddMacros;
 import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -18,10 +19,13 @@ import net.miginfocom.swing.MigLayout;
  */
 public class Breakfast extends JPanel {
 
-    private static AddLineManager addLine;
-    private static AddMacros macros;
+    private AddLineManager addLine;
+//    private final EnterCalories EC; // truing to pass the date
 
-    public Breakfast() {
+    public Breakfast(EnterCalories enterCalorie) {
+//        EC = enterCalorie;
+//        String dateST = EC.getTextDate().getText();
+        addLine = new AddLineManager("Breakfast");//, dateST);
         addGUIComponents();
         setLayout(new MigLayout("wrap, fillx", "[]", "[]"));
         this.setBackground(Constants.COLOR_BACK);
@@ -37,14 +41,13 @@ public class Breakfast extends JPanel {
 
         header.add(breakfast, "growx");
 
-        // macros constiner -------------------------------------
-        macros = new AddMacros();
-        header.add(macros.getCaloContainer());
+        // macros calculation -------------------------------------
 
+        header.add(addLine.getMacros().getCaloContainer());
         this.add(header);
 
         // ---center panel calories --------------------------------------------
-        addLine = new AddLineManager("Breakfast");
+        
         this.add(addLine.getLine().getMiddleContent());
 
     }

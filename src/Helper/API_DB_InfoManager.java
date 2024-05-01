@@ -5,7 +5,6 @@
 package Helper;
 
 import API.fetchAPI;
-import static GUI.EnterCalories.getTextDate;
 import MyJBDC.MyJDBC;
 import UserInfo.UserProfile;
 import java.util.HashMap;

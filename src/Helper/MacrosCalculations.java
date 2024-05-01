@@ -75,7 +75,7 @@ public class MacrosCalculations {
         totalFat = 0;
         totalCarb = 0;
         totalProtein = 0;
-        System.out.println("macro.CalculateMacro called");
+
         for (String s : calorieArray) {
             totalCal += Integer.parseInt(s);
         }
@@ -108,6 +108,11 @@ public class MacrosCalculations {
             stProteinMacro = String.format("%.1f%%", proPercentage);
             stCalMacro = String.valueOf(totalCal);
 
+        }else {
+            stFatMacro = "0%";
+            stCarbsMacro = "0%";
+            stProteinMacro = "0%";
+            stCalMacro = "0";
         }
     }
 

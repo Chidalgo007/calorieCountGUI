@@ -47,7 +47,7 @@ public class AddMacros {
         fatLabel.setForeground(Constants.COLOR_redFat);
 
         fat = new JLabel();
-        fat.setText("0");
+        fat.setText("0%");
         fat.setForeground(Constants.COLOR_redFat);
         fat.setFont(Constants.FONT_Medium.deriveFont(Font.PLAIN, 15));
 
@@ -62,7 +62,7 @@ public class AddMacros {
         carbsLabel.setForeground(Constants.COLOR_yellowCarb);
 
         carbs = new JLabel();
-        carbs.setText("0");
+        carbs.setText("0%");
         carbs.setForeground(Constants.COLOR_yellowCarb);
         carbs.setFont(Constants.FONT_Medium.deriveFont(Font.PLAIN, 15));
 
@@ -77,7 +77,7 @@ public class AddMacros {
         proLabel.setForeground(Constants.COLOR_greenPro);
 
         protein = new JLabel();
-        protein.setText("0");
+        protein.setText("0%");
         protein.setForeground(Constants.COLOR_greenPro);
         protein.setFont(Constants.FONT_Medium.deriveFont(Font.PLAIN, 15));
 
@@ -97,7 +97,6 @@ public class AddMacros {
 
     // need set values for this in the AddLineManager
     public void setInfoValues(String stFat, String stCarbs, String stProtein, String stCal) {
-        System.out.println("Addmacro.setValues called"+stFat+" "+stCal);
         fat.setText(stFat);
         carbs.setText(stCarbs);
         protein.setText(stProtein);

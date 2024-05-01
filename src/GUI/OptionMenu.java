@@ -104,7 +104,7 @@ public class OptionMenu extends Form implements ActionListener {
             cardLayout.show(container, "calories");
             caloriesBtn.setBackground(Constants.Constants.COLOR_ORANGE);
             caloriesBtn.setFont(Constants.Constants.FONT_SemiBold.deriveFont(Font.BOLD, 10));
-            enterCalories.name.setText(UserProfile.getProfile().get("name"));
+            enterCalories.getNameF().setText(UserProfile.getProfile().get("name"));
 
             profileBtn.setBackground(Constants.Constants.COLOR_BACK);
             profileBtn.setFont(Constants.Constants.FONT_Light.deriveFont(Font.PLAIN, 10));

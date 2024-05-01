@@ -40,11 +40,19 @@ import javax.swing.event.DocumentListener;
  */
 public class EnterCalories extends JPanel implements ActionListener {
 
+    public JTextField getTextDate() {
+        return textDate;
+    }
+    public JLabel getNameF() {
+        return nameF;
+    }
+   
+    
     //private DatePicker datePicker;
     private DateChooser date;
-    private static JTextField textDate;
+    private JTextField textDate;
     private JPanel header;
-    final JLabel name = new JLabel();
+    private JLabel nameF;
 
     // meal multi panel container ---------------------------
     private final JPanel MEAL_CONTAINER = new JPanel();
@@ -68,12 +76,12 @@ public class EnterCalories extends JPanel implements ActionListener {
     private final ImageIcon snackIcon = new ImageIcon("./img/snack.png");
 
     public EnterCalories() {
-
-        bfast = new Breakfast();
+        bfast = new Breakfast(this);
         lunch = new Lunch();
         dinner = new Dinner();
         snack = new Snacks();
-
+        textDate = new JTextField(); // this is where the date will be displayed
+        nameF = new JLabel(); // name will be displayed here
         addGUIComponents();
     }
 
@@ -86,20 +94,18 @@ public class EnterCalories extends JPanel implements ActionListener {
         JLabel welcome = new JLabel("Welcome ");
         welcome.setFont(Constants.FONT_Medium.deriveFont(15));
 
-        name.setFont(Constants.FONT_SemiBold.deriveFont(17));
+        nameF.setFont(Constants.FONT_SemiBold.deriveFont(17));
 
         // datechooser -------------------
         date = new DateChooser();
         date.setForeground(Constants.COLOR_ORANGE);
-
-        textDate = new JTextField();
-        date.setTextRefernce(getTextDate());// this set the date in the textfield
-        getTextDate().setPreferredSize(new Dimension(80, 20));
-        getTextDate().setBackground(Constants.COLOR_BACK);
-        getTextDate().setBorder(null);
-        getTextDate().setFocusable(false);
-        getTextDate().addActionListener(this);
-        getTextDate().getDocument().addDocumentListener(new DocumentListener() {
+        date.setTextRefernce(textDate);// this set the date in the textfield
+        textDate.setPreferredSize(new Dimension(80, 20));
+        textDate.setBackground(Constants.COLOR_BACK);
+        textDate.setBorder(null);
+        textDate.setFocusable(false);
+        textDate.addActionListener(this);
+        textDate.getDocument().addDocumentListener(new DocumentListener() {
             @Override
 // check date is not after today date
             public void insertUpdate(DocumentEvent e) {
@@ -128,9 +134,9 @@ public class EnterCalories extends JPanel implements ActionListener {
             }
         });
 
-        header.add(getTextDate());
+        header.add(textDate);
         header.add(welcome);
-        header.add(name);
+        header.add(nameF);
         // -------- middle components panel ---------------------
         MEAL_CONTAINER.setLayout(CARDLAYOUT);
         MEAL_CONTAINER.add(bfast, "breakfast");
@@ -248,11 +254,6 @@ public class EnterCalories extends JPanel implements ActionListener {
         if (e.getSource() == getTextDate()) {
             date.showPopup();
         }
-    }
-// -------------------------------- get date -----------------------------------
-
-    public static JTextField getTextDate() {
-        return textDate;
     }
 
 }

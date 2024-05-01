@@ -4,11 +4,11 @@
  */
 package Helper;
 
+import GUI.EnterCalories;
 import MyJBDC.MyJDBC;
 import com.formdev.flatlaf.FlatLaf;
 import java.util.List;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Arrays;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -32,9 +32,12 @@ public final class AddLineManager {
     private AddLine line;
     private API_DB_InfoManager api;
     private final String meal;
+//    private String date;
 
     public AddLineManager(String mealType) {
-        meal = mealType;
+        meal = mealType; // mealType (breakfast, lunch...etc)
+//        date = dateST;
+        // panel managed
         macroCal = new MacrosCalculations();
         addMacros = new AddMacros();
         line = new AddLine(this);
@@ -54,21 +57,25 @@ public final class AddLineManager {
                 }
             }
 
-            // remvoe btnDelete from itself
-            line.getDeleteBtnArray().remove(index);
             // remove line box from conteiner
-//            JPanel lineToRemove = line.getLineArray().get(index);
             line.getScrollablemiddleContent().remove(lineToRemove);
 
-            List<List<?>> allArrays = Arrays.asList(line.getLineArray(), line.getItemIDArray(), line.getQArray(), line.getQnArray(), line.getItemArray(),
-                    macroCal.getCalorieArray(), macroCal.getFatArray(), macroCal.getCarbsArray(), macroCal.getProteinArray());
-
-            for (List<?> array : allArrays) {
-                array.remove(index);
-            }
+            // remvoe btnDelete from itself
+            line.getDeleteBtnArray().remove(index);
+            line.getLineArray().remove(index);
+            line.getItemIDArray().remove(index);
+            line.getQArray().remove(index);
+            line.getQnArray().remove(index);
+            line.getItemArray().remove(index);
+            macroCal.getCalorieArray().remove(index);
+            macroCal.getFatArray().remove(index);
+            macroCal.getCarbsArray().remove(index);
+            macroCal.getProteinArray().remove(index);
+            
 
             // refresh container after removing the lone box to reflect the changes
             FlatLaf.revalidateAndRepaintAllFramesAndDialogs();
+
             macroCal.calculateMacro();
             refresh();
         }
