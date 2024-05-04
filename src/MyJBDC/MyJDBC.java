@@ -269,14 +269,11 @@ public class MyJDBC {
 
         Map<String, List<Map<String, String>>> dateItemsInfo = new LinkedHashMap<>();
 
-//        LocalDate DateToday = LocalDate.now();
-//        LocalDate localDateWeekAgo = DateToday.minusDays(7);
         try ( Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD); //NOSONAR
                   PreparedStatement retriveInfo = connection.prepareStatement(
                         "SELECT * FROM " + DB_ITEMS_TABLE + " WHERE USERID = ? ")) {
 
             retriveInfo.setInt(1, userID);
-//            retriveInfo.setObject(2, localDateWeekAgo); // instead of changin date to SQLDATE
 
             String[] items = {"itemsID", "meal", "items", "quantity", "qtype", "calorie", "fat", "carbs", "protein"};
             try ( ResultSet result = retriveInfo.executeQuery()) {

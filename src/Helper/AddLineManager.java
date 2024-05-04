@@ -7,9 +7,7 @@ package Helper;
 import GUI.EnterCalories;
 import MyJBDC.MyJDBC;
 import com.formdev.flatlaf.FlatLaf;
-import java.util.List;
 import java.awt.event.ActionEvent;
-import java.util.Arrays;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -27,35 +25,36 @@ public final class AddLineManager {
         return addMacros;
     }
 
-    private MacrosCalculations macroCal;
-    private AddMacros addMacros;
-    private AddLine line;
-    private API_DB_InfoManager api;
+    private MacrosCalculations macroCal; // calculate the macros
+    private AddMacros addMacros; // update the calories en macros total
+    private AddLine line; // create the lines to add food information
+    private API_DB_InfoManager api; // communicate with API and insert food to DB
+    private EnterCalories EC; // provide updated date
+    private AddLineWithInfo previousDayInfo; // in charge to add privous lines with food information
+
     private final String meal;
-    private EnterCalories EC;
     private String date;
 
     public AddLineManager(String mealType, EnterCalories enterCal) {
         meal = mealType; // mealType (breakfast, lunch...etc)
-        EC = enterCal;
+        EC = enterCal; // to retrive updated date.
         // panel managed
         macroCal = new MacrosCalculations();
         addMacros = new AddMacros();
         line = new AddLine(this);
         api = new API_DB_InfoManager();
+        previousDayInfo = new AddLineWithInfo(line, macroCal, this, meal);
 
     }
 
 // ---------------------- ACTION LISTENER --------------------------------------
     public void handleDeleteButtonAction(JPanel lineToRemove) {
         int index = line.getLineArray().indexOf(lineToRemove);
+        System.out.println("line to remove: " + index);
         if (index != -1) {
-            //check if items come from the DB to delete directly or are only local stored
-            if (!line.getItemIDArray().isEmpty()) {
-                String item_ID = line.getItemIDArray().get(index).getText();
-                if (!item_ID.equals("-1")) {
-                    MyJDBC.deleteRow(item_ID);
-                }
+            String item_ID = line.getItemIDArray().get(index).getText();
+            if (!item_ID.equals("-1")) {
+                MyJDBC.deleteRow(item_ID); // remove row from DB 
             }
 
             // remove line box from conteiner
@@ -116,7 +115,7 @@ public final class AddLineManager {
     }
 
 //================================ UPDATE MACRO VALUES ================================
-    private void refresh() {
+    public void refresh() {
         String stCalMacro = macroCal.getStCalMacro();
         String stFatMacro = macroCal.getStFatMacro();
         String stCarbsMacro = macroCal.getStCarbsMacro();
@@ -127,8 +126,7 @@ public final class AddLineManager {
 
     private void insertMyJDBC() {
         date = EC.shareDate;
-        System.out.println("date "+date);
-   
+        System.out.println("insert date " + date);
         String itemid = line.getItemID().getText().isEmpty() ? "-1" : line.getItemID().getText();
         String item = line.getItem().getText();
         String Quan = line.getQ().getText();
@@ -145,6 +143,5 @@ public final class AddLineManager {
             line.getItemIDArray().add(line.getItemID());
         }
     }
-//=============================== POPULATE LINES ======================================
 
 }

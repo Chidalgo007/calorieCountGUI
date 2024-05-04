@@ -9,9 +9,9 @@ import GUI.MealGUI.Breakfast;
 import GUI.MealGUI.Dinner;
 import GUI.MealGUI.Lunch;
 import GUI.MealGUI.Snacks;
+import Helper.AddLineWithInfo;
 import UserInfo.UserProfile;
 import com.formdev.flatlaf.FlatClientProperties;
-import com.raven.datechooser.DateChooser;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Cursor;
@@ -24,23 +24,12 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
-import java.awt.Dimension;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.EventListener;
 import javax.swing.ImageIcon;
 import javax.swing.JFormattedTextField;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import raven.datetime.component.date.DateEvent;
 import raven.datetime.component.date.DatePicker;
-import raven.datetime.component.date.DateSelectionListener;
 
 /**
  *
@@ -54,6 +43,9 @@ public class EnterCalories extends JPanel implements ActionListener {
 
     public JLabel getNameF() {
         return nameF;
+    }
+    public DatePicker getDatePicker() {
+        return datePicker;
     }
 
     private DatePicker datePicker;
@@ -120,12 +112,11 @@ public class EnterCalories extends JPanel implements ActionListener {
             if (!datePicker.isDateSelected()) {
                 datePicker.setSelectedDate(LocalDate.now());
             }
+            AddLineWithInfo.allocateInfo(datePicker.getSelectedDate());
+            DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            LocalDate temp = datePicker.getSelectedDate();
+            shareDate = temp.format(dateFormat);
         });
-        DateTimeFormatter  dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDate temp = datePicker.getSelectedDate();
-        shareDate = temp.format(dateFormat);
-
-        System.out.println("dateEnterCalo " + shareDate);
 
         header.add(date);
         header.add(welcome);

@@ -144,8 +144,7 @@ public final class AddLine implements ActionListener {
         scroll.setBorder(BorderFactory.createEmptyBorder());
         middleContent.add(scroll);
 
-        createLine();
-
+//        createLine();
     }
 
     public void createLine() {
@@ -200,27 +199,12 @@ public final class AddLine implements ActionListener {
         calorie = new JTextField(4);
         calorie.setEditable(false);
         calorie.setFocusable(false);
-        calorie.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                enableDisableDeleteBtn();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                enableDisableDeleteBtn();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-            }
-        });
 
         JLabel kcal = new JLabel("Kcal");
 
         delete = new JButton("Delete (-)");
         delete.putClientProperty("linePanel", line);
-//        delete.addActionListener(this);
+        delete.addActionListener(this);
 
         save = new JButton("Save");
         save.addActionListener(this);
@@ -244,6 +228,7 @@ public final class AddLine implements ActionListener {
         QArray.add(Q);
         QnArray.add(Qn);
         itemArray.add(item);
+        itemIDArray.add(itemID);
         // buttons
         deleteBtnArray.add(delete);
         // line box
@@ -279,26 +264,14 @@ public final class AddLine implements ActionListener {
         return true;
     }
 
-    public boolean enableDisableDeleteBtn() {
-        String inputCalorie = getCalorie().getText().trim();
-        if (inputCalorie.equals("-1") || inputCalorie.equals("0") || inputCalorie.isEmpty()) {
-            delete.setEnabled(false);
-            return false;
-        } else {
-            delete.setEnabled(true);
-            delete.addActionListener(this);
-        }
-        return true;
-    }
-
     public boolean fieldValidationCalorie() {
         String inputCalorie = getCalorie().getText().trim();
         if (inputCalorie.equals("-1") || inputCalorie.equals("0") || inputCalorie.isEmpty()) {
-            getCalorie().setBackground(Constants.COLOR_Error);
+            calorie.setBackground(Constants.COLOR_Error);
             return false;
         } else {
-            getCalorie().setOpaque(false);
-            getCalorie().setBackground(null);
+            calorie.setOpaque(false);
+            calorie.setBackground(null);
         }
         return true;
     }
@@ -309,10 +282,15 @@ public final class AddLine implements ActionListener {
             manager.handleSaveButtonAction(e);
         } else if (e.getSource() instanceof JButton) {
             JButton deleteButton = (JButton) e.getSource();
-            if (deleteButton.isEnabled()) {
-
-                JPanel lineToRemove = (JPanel) deleteButton.getClientProperty("linePanel");
-                manager.handleDeleteButtonAction(lineToRemove);
+            if (fieldValidationCalorie()) {
+            System.out.println("Delete :" + getDeleteBtnArray().size());
+            System.out.println("Line :" + getLineArray().size());
+            System.out.println("items :" + getItemArray().size());
+            System.out.println("itemsID :" + getItemIDArray().size());
+            System.out.println("Q :" + getQArray().size());
+            System.out.println("Qn :" + getQnArray());
+            JPanel lineToRemove = (JPanel) deleteButton.getClientProperty("linePanel");
+            manager.handleDeleteButtonAction(lineToRemove);
             }
         }
     }
