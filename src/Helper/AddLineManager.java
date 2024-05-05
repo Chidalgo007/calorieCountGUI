@@ -25,12 +25,12 @@ public final class AddLineManager {
         return addMacros;
     }
 
-    private MacrosCalculations macroCal; // calculate the macros
-    private AddMacros addMacros; // update the calories en macros total
-    private AddLine line; // create the lines to add food information
-    private API_DB_InfoManager api; // communicate with API and insert food to DB
-    private EnterCalories EC; // provide updated date
-    private AddLineWithInfo previousDayInfo; // in charge to add privous lines with food information
+    private final MacrosCalculations macroCal; // calculate the macros
+    private final AddMacros addMacros; // update the calories en macros total
+    private final AddLine line; // create the lines to add food information
+    private final API_DB_InfoManager api; // communicate with API and insert food to DB
+    private final EnterCalories EC; // provide updated date
+    private final AddLineWithInfo previousDayInfo; // in charge to add privous lines with food information
 
     private final String meal;
     private String date;
@@ -41,19 +41,28 @@ public final class AddLineManager {
         // panel managed
         macroCal = new MacrosCalculations();
         addMacros = new AddMacros();
-        line = new AddLine(this);
+        line = new AddLine(this, mealType);
         api = new API_DB_InfoManager();
         previousDayInfo = new AddLineWithInfo(line, macroCal, this, meal);
-
     }
 
 // ---------------------- ACTION LISTENER --------------------------------------
     public void handleDeleteButtonAction(JPanel lineToRemove) {
         int index = line.getLineArray().indexOf(lineToRemove);
-        System.out.println("line to remove: " + index);
-        if (index != -1) {
+//        System.out.println("class lineManager - index: " + index);
+//        System.out.println("class lineManager - index to delete: " +line.getDeleteBtnArray().size());
+//        System.out.println("class lineManager - index to line: " +line.getLineArray().size());
+//        System.out.println("class lineManager - index to items ID: " +line.getItemIDArray().size());
+//        System.out.println("class lineManager - index to Q: " +line.getQArray().size());
+//        System.out.println("class lineManager - index to Qn: " +line.getQnArray().size());
+//        System.out.println("class lineManager - index to items: " +line.getItemArray().size());
+//        System.out.println("class lineManager - index to calor: " +macroCal.getCalorieArray().size());
+//        System.out.println("class lineManager - index to fat: " +macroCal.getFatArray().size());
+//        System.out.println("class lineManager - index to carbs: " +macroCal.getCarbsArray().size());
+//        System.out.println("class lineManager - index to prote: " +macroCal.getProteinArray().size());
+        if (index != -1&&index<macroCal.getCalorieArray().size()) { // check deleteBtn is not empty values (calorie)
             String item_ID = line.getItemIDArray().get(index).getText();
-            if (!item_ID.equals("-1")) {
+            if (!item_ID.isEmpty() && !item_ID.equals("-1")) {
                 MyJDBC.deleteRow(item_ID); // remove row from DB 
             }
 
@@ -125,8 +134,8 @@ public final class AddLineManager {
 //================================= INSERT INTO DB ====================================
 
     private void insertMyJDBC() {
-        date = EC.shareDate;
-        System.out.println("insert date " + date);
+        date = EC.getShareDate();
+
         String itemid = line.getItemID().getText().isEmpty() ? "-1" : line.getItemID().getText();
         String item = line.getItem().getText();
         String Quan = line.getQ().getText();
@@ -143,5 +152,9 @@ public final class AddLineManager {
             line.getItemIDArray().add(line.getItemID());
         }
     }
+// ================================== UPDATE ITEMS ON EACH MEAL ===================
 
+    public void updateLinesAndItemsForNewDate(String date) {
+        previousDayInfo.allocateInfo(date);
+    }
 }

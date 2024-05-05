@@ -17,7 +17,7 @@ import net.miginfocom.swing.MigLayout;
  *
  * @author chg
  */
-public class weeklyStadistics extends JPanel{
+public class WeeklyStadistics extends JPanel{
     
     private static final LinkedList<Map<String,String>> weeklyCal = new LinkedList<>();
     

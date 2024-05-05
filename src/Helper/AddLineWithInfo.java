@@ -23,11 +23,11 @@ import java.util.Map;
  */
 public class AddLineWithInfo {
 
-    private static Map<String, List<Map<String, String>>> previousDayInfo = new HashMap<>();
-    private static AddLine line;
-    private static MacrosCalculations macroCal;
-    private static AddLineManager lineManager;
-    private static String mealType;
+    private Map<String, List<Map<String, String>>> previousDayInfo = new HashMap<>();
+    private AddLine line;
+    private MacrosCalculations macroCal;
+    private AddLineManager lineManager;
+    private String mealType;
 
     public AddLineWithInfo(AddLine newLine, MacrosCalculations macroCalo, AddLineManager manager, String meal) {
         line = newLine;
@@ -36,7 +36,7 @@ public class AddLineWithInfo {
         mealType = meal;
     }
 
-    public static void retrieveOneWeekInfo() {
+    public void retrieveInfo() {
         previousDayInfo = MyJDBC.retrieveOneWeek(UserProfile.getID());
 
 //        for (Map.Entry<String, List<Map<String, String>>> st : previousDayInfo.entrySet()) {
@@ -44,14 +44,15 @@ public class AddLineWithInfo {
 //        }
     }
 
-    public static void allocateInfo(LocalDate date) {
-        retrieveOneWeekInfo();
+    public void allocateInfo(String date) {
+        retrieveInfo();
         removeAll();
         line.createLine();
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        String dateSelected = date.format(dateFormat);
-        System.out.println("date in class AddLineWithInfo" + dateSelected);
-        List<Map<String, String>> dateStored = previousDayInfo.get(dateSelected);
+        System.out.println("Line created: " + mealType);
+//        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+//        String dateSelected = date.format(dateFormat);
+
+        List<Map<String, String>> dateStored = previousDayInfo.get(date);
         if (dateStored != null) {
             for (int i = 0; i < dateStored.size(); i++) {
                 if (dateStored.get(i).get("meal").equalsIgnoreCase(mealType)) {
@@ -67,8 +68,9 @@ public class AddLineWithInfo {
                     macroCal.getCarbsArray().add(dateStored.get(i).get("carbs"));
                     macroCal.getProteinArray().add(dateStored.get(i).get("protein"));
                 }
-                line.createLine();
-                System.out.println("delete btn size: " + line.getDeleteBtnArray().size());
+                if (!line.getCalorie().getText().isEmpty()) { // prevent to create lines with empty information
+                    line.createLine();
+                }
             }
             macroCal.calculateMacro();
             lineManager.refresh();
@@ -77,9 +79,9 @@ public class AddLineWithInfo {
 
     }
 
-    private static void removeAll() {
+    private void removeAll() {
 
-//        line.getDeleteBtnArray().clear();
+        line.getDeleteBtnArray().clear();
         line.getScrollablemiddleContent().removeAll();
         line.getLineArray().clear();
         line.getItemIDArray().clear();

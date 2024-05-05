@@ -15,15 +15,20 @@ import java.awt.Font;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -104,12 +109,12 @@ public class Register extends Form implements ActionListener, MouseListener {
         this.add(rePasswordLabelCondition);
 
 // ------------------------------- container --------------------------------------------        
-        JPanel container = new JPanel(new MigLayout("wrap, fillx, insets 10","fill,270"));
+        JPanel container = new JPanel(new MigLayout("wrap, fillx, insets 10", "fill,270"));
 //        container.putClientProperty(FlatClientProperties.STYLE, "" + "arc:20");
         container.setBorder(new RoundedBorder(Constants.btnRadius));
         container.setBackground(Constants.COLOR_Light_BAKG);
 
-        JPanel pageName = new JPanel(new MigLayout("wrap, fill, insets 0","[]","[]"));
+        JPanel pageName = new JPanel(new MigLayout("wrap, fill, insets 0", "[]", "[]"));
         pageName.setOpaque(false);
         JLabel title = new JLabel("Register");
         title.setFont(Constants.FONT_SemiBold.deriveFont(Font.PLAIN, 20));
@@ -117,7 +122,7 @@ public class Register extends Form implements ActionListener, MouseListener {
         JLabel frase = new JLabel("Enter your detail to Sing Up ");
         frase.setFont(Constants.FONT_Neon.deriveFont(Font.PLAIN, 10));
         frase.setForeground(Constants.COLOR_WHITE);
-        
+
         pageName.add(title);
         pageName.add(frase);
 
@@ -224,6 +229,13 @@ public class Register extends Form implements ActionListener, MouseListener {
 //        registerbtn.setBorder(new RoundedBorder(Constants.btnRadius));
         registerbtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         registerbtn.addActionListener(this);
+        registerbtn.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0), "register");
+        registerbtn.getActionMap().put("register",new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                register();
+            }
+        });
 
         container.add(pageName);
         container.add(pFields, "gapy 30");
@@ -252,23 +264,15 @@ public class Register extends Form implements ActionListener, MouseListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == registerbtn) {
-
-            if (fieldValidation()) {
-                if (MyJBDC.MyJDBC.register(email, password)) {
-                    Register.this.dispose();
-                    new LogIn().setVisible(true);
-                } else {
-                    errorMessage.setText("Email already register, please use another email or Login with the link at the bottom !!!");
-                }
-            }
+            register();
         }
 
     }
 
     private boolean fieldValidation() {
-        return !(!emailValidation()
-                || !passwordValidation()
-                || !rePasswordValidation());
+        return (emailValidation()
+                || passwordValidation()
+                || rePasswordValidation());
     }
 
     @Override
@@ -333,4 +337,18 @@ public class Register extends Form implements ActionListener, MouseListener {
         return true;
     }
 
+//================= REGISTER ============================
+
+    private void register() {
+        if (fieldValidation()) {
+            if (MyJBDC.MyJDBC.register(email, password)) {
+                Register.this.dispose();
+                new LogIn().setVisible(true);
+            } else {
+                errorMessage.setText("Email already register, please use another email or sign in with the link at the bottom !!!");
+            }
+        }else{
+            System.out.println("problem");
+        }
+    }
 }

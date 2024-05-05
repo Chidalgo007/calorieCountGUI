@@ -124,9 +124,11 @@ public final class AddLine implements ActionListener {
     private final JPanel scrollablemiddleContent;
 
     private final AddLineManager manager;
+    private final String mealType;
 
-    public AddLine(AddLineManager managerLine) {
+    public AddLine(AddLineManager managerLine, String meal) {
 
+        mealType = meal;
         manager = managerLine;
         itemIDArray = new LinkedList<>();
         itemArray = new LinkedList<>();
@@ -204,6 +206,7 @@ public final class AddLine implements ActionListener {
 
         delete = new JButton("Delete (-)");
         delete.putClientProperty("linePanel", line);
+        delete.putClientProperty("mealType", mealType);
         delete.addActionListener(this);
 
         save = new JButton("Save");
@@ -282,16 +285,10 @@ public final class AddLine implements ActionListener {
             manager.handleSaveButtonAction(e);
         } else if (e.getSource() instanceof JButton) {
             JButton deleteButton = (JButton) e.getSource();
-            if (fieldValidationCalorie()) {
-            System.out.println("Delete :" + getDeleteBtnArray().size());
-            System.out.println("Line :" + getLineArray().size());
-            System.out.println("items :" + getItemArray().size());
-            System.out.println("itemsID :" + getItemIDArray().size());
-            System.out.println("Q :" + getQArray().size());
-            System.out.println("Qn :" + getQnArray());
+//            String mealtype = (String) deleteButton.getClientProperty("mealType"); // in case is need it to identify the meal
             JPanel lineToRemove = (JPanel) deleteButton.getClientProperty("linePanel");
             manager.handleDeleteButtonAction(lineToRemove);
-            }
+
         }
     }
 

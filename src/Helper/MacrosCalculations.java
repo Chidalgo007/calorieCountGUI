@@ -93,7 +93,6 @@ public class MacrosCalculations {
     }
 
     private void refreshValue() {
-        System.out.println("refreshVal called");
         float cal = totalCal;
         float f = totalFat;
         float c = totalCarb;

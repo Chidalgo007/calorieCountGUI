@@ -37,6 +37,13 @@ import raven.datetime.component.date.DatePicker;
  */
 public class EnterCalories extends JPanel implements ActionListener {
 
+    /**
+     * @return the shareDate
+     */
+    public String getShareDate() {
+        return shareDate;
+    }
+
     public JTextField getTextDate() {
         return textDate;
     }
@@ -44,16 +51,17 @@ public class EnterCalories extends JPanel implements ActionListener {
     public JLabel getNameF() {
         return nameF;
     }
+
     public DatePicker getDatePicker() {
         return datePicker;
     }
 
     private DatePicker datePicker;
 //    private DateChooser date;
-    private JTextField textDate;
-    public String shareDate; // assigning dateText to here
+    private final JTextField textDate;
+    private String shareDate; // assigning dateText to here
     private JPanel header;
-    private JLabel nameF;
+    private final JLabel nameF;
 
     // meal multi panel container ---------------------------
     private final JPanel MEAL_CONTAINER = new JPanel();
@@ -69,7 +77,7 @@ public class EnterCalories extends JPanel implements ActionListener {
     private JButton dinnerBtn;
     private JButton snacksBtn;
 
-    JButton[] btnFieldsArray = {};
+    private JButton[] btnFieldsArray = {};
 
     private final ImageIcon bfastIcon = new ImageIcon("./img/bfast.png");
     private final ImageIcon lunchIcon = new ImageIcon("./img/lunch.png");
@@ -78,9 +86,9 @@ public class EnterCalories extends JPanel implements ActionListener {
 
     public EnterCalories() {
         bfast = new Breakfast(this);
-        lunch = new Lunch();
-        dinner = new Dinner();
-        snack = new Snacks();
+        lunch = new Lunch(this);
+        dinner = new Dinner(this);
+        snack = new Snacks(this);
         textDate = new JTextField(); // this is where the date will be displayed
         nameF = new JLabel(); // name will be displayed here
         addGUIComponents();
@@ -112,10 +120,11 @@ public class EnterCalories extends JPanel implements ActionListener {
             if (!datePicker.isDateSelected()) {
                 datePicker.setSelectedDate(LocalDate.now());
             }
-            AddLineWithInfo.allocateInfo(datePicker.getSelectedDate());
             DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             LocalDate temp = datePicker.getSelectedDate();
             shareDate = temp.format(dateFormat);
+            notifyDateChange();
+//            AddLineWithInfo.allocateInfo(shareDate);
         });
 
         header.add(date);
@@ -145,7 +154,7 @@ public class EnterCalories extends JPanel implements ActionListener {
             btn.putClientProperty(FlatClientProperties.STYLE, "" + "arc:30");
             btn.setFocusable(false);
             btn.addActionListener(this);
-//            btn.setBorder(null);
+
             mealBtn.add(btn, "growy");
         }
         bFastBtn.setBackground(Constants.COLOR_ORANGE);
@@ -179,7 +188,7 @@ public class EnterCalories extends JPanel implements ActionListener {
 
         snacksBtn.add(iconSK, BorderLayout.NORTH);
         snacksBtn.add(labelSK, BorderLayout.SOUTH);
-
+// -------------------- fin meal btns -----------------------------
         this.add(header, BorderLayout.NORTH);
         this.add(MEAL_CONTAINER, BorderLayout.CENTER);
         this.add(mealBtn, BorderLayout.SOUTH);
@@ -221,9 +230,19 @@ public class EnterCalories extends JPanel implements ActionListener {
         }
     }
 
-    public void setDateIfEmpty() {
-        if (!datePicker.isDateSelected()) {
-            datePicker.setSelectedDate(LocalDate.now());
-        }
-    }
+//    private void setDateIfEmpty() {
+//        if (!datePicker.isDateSelected()) {
+//            datePicker.setSelectedDate(LocalDate.now());
+//        }
+//    }
+    
+    private void notifyDateChange() {
+    // Iterate over active meal windows
+    // Call a method in each meal window to update its content
+    // For example:
+    bfast.updateContentForNewDate(shareDate);
+    lunch.updateContentForNewDate(shareDate);
+    dinner.updateContentForNewDate(shareDate);
+    snack.updateContentForNewDate(shareDate);
+}
 }

@@ -5,7 +5,6 @@
 package GUI;
 
 import Constants.Constants;
-import Helper.AddLineWithInfo;
 import Helper.RoundedBorder;
 import MyJBDC.MyJDBC;
 import com.formdev.flatlaf.FlatClientProperties;
@@ -16,16 +15,21 @@ import java.awt.Font;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
@@ -44,16 +48,14 @@ public class LogIn extends Form implements ActionListener, MouseListener {
     private JLabel signUp;
     private JLabel signUpLink;
     SimpleAttributeSet center = new SimpleAttributeSet();
-    
+
     public LogIn() {
         super("Log In");
         addGUIComponents();
     }
 
-
     private void addGUIComponents() {
 
-        
         // Error message----------------------------------------------
         errorMessage = new JTextPane();
         errorMessage.setBounds(25, 20, 250, 50);
@@ -128,15 +130,15 @@ public class LogIn extends Form implements ActionListener, MouseListener {
         passwordField.setBounds(100, 170, 130, 20);
         passwordField.setOpaque(false);
         passwordField.setForeground(Color.WHITE);
+        passwordField.setFocusable(true);
         passwordField.setFont(Constants.FONT_Medium.deriveFont(Font.PLAIN, 12));
         passwordField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Constants.COLOR_Light_Grey));
-        passwordField.putClientProperty(FlatClientProperties.STYLE, ""+"showRevealButton:true");
+        passwordField.putClientProperty(FlatClientProperties.STYLE, "" + "showRevealButton:true");
         container.add(passwordField);
-        
+
         JCheckBox rememberMe = new JCheckBox("Remember Me");
         rememberMe.setBounds(14, 200, 200, 20);
         container.add(rememberMe, "grow 0");
-        
 
         // log in button ------------------------------------
         int btnWith = Constants.btnWidth;
@@ -150,12 +152,18 @@ public class LogIn extends Form implements ActionListener, MouseListener {
         logInBtn.setBackground(Constants.COLOR_Light_Grey);
         logInBtn.setBorder(new RoundedBorder(Constants.btnRadius));
         logInBtn.addActionListener(this);
+        logInBtn.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0), "loginAction");
+        logInBtn.getActionMap().put("loginAction", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                logIn();
+            }
+        });
         logInBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         container.add(logInBtn);
 
         //------- OUT OF CONTAINER --------------------------------
         // textRegister label ------------------------------------
-
         JPanel jSignUp = new JPanel(new FlowLayout(FlowLayout.CENTER));
         jSignUp.setOpaque(false);
         jSignUp.setBounds(0, 430, Constants.WIDTH, 20);
@@ -168,6 +176,7 @@ public class LogIn extends Form implements ActionListener, MouseListener {
         signUpLink.setForeground(Constants.COLOR_ORANGE);
         signUpLink.addMouseListener(this);
         signUpLink.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        signUpLink.setFocusable(false);
         jSignUp.add(signUpLink);
 
         this.add(container);
@@ -176,20 +185,8 @@ public class LogIn extends Form implements ActionListener, MouseListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String email = emailField.getText();
-        String password = new String(this.passwordField.getPassword());
         if (e.getSource() == logInBtn) {
-            errorMessage.setText("");
-            // login check with database
-            UserInfo.UserProfile.setID(MyJDBC.getUserId(email, password)); // setting the user ID
-
-            if (UserInfo.UserProfile.getID() != -1) { // check the user exist
-                UserInfo.UserProfile.setProfile(MyJDBC.getUserProfile(UserInfo.UserProfile.getID()));
-                LogIn.this.dispose();
-                new OptionMenu().setVisible(true);
-            } else {
-                errorMessage.setText("Email / Password credential not valid, please try again or Sign Up below !!!");
-            }
+            logIn();
         }
 
     }
@@ -217,5 +214,22 @@ public class LogIn extends Form implements ActionListener, MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
         signUpLink.setText("<html>Sign Up.</html>");
+    }
+
+    // ============= LOGIN =============================
+    private void logIn() {
+        String email = emailField.getText();
+        String password = new String(this.passwordField.getPassword());
+        errorMessage.setText("");
+        // login check with database
+        UserInfo.UserProfile.setID(MyJDBC.getUserId(email, password)); // setting the user ID
+
+        if (UserInfo.UserProfile.getID() != -1) { // check the user exist
+            UserInfo.UserProfile.setProfile(MyJDBC.getUserProfile(UserInfo.UserProfile.getID()));
+            LogIn.this.dispose();
+            new OptionMenu().setVisible(true);
+        } else {
+            errorMessage.setText("Email / Password credential not valid, please try again or Sign Up below !!!");
+        }
     }
 }

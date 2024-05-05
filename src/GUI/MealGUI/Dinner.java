@@ -4,26 +4,46 @@
  */
 package GUI.MealGUI;
 
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import Constants.Constants;
+import GUI.EnterCalories;
+import Helper.AddLineManager;
+import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import net.miginfocom.swing.MigLayout;
 
 /**
  *
  * @author chg
+ * this initiate the dinner field items.
  */
-public class Dinner extends JPanel implements ActionListener {
+public class Dinner extends JPanel {
 
-    public Dinner() {
-        setLayout(null);
-        setBackground(Color.blue);
+    private final AddLineManager addLine;
+    private final EnterCalories EC; // to pass the date
+
+    public Dinner(EnterCalories enterCalorie) {
+        EC = enterCalorie;
+        addLine = new AddLineManager("Dinner", EC);
+        addGUIComponents();
+        setLayout(new MigLayout("wrap, fillx", "[]", "[]"));
+        this.setBackground(Constants.COLOR_BACK);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    private void addGUIComponents() {
+        //  header constainer-------------------------------------
+        JPanel header = new JPanel(new MigLayout("fillx, insets 0", "[grow, fill]push[]", "[]"));
+        header.setOpaque(false);
 
+        JLabel dinner = new JLabel("Dinner");
+        dinner.setFont(Constants.FONT_SemiBold.deriveFont(Font.PLAIN, 15));
+
+        header.add(dinner, "growx");
+        header.add(addLine.getMacros().getCaloContainer()); // add macros calculation
+        this.add(header);
+        this.add(addLine.getLine().getMiddleContent()); // add panel calories
+    }
+        public void updateContentForNewDate(String date){
+        addLine.updateLinesAndItemsForNewDate(date);
+    }
 }
