@@ -30,6 +30,7 @@ public class Constants {
     public static final Color COLOR_Trans = new Color(0, 0, 0, 128);//black 50%
     public static final Color COLOR_BACK = Color.BLACK;
     public static final Color COLOR_WHITE = Color.WHITE;
+    public static final Color COLOR_SMK_WHITE = new Color(194, 194, 194);
     // ------------ food color ------------------------------------------
     public static final Color COLOR_yellowCarb = Color.decode("#E0AD13");
     public static final Color COLOR_redFat = Color.decode("#930909");

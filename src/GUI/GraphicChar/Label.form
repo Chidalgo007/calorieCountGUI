@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="carbs" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="carbValue" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="fat" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="fatValue" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="calories" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="calValue" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="prot" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="proValue" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace pref="65" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="dinner" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="dValue" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="lunch" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="lValue" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="bfast" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="bfValue" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="snack" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="sValue" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="bfast" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="bfValue" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lunch" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lValue" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="dinner" min="-2" max="-2" attributes="0"/>
+                          <Component id="dValue" alignment="1" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="snack" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="sValue" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="calories" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="calValue" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="fat" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="fatValue" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="carbs" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="carbValue" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="prot" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="proValue" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+              </Group>
+              <EmptySpace pref="15" max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JLabel" name="calValue">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="2500"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="fatValue">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="500"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="carbValue">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="1200"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="carbs">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Carbs"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="proValue">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="800"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="fat">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Fat"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="calories">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Calories"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="prot">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Protein"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="dValue">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="910"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="dinner">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Dinner"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="sValue">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="250"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lunch">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Lunch"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="bfast">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Breakfast"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="snack">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Snacks"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="bfValue">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="1100"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lValue">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="890"/>
+      </Properties>
+    </Component>
+  </SubComponents>
+</Form>

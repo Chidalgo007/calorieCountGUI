@@ -217,16 +217,12 @@ public class Register extends Form implements ActionListener, MouseListener {
 
         // register button ---------------------------------------
         registerbtn = new JButton("Sign Up");
-//        registerbtn.setHorizontalAlignment(SwingConstants.CENTER);
         registerbtn.setPreferredSize(new Dimension(Constants.btnWidth, 30));
         registerbtn.setFont(Constants.FONT_Medium.deriveFont(Font.PLAIN, fontSize));
         registerbtn.setForeground(Constants.COLOR_WHITE);
         registerbtn.setBackground(Constants.COLOR_Light_Grey);
         registerbtn.setFocusable(false);
         registerbtn.putClientProperty(FlatClientProperties.STYLE, "" + "arc:20");
-//        registerbtn.setContentAreaFilled(false);
-//        registerbtn.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-//        registerbtn.setBorder(new RoundedBorder(Constants.btnRadius));
         registerbtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         registerbtn.addActionListener(this);
         registerbtn.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0), "register");
