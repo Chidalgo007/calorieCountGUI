@@ -15,11 +15,13 @@ import javax.swing.JPanel;
  */
 public class CaloriesStadistics extends JPanel {
 
+    EnterCalories EC;
     Container c; 
 
-    public CaloriesStadistics() {
+    public CaloriesStadistics(EnterCalories enterCal) {
 //        this.setLayout(null);
-        c = new Container();
+        EC = enterCal;
+        c = new Container(EC);
         setBackground(Constants.COLOR_BACK);
         add(c);
     }

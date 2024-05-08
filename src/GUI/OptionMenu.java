@@ -22,9 +22,9 @@ public class OptionMenu extends Form implements ActionListener {
     private final JPanel container = new JPanel();
     private final CardLayout cardLayout = new CardLayout();
 
-    EnterProfile enterProfile = new EnterProfile();
-    EnterCalories enterCalories = new EnterCalories();
-    CaloriesStadistics stadistics = new CaloriesStadistics();
+    EnterProfile enterProfile;
+    EnterCalories enterCalories;
+    CaloriesStadistics stadistics;
 
     JButton profileBtn;
     JButton caloriesBtn;
@@ -35,6 +35,10 @@ public class OptionMenu extends Form implements ActionListener {
 
         this.setLayout(new BorderLayout());
         container.setLayout(cardLayout);
+
+        enterProfile = new EnterProfile();
+        enterCalories = new EnterCalories();
+        stadistics = new CaloriesStadistics(enterCalories);
 
         container.add(enterProfile, "profile");
         container.add(enterCalories, "calories");

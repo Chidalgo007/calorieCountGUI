@@ -48,9 +48,6 @@ public class AddLineWithInfo {
         retrieveInfo();
         removeAll();
         line.createLine();
-        System.out.println("Line created: " + mealType);
-//        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-//        String dateSelected = date.format(dateFormat);
 
         List<Map<String, String>> dateStored = previousDayInfo.get(date);
         if (dateStored != null) {

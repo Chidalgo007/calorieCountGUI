@@ -109,6 +109,7 @@ public class EnterCalories extends JPanel implements ActionListener {
 // ---- datepicker ------------------
         JFormattedTextField date = new JFormattedTextField();
         date.setFocusable(false);
+        date.setEditable(false);
         date.setOpaque(false);
         date.setBorder(null);
         datePicker = new DatePicker();
@@ -124,7 +125,6 @@ public class EnterCalories extends JPanel implements ActionListener {
             LocalDate temp = datePicker.getSelectedDate();
             shareDate = temp.format(dateFormat);
             notifyDateChange();
-//            AddLineWithInfo.allocateInfo(shareDate);
         });
 
         header.add(date);

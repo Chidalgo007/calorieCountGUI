@@ -6,7 +6,6 @@ package GUI;
 
 import MyJBDC.MyJDBC;
 import UserInfo.UserProfile;
-import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Image;
@@ -127,9 +126,9 @@ public class EnterProfile extends JPanel implements ActionListener {
 
         // name Field ------------------------------------
         nameField = new JTextField();
-        nameField.setBounds(110, 87, 140, fieldSpaceFontSize);
+        nameField.setBounds(120, 87, 130, fieldSpaceFontSize);
         nameField.setBackground(Constants.Constants.COLOR_BACK);
-        nameField.setForeground(Color.WHITE);
+        nameField.setForeground(Constants.Constants.COLOR_WHITE);
         nameField.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, fieldFontSize));
         nameField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Constants.Constants.COLOR_Light_Grey));
         nameField.getDocument().addDocumentListener(new DocumentListener() {
@@ -159,9 +158,9 @@ public class EnterProfile extends JPanel implements ActionListener {
 
         // lastName Field ------------------------------------
         lastNameField = new JTextField();
-        lastNameField.setBounds(110, 137, 140, fieldSpaceFontSize);
+        lastNameField.setBounds(120, 137, 130, fieldSpaceFontSize);
         lastNameField.setBackground(Constants.Constants.COLOR_BACK);
-        lastNameField.setForeground(Color.WHITE);
+        lastNameField.setForeground(Constants.Constants.COLOR_WHITE);
         lastNameField.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, fieldFontSize));
         lastNameField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Constants.Constants.COLOR_Light_Grey));
         lastNameField.getDocument().addDocumentListener(new DocumentListener() {
@@ -194,9 +193,9 @@ public class EnterProfile extends JPanel implements ActionListener {
         genderField.addItem("");
         genderField.addItem("Male");
         genderField.addItem("Female");
-        genderField.setBounds(110, 182, 120, 30);
+        genderField.setBounds(120, 182, 120, 30);
         genderField.setBackground(Constants.Constants.COLOR_Trans); // dark grey
-        genderField.setForeground(Color.WHITE);
+        genderField.setForeground(Constants.Constants.COLOR_WHITE);
         genderField.setFocusable(false);
         genderField.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, fieldFontSize));
         this.add(genderField);
@@ -212,11 +211,13 @@ public class EnterProfile extends JPanel implements ActionListener {
         // DOB Field ------------------------------------
         JPanel date = new JPanel();
         date.setOpaque(false);
-        date.setBounds(110, 230, 120, 30);
+        date.setBounds(120, 230, 120, 30);
         date.setLayout(new MigLayout("fill, insets 0"));
         datePicker = new DatePicker();
+        datePicker.setOpaque(false);
         JFormattedTextField editor = new JFormattedTextField();
         editor.setFocusable(false);
+        editor.setBackground(Constants.Constants.COLOR_BACK);
         datePicker.setCloseAfterSelected(true);
         datePicker.setEditor(editor);
         datePicker.setDateSelectionAble((LocalDate LocalDate) -> !LocalDate.isAfter(LocalDate.now()));
@@ -234,9 +235,9 @@ public class EnterProfile extends JPanel implements ActionListener {
 
         // weightField textField ------------------------------------
         weightField = new JTextField();
-        weightField.setBounds(110, 287, 140, fieldSpaceFontSize);
+        weightField.setBounds(120, 287, 80, fieldSpaceFontSize);
         weightField.setBackground(Constants.Constants.COLOR_BACK);
-        weightField.setForeground(Color.WHITE);
+        weightField.setForeground(Constants.Constants.COLOR_WHITE);
         weightField.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, fieldFontSize));
         weightField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Constants.Constants.COLOR_Light_Grey));
         weightField.getDocument().addDocumentListener(new DocumentListener() {
@@ -255,6 +256,14 @@ public class EnterProfile extends JPanel implements ActionListener {
             }
         });
         this.add(weightField);
+        
+        // weightField label ------------------------------------
+        JLabel weightLabelKg = new JLabel("Kg");
+        weightLabelKg.setBounds(190, 275, 50, 50);
+        weightLabelKg.setHorizontalAlignment(SwingConstants.RIGHT);
+        weightLabelKg.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, labelFontSize));
+        weightLabelKg.setForeground(Constants.Constants.COLOR_Light_Grey); // change color font
+        this.add(weightLabelKg);
 
         // heightLabel label--------------------------------------
         JLabel heightLabel = new JLabel("Height: ");
@@ -266,9 +275,9 @@ public class EnterProfile extends JPanel implements ActionListener {
 
         // heightLabel field ------------------------------------
         heightField = new JTextField();
-        heightField.setBounds(110, 337, 140, fieldSpaceFontSize);
+        heightField.setBounds(120, 337, 80, fieldSpaceFontSize);
         heightField.setBackground(Constants.Constants.COLOR_BACK);
-        heightField.setForeground(Color.WHITE);
+        heightField.setForeground(Constants.Constants.COLOR_WHITE);
         heightField.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, fieldFontSize));
         heightField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Constants.Constants.COLOR_Light_Grey));
         heightField.getDocument().addDocumentListener(new DocumentListener() {
@@ -287,6 +296,14 @@ public class EnterProfile extends JPanel implements ActionListener {
             }
         });
         this.add(heightField);
+        
+        // heightLabel label--------------------------------------
+        JLabel heightLabelCm = new JLabel("cm");
+        heightLabelCm.setBounds(190, 325, 50, 50);
+        heightLabelCm.setHorizontalAlignment(SwingConstants.RIGHT);
+        heightLabelCm.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, labelFontSize));
+        heightLabelCm.setForeground(Constants.Constants.COLOR_Light_Grey);
+        this.add(heightLabelCm);
 
         // save button ---------------------------------------
         ImageIcon green = new ImageIcon("img/green.png");

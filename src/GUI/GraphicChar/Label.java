@@ -33,11 +33,11 @@ public class Label extends JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        calValue = new javax.swing.JLabel();
-        fatValue = new javax.swing.JLabel();
-        carbValue = new javax.swing.JLabel();
+        calPerc = new javax.swing.JLabel();
+        fatPerc = new javax.swing.JLabel();
+        carbPerc = new javax.swing.JLabel();
         carbs = new javax.swing.JLabel();
-        proValue = new javax.swing.JLabel();
+        proPerc = new javax.swing.JLabel();
         fat = new javax.swing.JLabel();
         calories = new javax.swing.JLabel();
         prot = new javax.swing.JLabel();
@@ -49,16 +49,20 @@ public class Label extends JPanel {
         snack = new javax.swing.JLabel();
         bfValue = new javax.swing.JLabel();
         lValue = new javax.swing.JLabel();
+        calValue = new javax.swing.JLabel();
+        fatValue = new javax.swing.JLabel();
+        carbValue = new javax.swing.JLabel();
+        proValue = new javax.swing.JLabel();
 
-        calValue.setText("2500");
+        calPerc.setText("0");
 
-        fatValue.setText("500");
+        fatPerc.setText("0");
 
-        carbValue.setText("1200");
+        carbPerc.setText("0");
 
         carbs.setText("Carbs");
 
-        proValue.setText("800");
+        proPerc.setText("0");
 
         fat.setText("Fat");
 
@@ -66,11 +70,11 @@ public class Label extends JPanel {
 
         prot.setText("Protein");
 
-        dValue.setText("910");
+        dValue.setText("0");
 
         dinner.setText("Dinner");
 
-        sValue.setText("250");
+        sValue.setText("0");
 
         lunch.setText("Lunch");
 
@@ -78,51 +82,53 @@ public class Label extends JPanel {
 
         snack.setText("Snacks");
 
-        bfValue.setText("1100");
+        bfValue.setText("0");
 
-        lValue.setText("890");
+        lValue.setText("0");
+
+        calValue.setText("0");
+
+        fatValue.setText("0");
+
+        carbValue.setText("0");
+
+        proValue.setText("0");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(35, 35, 35)
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(prot)
+                    .addComponent(calories)
+                    .addComponent(carbs)
+                    .addComponent(fat))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(carbs)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(carbValue))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(fat)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(fatValue))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(calories)
-                        .addGap(18, 18, 18)
-                        .addComponent(calValue))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(prot)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(proValue)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(dinner)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(dValue))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lunch)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lValue))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(bfast)
-                        .addGap(18, 18, 18)
-                        .addComponent(bfValue))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(snack)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(sValue)))
+                    .addComponent(fatValue, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(carbValue, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(proValue, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(calValue, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(fatPerc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(carbPerc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(proPerc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(calPerc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(dinner)
+                    .addComponent(lunch)
+                    .addComponent(bfast)
+                    .addComponent(snack))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(sValue, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(bfValue, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lValue, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(dValue, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -135,9 +141,9 @@ public class Label extends JPanel {
                             .addComponent(bfast)
                             .addComponent(bfValue))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lunch)
-                            .addComponent(lValue))
+                            .addComponent(lValue, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(dinner)
@@ -149,20 +155,24 @@ public class Label extends JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(calories)
+                            .addComponent(calPerc)
                             .addComponent(calValue))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(fat)
+                            .addComponent(fatPerc)
                             .addComponent(fatValue))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(carbs)
+                            .addComponent(carbPerc)
                             .addComponent(carbValue))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(prot)
+                            .addComponent(proPerc)
                             .addComponent(proValue))))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -174,16 +184,16 @@ public class Label extends JPanel {
                 RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setRenderingHints(rh);
 
-        Ellipse2D.Double e1 = new Ellipse2D.Double(5,calories.getY(),w,h);
+        Ellipse2D.Double e1 = new Ellipse2D.Double(2,calories.getY(),w,h);
         g2d.setColor(Constants.COLOR_SMK_WHITE);
         g2d.fill(e1);
-        Ellipse2D.Double e2 = new Ellipse2D.Double(5,fat.getY(),w,h);
+        Ellipse2D.Double e2 = new Ellipse2D.Double(2,fat.getY(),w,h);
         g2d.setColor(Constants.COLOR_redFat);
         g2d.fill(e2);
-        Ellipse2D.Double e3 = new Ellipse2D.Double(5,carbs.getY(),w,h);
+        Ellipse2D.Double e3 = new Ellipse2D.Double(2,carbs.getY(),w,h);
         g2d.setColor(Constants.COLOR_yellowCarb);
         g2d.fill(e3);
-        Ellipse2D.Double e4 = new Ellipse2D.Double(5,prot.getY(),w,h);
+        Ellipse2D.Double e4 = new Ellipse2D.Double(2,prot.getY(),w,h);
         g2d.setColor(Constants.COLOR_greenPro);
         g2d.fill(e4);
     }
@@ -191,16 +201,20 @@ public class Label extends JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bfValue;
     private javax.swing.JLabel bfast;
+    private javax.swing.JLabel calPerc;
     private javax.swing.JLabel calValue;
     private javax.swing.JLabel calories;
+    private javax.swing.JLabel carbPerc;
     private javax.swing.JLabel carbValue;
     private javax.swing.JLabel carbs;
     private javax.swing.JLabel dValue;
     private javax.swing.JLabel dinner;
     private javax.swing.JLabel fat;
+    private javax.swing.JLabel fatPerc;
     private javax.swing.JLabel fatValue;
     private javax.swing.JLabel lValue;
     private javax.swing.JLabel lunch;
+    private javax.swing.JLabel proPerc;
     private javax.swing.JLabel proValue;
     private javax.swing.JLabel prot;
     private javax.swing.JLabel sValue;
@@ -212,6 +226,55 @@ public class Label extends JPanel {
      */
     public javax.swing.JLabel getBfValue() {
         return bfValue;
+    }
+
+    /**
+     * @return the calValue
+     */
+    public javax.swing.JLabel getCalPerc() {
+        return calPerc;
+    }
+
+    /**
+     * @return the carbValue
+     */
+    public javax.swing.JLabel getCarbPerc() {
+        return carbPerc;
+    }
+
+    /**
+     * @return the dValue
+     */
+    public javax.swing.JLabel getdValue() {
+        return dValue;
+    }
+
+    /**
+     * @return the fatValue
+     */
+    public javax.swing.JLabel getFatPerc() {
+        return fatPerc;
+    }
+
+    /**
+     * @return the lValue
+     */
+    public javax.swing.JLabel getlValue() {
+        return lValue;
+    }
+
+    /**
+     * @return the proValue
+     */
+    public javax.swing.JLabel getProPerc() {
+        return proPerc;
+    }
+
+    /**
+     * @return the sValue
+     */
+    public javax.swing.JLabel getsValue() {
+        return sValue;
     }
 
     /**
@@ -229,13 +292,6 @@ public class Label extends JPanel {
     }
 
     /**
-     * @return the dValue
-     */
-    public javax.swing.JLabel getdValue() {
-        return dValue;
-    }
-
-    /**
      * @return the fatValue
      */
     public javax.swing.JLabel getFatValue() {
@@ -243,23 +299,9 @@ public class Label extends JPanel {
     }
 
     /**
-     * @return the lValue
-     */
-    public javax.swing.JLabel getlValue() {
-        return lValue;
-    }
-
-    /**
      * @return the proValue
      */
     public javax.swing.JLabel getProValue() {
         return proValue;
-    }
-
-    /**
-     * @return the sValue
-     */
-    public javax.swing.JLabel getsValue() {
-        return sValue;
     }
 }
