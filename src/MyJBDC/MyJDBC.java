@@ -28,22 +28,33 @@ import java.util.List;
  */
 public class MyJDBC {
 
-    private static final String DB_URL = "jdbc:mysql://127.0.0.1:3306/ct";
-    private static final String DB_USERNAME = "root";
-    private static final String DB_PASSWORD = "@.MySQL";
+//    private static final String DB_URL = "jdbc:mysql://127.0.0.1:3306/ct";
+//    private static final String DB_USERNAME = "root";
+//    private static final String DB_PASSWORD = "@.MySQL";
+    private static final String DB_URL = "jdbc:derby:CalorieTracker;create=true";
+    private static final String DB_USERNAME = "CHG";
+    private static final String DB_PASSWORD = "CHG";
     private static final String DB_USER_TABLE = "users";
     private static final String DB_USER_PROFILE = "user_profile";
     private static final String DB_ITEMS_TABLE = "items";
+    private static Connection connection = null;
+
+    // start server connection
+    public static void connection() {
+        try {
+            connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+        } catch (SQLException ex) {
+            Logger.getLogger(MyJDBC.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     // register new users
     public static boolean register(String email, String password) {
         try {
             // check if user exist in the DB
             if (!checkUser(email)) {
-                try ( Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD); //NOSONAR
-                          PreparedStatement insertUser = connection.prepareStatement(
-                                "INSERT INTO " + DB_USER_TABLE + "(EMAIL, PASSWORD) VALUES(?,?)"
-                        )) {
+                try ( PreparedStatement insertUser = connection.prepareStatement(
+                        "INSERT INTO " + DB_USER_TABLE + "(EMAIL, PASSWORD) VALUES(?,?)")) {
 
                     insertUser.setString(1, email);
                     insertUser.setString(2, password);
@@ -61,14 +72,13 @@ public class MyJDBC {
 
     // check if the username or email exist in the user table before creating a new user
     private static boolean checkUser(String email) {
-        try ( Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD); //NOSONAR
-                  PreparedStatement checkUserExist = connection.prepareStatement( //NOSONAR
-                        " SELECT * FROM " + DB_USER_TABLE + " WHERE BINARY email = ? ")) {
+        try ( PreparedStatement checkUserExist = connection.prepareStatement(
+                " SELECT * FROM " + DB_USER_TABLE + " WHERE EMAIL = ? ")) {
 
             checkUserExist.setString(1, email);
 
             try ( ResultSet resultSet = checkUserExist.executeQuery()) {
-                if (!resultSet.isBeforeFirst()) {
+                if (!resultSet.next()) {
                     return false;
                 }
             }
@@ -83,21 +93,20 @@ public class MyJDBC {
     // get the user id
     public static int getUserId(String email, String password) {
         int userId = -1; // default to indicate user not found
-        try ( Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD); //NOSONAR
-                  PreparedStatement checkUserExist = connection.prepareStatement(
-                        " SELECT * FROM " + DB_USER_TABLE + " WHERE BINARY EMAIL = ? AND BINARY PASSWORD = ?")) {
+        try ( PreparedStatement checkUserExist = connection.prepareStatement(
+                " SELECT * FROM " + DB_USER_TABLE + " WHERE EMAIL = ? AND PASSWORD = ?")) {
 
             checkUserExist.setString(1, email);
             checkUserExist.setString(2, password);
 
-            ResultSet resultSet = checkUserExist.executeQuery();
+            try ( ResultSet resultSet = checkUserExist.executeQuery()) {
 
-            if (resultSet.next()) {
-                userId = resultSet.getInt("userID");
+                if (resultSet.next()) {
+                    userId = resultSet.getInt("userID");
+                }
             }
-
         } catch (SQLException ex) {
-            Logger.getLogger(MyJDBC.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("user not exist");
         }
 
         return userId;
@@ -108,8 +117,7 @@ public class MyJDBC {
         String checkUser = "SELECT COUNT(*) FROM " + DB_USER_PROFILE + " WHERE USERID = ?";
         String inserInfo = "INSERT INTO " + DB_USER_PROFILE + " VALUES(?,?,?,?,?,?,?)";
         String updateInfo = "UPDATE " + DB_USER_PROFILE + " SET NAME=?,LASTNAME=?,GENDER=?,DOB=?,WEIGHT=?,HEIGHT=? WHERE USERID = ?";
-        try ( Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);//NOSONAR
-                  PreparedStatement checkUserProfile = connection.prepareStatement(checkUser);//NOSONAR
+        try ( PreparedStatement checkUserProfile = connection.prepareStatement(checkUser);//NOSONAR
                   PreparedStatement insertIntoProfile = connection.prepareStatement(inserInfo);//NOSONAR
                   PreparedStatement updateIntoProfile = connection.prepareStatement(updateInfo)) {
 
@@ -147,9 +155,8 @@ public class MyJDBC {
 
     public static Map<String, String> getUserProfile(int ID) {
         Map<String, String> profile = new HashMap();
-        try ( Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);//NOSONAR
-                  PreparedStatement getProfileInfo = connection.prepareStatement(
-                        " SELECT * FROM " + DB_USER_PROFILE + " WHERE USERID = ?")) {
+        try ( PreparedStatement getProfileInfo = connection.prepareStatement(
+                " SELECT * FROM " + DB_USER_PROFILE + " WHERE USERID = ?")) {
 
             getProfileInfo.setInt(1, ID);
 
@@ -181,9 +188,8 @@ public class MyJDBC {
 
     public static void deleteRow(String itemsId) {
         int itemsID = Integer.parseInt(itemsId);
-        try ( Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);//NOSONAR
-                  PreparedStatement deleteRow = connection.prepareStatement(
-                        "DELETE FROM " + DB_ITEMS_TABLE + " WHERE ITEMSID=?")) {
+        try ( PreparedStatement deleteRow = connection.prepareStatement(
+                "DELETE FROM " + DB_ITEMS_TABLE + " WHERE ITEMSID=?")) {
 
             deleteRow.setInt(1, itemsID);
             deleteRow.executeUpdate();
@@ -209,8 +215,7 @@ public class MyJDBC {
                     + "SET DATE=?,MEAL=?, ITEMS=?, QUANTITY=?,QTYPE=?, CALORIE=?,FAT=?,CARBS=?,PROTEIN=?"
                     + " WHERE ITEMSID=? AND USERID = ?";
 
-            try ( Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);//NOSONAR
-                      PreparedStatement inserCalo = connection.prepareStatement(inserCal, Statement.RETURN_GENERATED_KEYS);//NOSONAR
+            try ( PreparedStatement inserCalo = connection.prepareStatement(inserCal, Statement.RETURN_GENERATED_KEYS);//NOSONAR
                       PreparedStatement updateCalo = connection.prepareStatement(updateCal)) {
 
                 if (itemsID > -1) {
@@ -269,9 +274,8 @@ public class MyJDBC {
 
         Map<String, List<Map<String, String>>> dateItemsInfo = new LinkedHashMap<>();
 
-        try ( Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD); //NOSONAR
-                  PreparedStatement retriveInfo = connection.prepareStatement(
-                        "SELECT * FROM " + DB_ITEMS_TABLE + " WHERE USERID = ? ")) {
+        try ( PreparedStatement retriveInfo = connection.prepareStatement(
+                "SELECT * FROM " + DB_ITEMS_TABLE + " WHERE USERID = ? ")) {
 
             retriveInfo.setInt(1, userID);
 
@@ -308,5 +312,14 @@ public class MyJDBC {
         }
 
         return dateItemsInfo;
+    }
+
+    public static void connectionClose() {
+        System.out.println("connection close");
+        try {
+            connection.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(MyJDBC.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

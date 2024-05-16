@@ -10,6 +10,7 @@ import GUI.LogIn;
 import GUI.MealGUI.Breakfast;
 import GUI.OptionMenu;
 import GUI.Register;
+import MyJBDC.MyJDBC;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import java.awt.EventQueue;
 
@@ -24,13 +25,12 @@ public class Main {
      */
     public static void main(String[] args) {
         FlatMacDarkLaf.setup();
-        EventQueue.invokeLater(()->
-//        new Init().setVisible(true)
-//        new LogIn().setVisible(true)
-//        new Register().setVisible(true)
-        new OptionMenu().setVisible(true)
-
-            );
+        MyJDBC.connection();
+        // shutdown hook to close the connection when the program ends
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            MyJDBC.connectionClose();
+        }));
+        EventQueue.invokeLater(() -> new Init().setVisible(true));
     }
-    
+
 }

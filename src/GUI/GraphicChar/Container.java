@@ -71,10 +71,7 @@ public class Container extends JPanel {
     }
 
     public void getInformation() {
-        stInfo = MyJDBC.retrieveOneWeek(1);//UserProfile.getID()
-//        for (Map.Entry<String, List<Map<String, String>>> entry : stInfo.entrySet()) {
-//            System.out.println("key set " + entry.toString());
-//        }
+        stInfo = MyJDBC.retrieveOneWeek(UserProfile.getID());
         calculateValues();
     }
 

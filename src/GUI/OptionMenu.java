@@ -124,6 +124,8 @@ public class OptionMenu extends Form implements ActionListener {
             caloriesBtn.setFont(Constants.Constants.FONT_Light.deriveFont(Font.PLAIN, 10));
             profileBtn.setBackground(Constants.Constants.COLOR_BACK);
             profileBtn.setFont(Constants.Constants.FONT_Light.deriveFont(Font.PLAIN, 10));
+            
+            stadistics.c.getInformation();// called to update info
         }
     }
 
