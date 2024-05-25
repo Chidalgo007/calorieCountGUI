@@ -64,6 +64,9 @@ public class AddLineWithInfo {
                     macroCal.getCarbsArray().add(dateStored.get(i).get("carbs"));
                     macroCal.getProteinArray().add(dateStored.get(i).get("protein"));
                 }
+                if (!line.getItemID().getText().isEmpty()||!line.getItemID().getText().equals("-1")){
+                    line.addActionListenerToDeleteBtn();
+                }
                 if (!line.getCalorie().getText().isEmpty()) { // prevent to create lines with empty information
                     line.createLine();
                 }

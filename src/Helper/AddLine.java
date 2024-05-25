@@ -207,7 +207,6 @@ public final class AddLine implements ActionListener {
         delete = new JButton("Delete (-)");
         delete.putClientProperty("linePanel", line);
         delete.putClientProperty("mealType", mealType);
-        delete.addActionListener(this);
 
         save = new JButton("Save");
         save.addActionListener(this);
@@ -269,7 +268,7 @@ public final class AddLine implements ActionListener {
 
     public boolean fieldValidationCalorie() {
         String inputCalorie = getCalorie().getText().trim();
-        if (inputCalorie.equals("-1") || inputCalorie.equals("0") || inputCalorie.isEmpty()) {
+        if ( inputCalorie.isEmpty()||(Integer.parseInt(inputCalorie) < 1)) {
             calorie.setBackground(Constants.COLOR_Error);
             return false;
         } else {
@@ -277,6 +276,10 @@ public final class AddLine implements ActionListener {
             calorie.setBackground(null);
         }
         return true;
+    }
+//---------------------- Action Listener ---------------------------------------
+    public void addActionListenerToDeleteBtn() {
+        delete.addActionListener(this);
     }
 
     @Override

@@ -200,7 +200,6 @@ public class MyJDBC {
     public static int insertIntoItems(int userID, String dates, String meal, String items, String quantity,
             String qtype, String calorie, String carbs, String fat, String protein) {
         try {
-//            int itemsID = Integer.parseInt(itemsId);
             SimpleDateFormat dateforamt = new SimpleDateFormat("dd-MM-yyyy");
             java.util.Date utilDate = dateforamt.parse(dates);
             Date sqlDate = new Date(utilDate.getTime());

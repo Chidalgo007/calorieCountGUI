@@ -13,6 +13,7 @@ import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatLaf;
 import java.awt.Dimension;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JPanel;
@@ -21,10 +22,11 @@ import net.miginfocom.swing.MigLayout;
 /**
  *
  * @author chg
- * 
- * this class manage the charplot, Y-labels , the labels ans the dates displayed.
- * retrive the information and calculate the values and pass them to the correspondent classes
- * 
+ *
+ * this class manage the charplot, Y-labels , the labels ans the dates
+ * displayed. retrive the information and calculate the values and pass them to
+ * the correspondent classes
+ *
  */
 public class Container extends JPanel {
 
@@ -126,10 +128,10 @@ public class Container extends JPanel {
             }
         }
         //assign value of y axis for calorie max
-        int temp=0;
-        for(int i=0;i<cal.length;i++){
-            if(cal[i]>temp){
-                temp=cal[i];
+        int temp = 0;
+        for (int i = 0; i < cal.length; i++) {
+            if (cal[i] > temp) {
+                temp = cal[i];
             }
         }
         charPlot.setTotalCalChar(temp);

@@ -90,6 +90,7 @@ public class MacrosCalculations {
             totalProtein += Integer.parseInt(s);
         }
         refreshValue(); // parent window, breakfast, lunch, dinner, snacks
+
     }
 
     private void refreshValue() {
@@ -113,6 +114,7 @@ public class MacrosCalculations {
             stProteinMacro = "0%";
             stCalMacro = "0";
         }
+
     }
 
 }

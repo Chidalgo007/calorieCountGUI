@@ -61,7 +61,7 @@ public class API_DB_InfoManager {
             String calorie, String carbs, String fat, String protein) {
 
         int userid = UserProfile.getID();
-        if (Integer.parseInt(calorie) < 1) { // this prenvet to get a false item id.
+        if (Integer.parseInt(calorie) > 1) { // this prenvet to get a false item id.
             int id = MyJDBC.insertIntoItems(userid, date, meal, item, quantity, qtype, calorie, carbs, fat, protein);
             return id;
         }

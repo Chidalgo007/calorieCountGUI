@@ -54,20 +54,19 @@ public final class AddLineManager {
             if (!item_ID.isEmpty() && !item_ID.equals("-1")) {
                 MyJDBC.deleteRow(item_ID); // remove row from DB 
 
-                    // remove line box from conteiner
-                    line.getScrollablemiddleContent().remove(lineToRemove);
-                    // remvoe btnDelete from itself
-                    line.getDeleteBtnArray().remove(index);
-                    line.getLineArray().remove(index);
-                    line.getItemIDArray().remove(index);
-                    line.getQArray().remove(index);
-                    line.getQnArray().remove(index);
-                    line.getItemArray().remove(index);
-                    macroCal.getCalorieArray().remove(index);
-                    macroCal.getFatArray().remove(index);
-                    macroCal.getCarbsArray().remove(index);
-                    macroCal.getProteinArray().remove(index);
-        
+                // remove line box from conteiner
+                line.getScrollablemiddleContent().remove(lineToRemove);
+                // remvoe btnDelete from itself
+                line.getDeleteBtnArray().remove(index);
+                line.getLineArray().remove(index);
+                line.getItemIDArray().remove(index);
+                line.getQArray().remove(index);
+                line.getQnArray().remove(index);
+                line.getItemArray().remove(index);
+                macroCal.getCalorieArray().remove(index);
+                macroCal.getFatArray().remove(index);
+                macroCal.getCarbsArray().remove(index);
+                macroCal.getProteinArray().remove(index);
             }
 
             // refresh container after removing the lone box to reflect the changes
@@ -76,7 +75,6 @@ public final class AddLineManager {
             macroCal.calculateMacro();
             refresh();
         }
-
     }
 
     public void handleSaveButtonAction(ActionEvent e) {
@@ -89,10 +87,10 @@ public final class AddLineManager {
             api.getAPIinfo(Quan, QnType, items);
             String cal = api.getCaloriesInfo().get("calories");
             line.getCalorie().setText(cal);
-            macroCal.getCalorieArray().add(cal);
         }
 
         if (line.fieldValidationCalorie()) {
+            macroCal.getCalorieArray().add(line.getCalorie().getText());
             // get fat, prot, and carb from API Map
             String food = api.getCaloriesInfo().get("food");
             // add them to the arrays
@@ -125,7 +123,6 @@ public final class AddLineManager {
     private void insertMyJDBC() {
         date = EC.getShareDate();
 
-//        String itemid = line.getItemID().getText().isEmpty() ? "-1" : line.getItemID().getText();
         String item = line.getItem().getText();
         String Quan = line.getQ().getText();
         String QnType = line.getQn().getSelectedItem().toString();
@@ -139,6 +136,7 @@ public final class AddLineManager {
         if (id != -1) {
             line.getItemID().setText(String.valueOf(id));
             line.getItemIDArray().add(line.getItemID());
+            line.addActionListenerToDeleteBtn();
         }
     }
 // ================================== UPDATE ITEMS ON EACH MEAL ===================
