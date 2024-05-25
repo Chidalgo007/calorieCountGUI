@@ -77,11 +77,11 @@ public class EnterCalories extends JPanel implements ActionListener {
     private JButton snacksBtn;
 
     private JButton[] btnFieldsArray = {};
-
-    private final ImageIcon bfastIcon = new ImageIcon("./img/bfast.png");
-    private final ImageIcon lunchIcon = new ImageIcon("./img/lunch.png");
-    private final ImageIcon dinnerIcon = new ImageIcon("./img/dinner.png");
-    private final ImageIcon snackIcon = new ImageIcon("./img/snack.png");
+    
+    private final ImageIcon bfastIcon = new ImageIcon(getClass().getClassLoader().getResource("bfast.png"));
+    private final ImageIcon lunchIcon = new ImageIcon(getClass().getClassLoader().getResource("lunch.png"));
+    private final ImageIcon dinnerIcon = new ImageIcon(getClass().getClassLoader().getResource("dinner.png"));
+    private final ImageIcon snackIcon = new ImageIcon(getClass().getClassLoader().getResource("snack.png"));
 
     public EnterCalories() {
         bfast = new Breakfast(this);
@@ -100,10 +100,10 @@ public class EnterCalories extends JPanel implements ActionListener {
         header = new JPanel(new FlowLayout(FlowLayout.LEFT));
         header.setBackground(Constants.COLOR_BACK);
         JLabel welcome = new JLabel("Welcome ");
-        welcome.setFont(Constants.FONT_Medium.deriveFont(15));
+        welcome.setFont(Constants.FONT_Medium.deriveFont(Font.PLAIN,14));
 
         nameF.setText(UserProfile.getProfile().get("name"));
-        nameF.setFont(Constants.FONT_SemiBold.deriveFont(17));
+        nameF.setFont(Constants.FONT_SemiBold.deriveFont(Font.PLAIN,15));
 
 // ---- datepicker ------------------
         JFormattedTextField date = new JFormattedTextField();

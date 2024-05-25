@@ -4,6 +4,7 @@
  */
 package MyJBDC;
 
+import com.mysql.cj.jdbc.DatabaseMetaData;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -28,9 +29,6 @@ import java.util.List;
  */
 public class MyJDBC {
 
-//    private static final String DB_URL = "jdbc:mysql://127.0.0.1:3306/ct";
-//    private static final String DB_USERNAME = "root";
-//    private static final String DB_PASSWORD = "@.MySQL";
     private static final String DB_URL = "jdbc:derby:CalorieTracker;create=true";
     private static final String DB_USERNAME = "CHG";
     private static final String DB_PASSWORD = "CHG";

@@ -12,7 +12,8 @@ import javax.swing.JFrame;
  * @author chg
  */
 public class Form extends JFrame {
-    ImageIcon icon = new ImageIcon("img/logo.png");
+
+    ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("logo.png"));
     public Form(String title){
         super(title);
         setIconImage(icon.getImage());

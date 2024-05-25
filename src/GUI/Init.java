@@ -33,7 +33,7 @@ public class Init extends Form implements ActionListener {
     private void addGUIComponents() {
         setLayout(null);
         
-        ImageIcon icon = new ImageIcon("img/logo.png");
+        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("logo.png"));
         int width = (int) (icon.getIconWidth()*0.2);
         int height = (int) (icon.getIconHeight()*0.2);
         Image resizedImage = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);

@@ -6,6 +6,8 @@
             <name>ASSIGNMENT_2</name>
             <source-roots>
                 <root id="src.dir"/>
+                <root id="src.img.dir"/>
+                <root id="src.fonts.dir"/>
             </source-roots>
             <test-roots>
                 <root id="test.src.dir"/>

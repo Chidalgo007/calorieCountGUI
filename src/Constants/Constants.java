@@ -9,6 +9,7 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,7 +18,7 @@ import java.util.logging.Logger;
  * @author chg
  */
 public class Constants {
-    
+
     //With and Heigh
     public static final int WIDTH = 320;
     public static final int HEIGHT = 520;
@@ -35,22 +36,25 @@ public class Constants {
     public static final Color COLOR_yellowCarb = Color.decode("#E0AD13");
     public static final Color COLOR_redFat = Color.decode("#930909");
     public static final Color COLOR_greenPro = Color.decode("#07CE4D");
-    
 
-    // Fonts
-    public static Font FONT_Light = loadFont("fonts/MontserratAlternates-Light.ttf");
-    public static Font FONT_Medium = loadFont("fonts/MontserratAlternates-Medium.ttf");
-    public static Font FONT_Regular = loadFont("fonts/MontserratAlternates-Regular.ttf");
-    public static Font FONT_SemiBold = loadFont("fonts/MontserratAlternates-SemiBold.ttf");
-    public static Font FONT_Neon = loadFont("fonts/TiltNeon-Regular-VariableFont_XROT,YROT.ttf");
     // border
     public static int btnRadius = 15;
     public static int btnWidth = 200;
-    
-    private static Font loadFont(String path) {
+
+    // Fonts
+    public static Font FONT_Light = loadFont("MontserratAlternates-Light.ttf");
+    public static Font FONT_Medium = loadFont("MontserratAlternates-Medium.ttf");
+    public static Font FONT_Regular = loadFont("MontserratAlternates-Regular.ttf");
+    public static Font FONT_SemiBold = loadFont("MontserratAlternates-SemiBold.ttf");
+    public static Font FONT_Neon = loadFont("TiltNeon-Regular-VariableFont_XROT,YROT.ttf");
+
+    private static Font loadFont(String customFont) {
         try {
-            File font = new File(path);
-            return Font.createFont(Font.TRUETYPE_FONT, font).deriveFont(12f);
+            InputStream fontStream = Constants.class.getClassLoader().getResourceAsStream(customFont);
+            if (fontStream == null) {
+                throw new IOException("Font resource not found: " + customFont);
+            }
+            return Font.createFont(Font.TRUETYPE_FONT, fontStream);
         } catch (IOException | FontFormatException ex) {
             Logger.getLogger(Constants.class.getName()).log(Level.SEVERE, null, ex);
         }

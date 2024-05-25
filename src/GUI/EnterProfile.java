@@ -268,7 +268,7 @@ public class EnterProfile extends JPanel implements ActionListener {
         this.add(heightLabelCm);
 
         // save button ---------------------------------------
-        ImageIcon green = new ImageIcon("img/green.png");
+        ImageIcon green = new ImageIcon(getClass().getClassLoader().getResource("green.png"));
         Image greenScale = green.getImage().getScaledInstance((int) (green.getIconWidth() * 0.4),
                 (int) (green.getIconHeight() * 0.4), Image.SCALE_SMOOTH);
         ImageIcon greenIcon = new ImageIcon(greenScale);
@@ -286,7 +286,7 @@ public class EnterProfile extends JPanel implements ActionListener {
         this.add(saveBtn);
 
         // clear button ---------------------------------------
-        ImageIcon clear = new ImageIcon("img/x.png");
+        ImageIcon clear = new ImageIcon(getClass().getClassLoader().getResource("x.png"));
         Image clearScale = clear.getImage().getScaledInstance((int) (clear.getIconWidth() * 0.3),
                 (int) (clear.getIconHeight() * 0.3), Image.SCALE_SMOOTH);
         ImageIcon clearIcon = new ImageIcon(clearScale);
