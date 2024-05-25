@@ -199,10 +199,10 @@ public class MyJDBC {
         }
     }
 
-    public static int insertIntoItems(String itemsId, int userID, String dates, String meal, String items, String quantity,
+    public static int insertIntoItems(int userID, String dates, String meal, String items, String quantity,
             String qtype, String calorie, String carbs, String fat, String protein) {
         try {
-            int itemsID = Integer.parseInt(itemsId);
+//            int itemsID = Integer.parseInt(itemsId);
             SimpleDateFormat dateforamt = new SimpleDateFormat("dd-MM-yyyy");
             java.util.Date utilDate = dateforamt.parse(dates);
             Date sqlDate = new Date(utilDate.getTime());
@@ -211,52 +211,32 @@ public class MyJDBC {
             String inserCal = "INSERT INTO " + DB_ITEMS_TABLE + ""
                     + " (userID, date, meal, items, quantity, qtype, calorie, fat, carbs, protein) "
                     + " VALUES(?,?,?,?,?,?,?,?,?,?)";
-            String updateCal = "UPDATE " + DB_ITEMS_TABLE + " "
-                    + "SET DATE=?,MEAL=?, ITEMS=?, QUANTITY=?,QTYPE=?, CALORIE=?,FAT=?,CARBS=?,PROTEIN=?"
-                    + " WHERE ITEMSID=? AND USERID = ?";
 
-            try ( PreparedStatement inserCalo = connection.prepareStatement(inserCal, Statement.RETURN_GENERATED_KEYS);//NOSONAR
-                      PreparedStatement updateCalo = connection.prepareStatement(updateCal)) {
+            try ( PreparedStatement inserCalo = connection.prepareStatement(inserCal, Statement.RETURN_GENERATED_KEYS)) {
 
-                if (itemsID > -1) {
-                    inserCalo.setDate(1, sqlDate);
-                    inserCalo.setString(2, meal);
-                    inserCalo.setString(3, items);
-                    inserCalo.setString(4, quantity);
-                    inserCalo.setString(5, qtype);
-                    inserCalo.setString(6, calorie);
-                    inserCalo.setString(7, fat);
-                    inserCalo.setString(8, carbs);
-                    inserCalo.setString(9, protein);
-                    inserCalo.setInt(10, itemsID);
-                    inserCalo.setInt(11, userID);
+                inserCalo.setInt(1, userID);
+                inserCalo.setDate(2, sqlDate);
+                inserCalo.setString(3, meal);
+                inserCalo.setString(4, items);
+                inserCalo.setString(5, quantity);
+                inserCalo.setString(6, qtype);
+                inserCalo.setString(7, calorie);
+                inserCalo.setString(8, fat);
+                inserCalo.setString(9, carbs);
+                inserCalo.setString(10, protein);
 
-                    updateCalo.executeUpdate();
-                } else {
-                    inserCalo.setInt(1, userID);
-                    inserCalo.setDate(2, sqlDate);
-                    inserCalo.setString(3, meal);
-                    inserCalo.setString(4, items);
-                    inserCalo.setString(5, quantity);
-                    inserCalo.setString(6, qtype);
-                    inserCalo.setString(7, calorie);
-                    inserCalo.setString(8, fat);
-                    inserCalo.setString(9, carbs);
-                    inserCalo.setString(10, protein);
+                int rowsAffected = inserCalo.executeUpdate();
 
-                    int rowsAffected = inserCalo.executeUpdate();
-
-                    if (rowsAffected > 0) {
-                        try ( ResultSet generatedKeys = inserCalo.getGeneratedKeys()) {
-                            if (generatedKeys.next()) {
-                                generatedId = generatedKeys.getInt(1);
-                            } else {
-                                throw new SQLException("Failed to retrieve generated ID.");
-                            }
+                if (rowsAffected > 0) {
+                    try ( ResultSet generatedKeys = inserCalo.getGeneratedKeys()) {
+                        if (generatedKeys.next()) {
+                            generatedId = generatedKeys.getInt(1);
+                        } else {
+                            throw new SQLException("Failed to retrieve generated ID.");
                         }
-                    } else {
-                        throw new SQLException("Insertion failed, no rows affected.");
                     }
+                } else {
+                    throw new SQLException("Insertion failed, no rows affected.");
                 }
 
             } catch (SQLException ex) {
@@ -303,9 +283,7 @@ public class MyJDBC {
                     listItems.add(itemsInfo);
 
                     dateItemsInfo.put(date, listItems);
-
                 }
-
             }
         } catch (SQLException ex) {
             Logger.getLogger(MyJDBC.class.getName()).log(Level.SEVERE, null, ex);
@@ -321,5 +299,10 @@ public class MyJDBC {
         } catch (SQLException ex) {
             Logger.getLogger(MyJDBC.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+// ====================== for testing purpose ==================================
+    public static void setConnection(Connection conn) {
+        connection = conn;
     }
 }

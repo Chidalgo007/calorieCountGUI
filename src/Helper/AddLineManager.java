@@ -49,37 +49,26 @@ public final class AddLineManager {
 // ---------------------- ACTION LISTENER --------------------------------------
     public void handleDeleteButtonAction(JPanel lineToRemove) {
         int index = line.getLineArray().indexOf(lineToRemove);
-//        System.out.println("class lineManager - index: " + index);
-//        System.out.println("class lineManager - index to delete: " +line.getDeleteBtnArray().size());
-//        System.out.println("class lineManager - index to line: " +line.getLineArray().size());
-//        System.out.println("class lineManager - index to items ID: " +line.getItemIDArray().size());
-//        System.out.println("class lineManager - index to Q: " +line.getQArray().size());
-//        System.out.println("class lineManager - index to Qn: " +line.getQnArray().size());
-//        System.out.println("class lineManager - index to items: " +line.getItemArray().size());
-//        System.out.println("class lineManager - index to calor: " +macroCal.getCalorieArray().size());
-//        System.out.println("class lineManager - index to fat: " +macroCal.getFatArray().size());
-//        System.out.println("class lineManager - index to carbs: " +macroCal.getCarbsArray().size());
-//        System.out.println("class lineManager - index to prote: " +macroCal.getProteinArray().size());
-        if (index != -1&&index<macroCal.getCalorieArray().size()) { // check deleteBtn is not empty values (calorie)
+        if (index != -1 && index < macroCal.getCalorieArray().size()) { // check deleteBtn is not empty values (calorie)
             String item_ID = line.getItemIDArray().get(index).getText();
             if (!item_ID.isEmpty() && !item_ID.equals("-1")) {
                 MyJDBC.deleteRow(item_ID); // remove row from DB 
+
+                    // remove line box from conteiner
+                    line.getScrollablemiddleContent().remove(lineToRemove);
+                    // remvoe btnDelete from itself
+                    line.getDeleteBtnArray().remove(index);
+                    line.getLineArray().remove(index);
+                    line.getItemIDArray().remove(index);
+                    line.getQArray().remove(index);
+                    line.getQnArray().remove(index);
+                    line.getItemArray().remove(index);
+                    macroCal.getCalorieArray().remove(index);
+                    macroCal.getFatArray().remove(index);
+                    macroCal.getCarbsArray().remove(index);
+                    macroCal.getProteinArray().remove(index);
+        
             }
-
-            // remove line box from conteiner
-            line.getScrollablemiddleContent().remove(lineToRemove);
-
-            // remvoe btnDelete from itself
-            line.getDeleteBtnArray().remove(index);
-            line.getLineArray().remove(index);
-            line.getItemIDArray().remove(index);
-            line.getQArray().remove(index);
-            line.getQnArray().remove(index);
-            line.getItemArray().remove(index);
-            macroCal.getCalorieArray().remove(index);
-            macroCal.getFatArray().remove(index);
-            macroCal.getCarbsArray().remove(index);
-            macroCal.getProteinArray().remove(index);
 
             // refresh container after removing the lone box to reflect the changes
             FlatLaf.revalidateAndRepaintAllFramesAndDialogs();
@@ -136,7 +125,7 @@ public final class AddLineManager {
     private void insertMyJDBC() {
         date = EC.getShareDate();
 
-        String itemid = line.getItemID().getText().isEmpty() ? "-1" : line.getItemID().getText();
+//        String itemid = line.getItemID().getText().isEmpty() ? "-1" : line.getItemID().getText();
         String item = line.getItem().getText();
         String Quan = line.getQ().getText();
         String QnType = line.getQn().getSelectedItem().toString();
@@ -146,7 +135,7 @@ public final class AddLineManager {
         String protein = macroCal.getProteinArray().get(macroCal.getProteinArray().size() - 1);
 
         // return id of line inserted and add it to itemID of line
-        int id = api.constructInsertion(itemid, date, meal, item, Quan, QnType, calorie, carbs, fat, protein);
+        int id = api.constructInsertion(date, meal, item, Quan, QnType, calorie, carbs, fat, protein);
         if (id != -1) {
             line.getItemID().setText(String.valueOf(id));
             line.getItemIDArray().add(line.getItemID());

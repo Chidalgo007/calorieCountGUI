@@ -65,44 +65,6 @@ public class EnterProfile extends JPanel implements ActionListener {
 
     }
 
-    private void addUserInformation() {
-        String[] fields = {"name", "lastName", "gender", "DOB", "weight", "height"};
-
-        for (String field : fields) {
-            if (UserInfo.UserProfile.getProfile().containsKey(field)) {
-                String st = UserInfo.UserProfile.getProfile().get(field);
-                switch (field) {
-                    case "name":
-                        nameField.setText(st);
-                        break;
-                    case "lastName":
-                        lastNameField.setText(st);
-                        break;
-                    case "gender":
-                        genderField.setSelectedItem(st);
-                        break;
-                    case "DOB":
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-                        try {
-                            LocalDate date = LocalDate.parse(st, formatter);
-
-                            datePicker.setSelectedDate(date);
-                        } catch (DateTimeParseException e) {
-                            e.printStackTrace();
-                        }
-                        break;
-                    case "weight":
-                        weightField.setText(st);
-                        break;
-                    case "height":
-                        heightField.setText(st);
-                        break;
-                }
-            }
-
-        }
-    }
-
     private void addGUIComponent() {
 
         int pageNameWith = 200;
@@ -343,6 +305,46 @@ public class EnterProfile extends JPanel implements ActionListener {
 
     }
 
+        // this method check if the user already update the information on his profile and update the GUI
+    private void addUserInformation() {
+        String[] fields = {"name", "lastName", "gender", "DOB", "weight", "height"};
+
+        for (String field : fields) {
+            if (UserProfile.getProfile().containsKey(field)) {
+                String st = UserInfo.UserProfile.getProfile().get(field);
+                switch (field) {
+                    case "name":
+                        nameField.setText(st);
+                        break;
+                    case "lastName":
+                        lastNameField.setText(st);
+                        break;
+                    case "gender":
+                        genderField.setSelectedItem(st);
+                        break;
+                    case "DOB":
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                        try {
+                            LocalDate date = LocalDate.parse(st, formatter);
+
+                            datePicker.setSelectedDate(date);
+                        } catch (DateTimeParseException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case "weight":
+                        weightField.setText(st);
+                        break;
+                    case "height":
+                        heightField.setText(st);
+                        break;
+                }
+            }
+
+        }
+    }
+    
+    //------------------- Action Performed -------------------------------------
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == saveBtn) {
@@ -366,7 +368,8 @@ public class EnterProfile extends JPanel implements ActionListener {
 
     }
 
-// --------------------------------------Validations ---------------------------
+    
+// --------------------------------Validations ---------------------------------
     private boolean nameValidation() {
         String nameST = nameField.getText();
         if (!nameST.isEmpty()) {

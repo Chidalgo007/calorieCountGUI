@@ -16,7 +16,6 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.AbstractAction;
@@ -72,7 +71,8 @@ public class LogIn extends Form implements ActionListener, MouseListener {
         error.setParagraphAttributes(0, error.getLength(), center, false);
 
         this.add(errorMessage);
-// ---  CONTAINER ------------------------------------------------
+        
+// ----------------  CONTAINER ------------------------------------------------
         JPanel container = new JPanel();
         container.setLayout(null);
         container.setBounds(20, 110, this.getWidth() - 50, 310);
@@ -80,7 +80,7 @@ public class LogIn extends Form implements ActionListener, MouseListener {
 //        container.putClientProperty(FlatClientProperties.STYLE, "arc:20");
         container.setBackground(Constants.COLOR_Light_BAKG);
 
-        // log in label ------------------------------------
+        // ------------- log in label -----------------------------------------
         JLabel logIn = new JLabel("Welcome Back");
         logIn.setBounds(15, 20, Constants.WIDTH, 30);
         logIn.setHorizontalAlignment(SwingConstants.LEFT);
@@ -89,7 +89,7 @@ public class LogIn extends Form implements ActionListener, MouseListener {
         //   welcome.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         container.add(logIn);
 
-        // Log in messase ------------------------------------
+        // ---------------- Log in messase ------------------------------------
         JLabel logInmessage = new JLabel("Please sing in to access your account");
         logInmessage.setBounds(15, 45, Constants.WIDTH, 30);
         logInmessage.setHorizontalAlignment(SwingConstants.LEFT);
@@ -98,7 +98,7 @@ public class LogIn extends Form implements ActionListener, MouseListener {
         //   welcome.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         container.add(logInmessage);
 
-        // username label ------------------------------------
+        // ---------------- username label ------------------------------------
         JLabel emailLabel = new JLabel("Email: ");
         emailLabel.setBounds(15, 125, 100, 20);
         emailLabel.setHorizontalAlignment(SwingConstants.LEFT);
@@ -107,7 +107,7 @@ public class LogIn extends Form implements ActionListener, MouseListener {
         // name.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         container.add(emailLabel);
 
-        // username text Field ------------------------------------
+        // ----------- username text Field ------------------------------------
         emailField = new JTextField();
         emailField.setBounds(70, 124, 160, 20);
         emailField.setOpaque(false);
@@ -116,7 +116,7 @@ public class LogIn extends Form implements ActionListener, MouseListener {
         emailField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Constants.COLOR_Light_Grey));
         container.add(emailField);
 
-        // passwordField label ------------------------------------
+        // ----------- passwordField label ------------------------------------
         JLabel pass = new JLabel("Password: ");
         pass.setBounds(15, 170, 100, 30);
         pass.setHorizontalAlignment(SwingConstants.LEFT);
@@ -125,7 +125,7 @@ public class LogIn extends Form implements ActionListener, MouseListener {
         // pass.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         container.add(pass);
 
-        // passwordField textField ------------------------------------
+        // ------- passwordField textField ------------------------------------
         passwordField = new JPasswordField();
         passwordField.setBounds(100, 170, 130, 20);
         passwordField.setOpaque(false);
@@ -140,7 +140,7 @@ public class LogIn extends Form implements ActionListener, MouseListener {
         rememberMe.setBounds(14, 200, 200, 20);
         container.add(rememberMe, "grow 0");
 
-        // log in button ------------------------------------
+        // ----------------- log in button ------------------------------------
         int btnWith = Constants.btnWidth;
         int btnCenter = (container.getWidth() - btnWith) / 2;
         logInBtn = new JButton("Login");
@@ -162,8 +162,8 @@ public class LogIn extends Form implements ActionListener, MouseListener {
         logInBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         container.add(logInBtn);
 
-        //------- OUT OF CONTAINER --------------------------------
-        // textRegister label ------------------------------------
+        //------------------ OUT OF CONTAINER --------------------------------
+        // ----------- textRegister label ------------------------------------
         JPanel jSignUp = new JPanel(new FlowLayout(FlowLayout.CENTER));
         jSignUp.setOpaque(false);
         jSignUp.setBounds(0, 430, Constants.WIDTH, 20);
@@ -216,7 +216,7 @@ public class LogIn extends Form implements ActionListener, MouseListener {
         signUpLink.setText("<html>Sign Up.</html>");
     }
 
-    // ============= LOGIN =============================
+    // ========================= LOGIN =================================
     private void logIn() {
         String email = emailField.getText();
         String password = new String(this.passwordField.getPassword());

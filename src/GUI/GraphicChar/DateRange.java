@@ -33,12 +33,12 @@ public class DateRange extends JPanel {
     private JLabel dateTo;
     private String[] dateLabel; // short date for char label dates
     private String[] dateTotalInfo; // date for char total info
-    private Container c;
+    private Container container;
 
     public DateRange(Container con) {
         setLayout(new MigLayout("wrap, fillx", "[280]", "0[]0[]0"));
         setBorder(null);
-        c = con;
+        container = con;
         setBackground(Constants.COLOR_Light_BAKG);
         dateLabel = new String[7];
         dateTotalInfo = new String[7];
@@ -65,7 +65,7 @@ public class DateRange extends JPanel {
                 temp = datePicker.getSelectedDate();
                 
                 setRange();
-                c.getInformation();
+                container.getInformation();
             }
         });
 

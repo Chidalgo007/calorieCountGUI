@@ -7,8 +7,6 @@ package Helper;
 import MyJBDC.MyJDBC;
 import UserInfo.UserProfile;
 import com.formdev.flatlaf.FlatLaf;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,10 +22,10 @@ import java.util.Map;
 public class AddLineWithInfo {
 
     private Map<String, List<Map<String, String>>> previousDayInfo = new HashMap<>();
-    private AddLine line;
-    private MacrosCalculations macroCal;
-    private AddLineManager lineManager;
-    private String mealType;
+    private final AddLine line;
+    private final MacrosCalculations macroCal;
+    private final AddLineManager lineManager;
+    private final String mealType;
 
     public AddLineWithInfo(AddLine newLine, MacrosCalculations macroCalo, AddLineManager manager, String meal) {
         line = newLine;
@@ -38,12 +36,13 @@ public class AddLineWithInfo {
 
     public void retrieveInfo() {
         previousDayInfo = MyJDBC.retrieveOneWeek(UserProfile.getID());
-
+//     ------- to check information retrived by the API----------------------------        
 //        for (Map.Entry<String, List<Map<String, String>>> st : previousDayInfo.entrySet()) {
 //            System.out.println(st);
 //        }
     }
 
+    // create new line with information on it according to the day slelected and the meal
     public void allocateInfo(String date) {
         retrieveInfo();
         removeAll();
@@ -76,6 +75,8 @@ public class AddLineWithInfo {
 
     }
 
+    // when click in a meal type, BF, Lunch...remove all the information 
+    // displayed and display updated information
     private void removeAll() {
 
         line.getDeleteBtnArray().clear();
@@ -90,7 +91,7 @@ public class AddLineWithInfo {
         macroCal.getCarbsArray().clear();
         macroCal.getProteinArray().clear();
 
-        // refresh container after removing the lone box to reflect the changes
+        // refresh container after removing the line box to reflect the changes
         FlatLaf.revalidateAndRepaintAllFramesAndDialogs();
 
         macroCal.calculateMacro();

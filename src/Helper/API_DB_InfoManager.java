@@ -27,7 +27,7 @@ public class API_DB_InfoManager {
     public String getProtein() {
         return protein;
     }
-    
+
     public Map<String, String> getCaloriesInfo() {
         return caloriesInfo;
     }
@@ -43,27 +43,28 @@ public class API_DB_InfoManager {
     }
 
     public void getAPIinfo(String Quan, String QnType, String items) {
-        
-            // calling the API    
-            String ing;
-            String ingM;
-            ing = Quan + QnType + " " + items;
-            ingM = ing.replaceAll(" ", "%20");
 
-            // storing the API info in the Map
-            caloriesInfo.clear();
-            caloriesInfo = fetchAPI.fetchAPISingleCalories(ingM);
-            //calories - fat - carbs - protein
+        // calling the API    
+        String ing;
+        String ingM;
+        ing = Quan + QnType + " " + items;
+        ingM = ing.replaceAll(" ", "%20");
+
+        // storing the API info in the Map
+        caloriesInfo.clear();
+        caloriesInfo = fetchAPI.fetchAPISingleCalories(ingM);
+        //calories - fat - carbs - protein
     }
 
     // ----------------- construct Array to insert into MyJDBC -----------------
-    public int constructInsertion(String itemid,String date,String meal,String item,String quantity,String qtype,
-            String calorie,String carbs,String fat,String protein) {
-        
+    public int constructInsertion(String date, String meal, String item, String quantity, String qtype,
+            String calorie, String carbs, String fat, String protein) {
+
         int userid = UserProfile.getID();
-
-        int id = MyJDBC.insertIntoItems(itemid, userid, date, meal, item, quantity, qtype, calorie, carbs, fat, protein);
-
-        return id;
+        if (Integer.parseInt(calorie) < 1) { // this prenvet to get a false item id.
+            int id = MyJDBC.insertIntoItems(userid, date, meal, item, quantity, qtype, calorie, carbs, fat, protein);
+            return id;
+        }
+        return -1;
     }
 }

@@ -38,7 +38,7 @@ public class OptionMenu extends Form implements ActionListener {
 
         enterProfile = new EnterProfile();
         enterCalories = new EnterCalories();
-        stadistics = new CaloriesStadistics(enterCalories);
+        stadistics = new CaloriesStadistics();
 
         container.add(enterProfile, "profile");
         container.add(enterCalories, "calories");
@@ -91,6 +91,8 @@ public class OptionMenu extends Form implements ActionListener {
         cardLayout.show(container, "calories");
     }
 
+    // ----------------------- Action Performed -------------------------------------
+    
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -125,7 +127,7 @@ public class OptionMenu extends Form implements ActionListener {
             profileBtn.setBackground(Constants.Constants.COLOR_BACK);
             profileBtn.setFont(Constants.Constants.FONT_Light.deriveFont(Font.PLAIN, 10));
             
-            stadistics.c.getInformation();// called to update info
+            stadistics.container.getInformation();// called to update info
         }
     }
 

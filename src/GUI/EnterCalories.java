@@ -9,7 +9,6 @@ import GUI.MealGUI.Breakfast;
 import GUI.MealGUI.Dinner;
 import GUI.MealGUI.Lunch;
 import GUI.MealGUI.Snacks;
-import Helper.AddLineWithInfo;
 import UserInfo.UserProfile;
 import com.formdev.flatlaf.FlatClientProperties;
 import java.awt.BorderLayout;
@@ -229,17 +228,9 @@ public class EnterCalories extends JPanel implements ActionListener {
             bFastBtn.setBackground(Constants.COLOR_BACK);
         }
     }
-
-//    private void setDateIfEmpty() {
-//        if (!datePicker.isDateSelected()) {
-//            datePicker.setSelectedDate(LocalDate.now());
-//        }
-//    }
     
     private void notifyDateChange() {
-    // Iterate over active meal windows
-    // Call a method in each meal window to update its content
-    // For example:
+    // call a method in each meal window to update its content acording to date selected
     bfast.updateContentForNewDate(shareDate);
     lunch.updateContentForNewDate(shareDate);
     dinner.updateContentForNewDate(shareDate);

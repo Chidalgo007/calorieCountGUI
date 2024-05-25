@@ -94,13 +94,13 @@ public class MacrosCalculations {
 
     private void refreshValue() {
         float cal = totalCal;
-        float f = totalFat;
-        float c = totalCarb;
-        float p = totalProtein;
+        float fat = totalFat;
+        float carbs = totalCarb;
+        float protein = totalProtein;
         if (cal != 0) {
-            float fatPercentage = (f / cal) * 100;
-            float cabsPercentage = (c / cal) * 100;
-            float proPercentage = (p / cal) * 100;
+            float fatPercentage = (fat / cal) * 100;
+            float cabsPercentage = (carbs / cal) * 100;
+            float proPercentage = (protein / cal) * 100;
 
             stFatMacro = String.format("%.1f%%", fatPercentage);
             stCarbsMacro = String.format("%.1f%%", cabsPercentage);

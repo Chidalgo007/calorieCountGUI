@@ -16,7 +16,7 @@ import javax.swing.*;
  */
 public class Char extends JPanel {
 
-    private int nL;
+    private final int numberOfLines;
     private int totalCal;
     private int[] cal;
     private int[] fat;
@@ -27,7 +27,7 @@ public class Char extends JPanel {
         putClientProperty(FlatClientProperties.STYLE, "" + "arc:20");
         setPreferredSize(new Dimension(Constants.WIDTH - 10, Constants.HEIGHT / 3));
 
-        nL = 6;
+        numberOfLines = 6;
     }
 
     @Override
@@ -39,13 +39,13 @@ public class Char extends JPanel {
 // --------------------------- lines -------------------------------------------    
 
         g.setFont(Constants.FONT_Medium.deriveFont(Font.PLAIN, 9));
-        int y = ((getHeight() - 20) / nL);
-        for (int i = 0; i <= nL; i++) {
+        int y = ((getHeight() - 20) / numberOfLines);
+        for (int i = 0; i <= numberOfLines; i++) {
             g2d.setColor(Constants.COLOR_Light_Grey);
 // -------------------------- Y Axis -------------------------------------------
             int value = 0;
             if (totalCal > 0) {
-                int valueIncre = totalCal / nL;
+                int valueIncre = totalCal / numberOfLines;
                 value = totalCal - valueIncre * i;
             }
             int yPos = (y * i) + 19;

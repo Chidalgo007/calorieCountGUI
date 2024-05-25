@@ -12,7 +12,6 @@ import UserInfo.UserProfile;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatLaf;
 import java.awt.Dimension;
-import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,13 +21,17 @@ import net.miginfocom.swing.MigLayout;
 /**
  *
  * @author chg
+ * 
+ * this class manage the charplot, Y-labels , the labels ans the dates displayed.
+ * retrive the information and calculate the values and pass them to the correspondent classes
+ * 
  */
 public class Container extends JPanel {
 
-    private Char c;
-    private Label l;
-    private LabelDays ld;
-    private DateRange dr;
+    private Char charPlot;
+    private Label labelChar;
+    private LabelDays labelDays;
+    private DateRange dateRange;
 
     private int totalCalorie;
     private int totalFat;
@@ -42,7 +45,7 @@ public class Container extends JPanel {
 
     private Map<String, List<Map<String, String>>> stInfo = new HashMap<>();
 
-    public Container(EnterCalories enterCal) {
+    public Container() {
 
         setPreferredSize(new Dimension(Constants.WIDTH - 10, Constants.HEIGHT - 70));
         putClientProperty(FlatClientProperties.STYLE, "" + "arc:20");
@@ -57,15 +60,15 @@ public class Container extends JPanel {
         bottom.putClientProperty(FlatClientProperties.STYLE, "" + "arc:20");
         bottom.setBackground(Constants.COLOR_Light_BAKG);
 
-        c = new Char();
-        l = new Label();
-        ld = new LabelDays();
-        dr = new DateRange(this);
+        charPlot = new Char();
+        labelChar = new Label();
+        labelDays = new LabelDays();
+        dateRange = new DateRange(this);
 
-        top.add(dr);
-        top.add(c);
-        top.add(ld);
-        bottom.add(l);
+        top.add(dateRange);
+        top.add(charPlot);
+        top.add(labelDays);
+        bottom.add(labelChar);
         add(top);
         add(bottom);
     }
@@ -76,7 +79,7 @@ public class Container extends JPanel {
     }
 
     private void calculateValues() {
-        String[] dates = dr.getDateLabelInfo();
+        String[] dates = dateRange.getDateLabelInfo();
         totalCalorie = 0;
         totalFat = 0;
         totalCarbs = 0;
@@ -98,6 +101,7 @@ public class Container extends JPanel {
                 int tempCarb = 0;
                 int tempProt = 0;
                 for (Map<String, String> entry : stInfo.get(dates[i])) {
+                    // values for labels 
                     totalCalorie += Integer.parseInt(entry.get("calorie"));
                     totalFat += Integer.parseInt(entry.get("fat"));
                     totalCarbs += Integer.parseInt(entry.get("carbs"));
@@ -128,51 +132,51 @@ public class Container extends JPanel {
                 temp=cal[i];
             }
         }
-        c.setTotalCalChar(temp);
+        charPlot.setTotalCalChar(temp);
         //assign values to array in char class
-        c.setCal(cal);
-        c.setFat(fat);
-        c.setCarbs(carbs);
-        c.setProt(prot);
+        charPlot.setCal(cal);
+        charPlot.setFat(fat);
+        charPlot.setCarbs(carbs);
+        charPlot.setProt(prot);
 
         refreshStats();
     }
 
     private void refreshStats() {
         // dates working --------------------------------
-        ld.getMonDate().setText(dr.getDateLabel()[0]);
-        ld.getTuesDate().setText(dr.getDateLabel()[1]);
-        ld.getWedDate().setText(dr.getDateLabel()[2]);
-        ld.getThurDate().setText(dr.getDateLabel()[3]);
-        ld.getFriDate().setText(dr.getDateLabel()[4]);
-        ld.getSatDate().setText(dr.getDateLabel()[5]);
-        ld.getSunDate().setText(dr.getDateLabel()[6]);
+        labelDays.getMonDate().setText(dateRange.getDateLabel()[0]);
+        labelDays.getTuesDate().setText(dateRange.getDateLabel()[1]);
+        labelDays.getWedDate().setText(dateRange.getDateLabel()[2]);
+        labelDays.getThurDate().setText(dateRange.getDateLabel()[3]);
+        labelDays.getFriDate().setText(dateRange.getDateLabel()[4]);
+        labelDays.getSatDate().setText(dateRange.getDateLabel()[5]);
+        labelDays.getSunDate().setText(dateRange.getDateLabel()[6]);
         // ------------------------------- values working 
         if (totalCalorie > 0) {
             Double fat = (totalFat / (double) totalCalorie) * 100;
             Double carbs = (totalCarbs / (double) totalCalorie) * 100;
             Double prot = (totalProtein / (double) totalCalorie) * 100;
 
-            l.getCalPerc().setText("100%");
-            l.getFatPerc().setText(String.format("%.0f", fat) + "%");
-            l.getCarbPerc().setText(String.format("%.0f", carbs) + "%");
-            l.getProPerc().setText(String.format("%.0f", prot) + "%");
+            labelChar.getCalPerc().setText("100%");
+            labelChar.getFatPerc().setText(String.format("%.0f", fat) + "%");
+            labelChar.getCarbPerc().setText(String.format("%.0f", carbs) + "%");
+            labelChar.getProPerc().setText(String.format("%.0f", prot) + "%");
         } else {
-            l.getCalPerc().setText("0");
-            l.getFatPerc().setText("0");
-            l.getCarbPerc().setText("0");
-            l.getProPerc().setText("0");
+            labelChar.getCalPerc().setText("0");
+            labelChar.getFatPerc().setText("0");
+            labelChar.getCarbPerc().setText("0");
+            labelChar.getProPerc().setText("0");
         }
 
-        l.getBfValue().setText(String.valueOf(totalBF));
-        l.getlValue().setText(String.valueOf(totalLunch));
-        l.getdValue().setText(String.valueOf(totalDinner));
-        l.getsValue().setText(String.valueOf(totalSnacks));
+        labelChar.getBfValue().setText(String.valueOf(totalBF));
+        labelChar.getlValue().setText(String.valueOf(totalLunch));
+        labelChar.getdValue().setText(String.valueOf(totalDinner));
+        labelChar.getsValue().setText(String.valueOf(totalSnacks));
 
-        l.getCalValue().setText(String.valueOf(totalCalorie));
-        l.getFatValue().setText(String.valueOf(totalFat));
-        l.getCarbValue().setText(String.valueOf(totalCarbs));
-        l.getProValue().setText(String.valueOf(totalProtein));
+        labelChar.getCalValue().setText(String.valueOf(totalCalorie));
+        labelChar.getFatValue().setText(String.valueOf(totalFat));
+        labelChar.getCarbValue().setText(String.valueOf(totalCarbs));
+        labelChar.getProValue().setText(String.valueOf(totalProtein));
 
         FlatLaf.revalidateAndRepaintAllFramesAndDialogs();
     }
