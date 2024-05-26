@@ -127,7 +127,6 @@ public class MyJDBC {
     }
 
     public static void insertUserProfile(String name, String lastName, String gender, LocalDate date, String weight, String height, int ID) {
-        System.out.println("insert info database");
         Date DOB = null;
         if (date != null) {
             DOB = Date.valueOf(date);

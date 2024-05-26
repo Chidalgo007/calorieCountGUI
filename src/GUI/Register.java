@@ -5,7 +5,7 @@
 package GUI;
 
 import Constants.Constants;
-import Helper.RoundedBorder;
+import GUI_Interaction.RoundedBorder;
 import com.formdev.flatlaf.FlatClientProperties;
 import java.awt.Color;
 import java.awt.Cursor;

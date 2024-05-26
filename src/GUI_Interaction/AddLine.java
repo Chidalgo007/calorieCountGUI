@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Helper;
+package GUI_Interaction;
 
 import Constants.Constants;
 import com.formdev.flatlaf.FlatLaf;
@@ -268,7 +268,7 @@ public final class AddLine implements ActionListener {
 
     public boolean fieldValidationCalorie() {
         String inputCalorie = getCalorie().getText().trim();
-        if ( inputCalorie.isEmpty()||(Integer.parseInt(inputCalorie) < 1)) {
+        if ( inputCalorie.isEmpty()) {
             calorie.setBackground(Constants.COLOR_Error);
             return false;
         } else {

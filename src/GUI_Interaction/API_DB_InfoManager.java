@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Helper;
+package GUI_Interaction;
 
 import API.fetchAPI;
 import MyJBDC.MyJDBC;
@@ -61,10 +61,9 @@ public class API_DB_InfoManager {
             String calorie, String carbs, String fat, String protein) {
 
         int userid = UserProfile.getID();
-        if (Integer.parseInt(calorie) > 1) { // this prenvet to get a false item id.
-            int id = MyJDBC.insertIntoItems(userid, date, meal, item, quantity, qtype, calorie, carbs, fat, protein);
-            return id;
-        }
-        return -1;
+
+        int id = MyJDBC.insertIntoItems(userid, date, meal, item, quantity, qtype, calorie, carbs, fat, protein);
+        return id;
+
     }
 }

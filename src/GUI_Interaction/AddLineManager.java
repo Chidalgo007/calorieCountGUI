@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Helper;
+package GUI_Interaction;
 
 import GUI.EnterCalories;
 import MyJBDC.MyJDBC;
@@ -100,8 +100,11 @@ public final class AddLineManager {
             line.getItem().setText(food.replaceAll("[-'.,/]", " "));
 
             line.getItem().setFocusable(false);
+            line.getItem().setEditable(false);
             line.getQ().setFocusable(false);
+            line.getQ().setEditable(false);
             line.getQn().setFocusable(false);
+            line.getQn().setEditable(false);
 
             macroCal.calculateMacro();
             refresh();

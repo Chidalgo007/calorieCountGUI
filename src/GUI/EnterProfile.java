@@ -349,8 +349,6 @@ public class EnterProfile extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == saveBtn) {
             if (UserProfile.getID() != -1) {
-                System.out.println("Submit profile call");
-                System.out.println("user id: "+UserProfile.getID());
                 gender = (String) this.genderField.getSelectedItem();
                 DOB = datePicker.getSelectedDate();
                 MyJDBC.insertUserProfile(name, lastname, gender, DOB, weight, height, UserProfile.getID());

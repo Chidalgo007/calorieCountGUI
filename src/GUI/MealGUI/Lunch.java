@@ -6,7 +6,7 @@ package GUI.MealGUI;
 
 import Constants.Constants;
 import GUI.EnterCalories;
-import Helper.AddLineManager;
+import GUI_Interaction.AddLineManager;
 import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
