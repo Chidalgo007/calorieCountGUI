@@ -349,10 +349,12 @@ public class EnterProfile extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == saveBtn) {
             if (UserProfile.getID() != -1) {
+                System.out.println("Submit profile call");
+                System.out.println("user id: "+UserProfile.getID());
                 gender = (String) this.genderField.getSelectedItem();
                 DOB = datePicker.getSelectedDate();
                 MyJDBC.insertUserProfile(name, lastname, gender, DOB, weight, height, UserProfile.getID());
-                UserInfo.UserProfile.setProfile(MyJDBC.getUserProfile(UserInfo.UserProfile.getID()));
+                UserProfile.setProfile(MyJDBC.getUserProfile(UserProfile.getID()));
             } else {
                 System.out.println("user not exist = -1 ?..." + UserProfile.getID());
             }

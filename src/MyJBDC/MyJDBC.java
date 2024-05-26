@@ -39,10 +39,26 @@ public class MyJDBC {
 
     // start server connection
     public static void connection() {
+        if (connection != null) {
+            System.out.println("Database is already connected.");
+            return; // Prevents further connection attempts if already connected
+        }
         try {
             connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
         } catch (SQLException ex) {
             Logger.getLogger(MyJDBC.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    // close server connection
+    public static void connectionClose() {
+        if (connection != null) {
+            try {
+                connection.close();
+                connection = null; // Reset the connection to allow reconnection later
+            } catch (SQLException ex) {
+                Logger.getLogger(MyJDBC.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
@@ -111,7 +127,11 @@ public class MyJDBC {
     }
 
     public static void insertUserProfile(String name, String lastName, String gender, LocalDate date, String weight, String height, int ID) {
-        Date DOB = Date.valueOf(date);
+        System.out.println("insert info database");
+        Date DOB = null;
+        if (date != null) {
+            DOB = Date.valueOf(date);
+        }
         String checkUser = "SELECT COUNT(*) FROM " + DB_USER_PROFILE + " WHERE USERID = ?";
         String inserInfo = "INSERT INTO " + DB_USER_PROFILE + " VALUES(?,?,?,?,?,?,?)";
         String updateInfo = "UPDATE " + DB_USER_PROFILE + " SET NAME=?,LASTNAME=?,GENDER=?,DOB=?,WEIGHT=?,HEIGHT=? WHERE USERID = ?";
@@ -287,15 +307,6 @@ public class MyJDBC {
         }
 
         return dateItemsInfo;
-    }
-
-    public static void connectionClose() {
-        System.out.println("connection close");
-        try {
-            connection.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(MyJDBC.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
 // ====================== for testing purpose ==================================

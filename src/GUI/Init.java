@@ -21,7 +21,7 @@ import javax.swing.SwingConstants;
  * @author chg
  */
 public class Init extends Form implements ActionListener {
-    
+
     JButton register;
     JButton logIn;
 
@@ -32,27 +32,26 @@ public class Init extends Form implements ActionListener {
 
     private void addGUIComponents() {
         setLayout(null);
-        
+
         ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("logo.png"));
-        int width = (int) (icon.getIconWidth()*0.2);
-        int height = (int) (icon.getIconHeight()*0.2);
+        int width = (int) (icon.getIconWidth() * 0.2);
+        int height = (int) (icon.getIconHeight() * 0.2);
         Image resizedImage = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
         ImageIcon resizedIcon = new ImageIcon(resizedImage);
-        
-        int iconLabelCenter = (this.getWidth()-resizedIcon.getIconWidth())/2;
+
+        int iconLabelCenter = (this.getWidth() - resizedIcon.getIconWidth()) / 2;
         JLabel iconLabel = new JLabel(resizedIcon);
         iconLabel.setBounds(iconLabelCenter, 100, width, height);
         this.add(iconLabel);
-        
+
         JLabel welcome = new JLabel("Calorie Tracker");
-     //   welcome.setIcon(resizedIcon);
+        //   welcome.setIcon(resizedIcon);
         welcome.setBounds(0, 15, 287, 50);
         welcome.setHorizontalAlignment(SwingConstants.CENTER);
         welcome.setFont(Constants.Constants.FONT_Medium.deriveFont(Font.PLAIN, 20));
         welcome.setForeground(Constants.Constants.COLOR_Light_Grey); // change color font
         //   welcome.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         this.add(welcome);
-
 
         int btnFontSize = 20;
         int btnRadius = Constants.Constants.btnRadius;
@@ -100,12 +99,12 @@ public class Init extends Form implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource()== register){
+        if (e.getSource() == register) {
             Init.this.dispose();
             new Register().setVisible(true);
         }
-        if(e.getSource()== logIn){
-                        Init.this.dispose();
+        if (e.getSource() == logIn) {
+            Init.this.dispose();
             new LogIn().setVisible(true);
         }
     }

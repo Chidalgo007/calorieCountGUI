@@ -4,15 +4,12 @@
  */
 package Main;
 
-import GUI.EnterProfile;
 import GUI.Init;
-import GUI.LogIn;
-import GUI.MealGUI.Breakfast;
-import GUI.OptionMenu;
-import GUI.Register;
 import MyJBDC.MyJDBC;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import java.awt.EventQueue;
+import java.io.File;
+import java.io.IOException;
 
 /**
  *
@@ -20,17 +17,57 @@ import java.awt.EventQueue;
  */
 public class Main {
 
-    /**
-     * @param args the command line arguments
-     */
+    private static final String LOCK_FILE = "app.lock";
+
     public static void main(String[] args) {
-        FlatMacDarkLaf.setup();
-        MyJDBC.connection();
-        // shutdown hook to close the connection when the program ends
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            MyJDBC.connectionClose();
-        }));
-        EventQueue.invokeLater(() -> new Init().setVisible(true));
+        try {
+            if (isAppAlreadyRunning()) {
+                throw new ApplicationAlreadyRunningException("Application is already running.");
+            }
+
+            createLockFile();
+
+            FlatMacDarkLaf.setup();
+            MyJDBC.connection();
+
+            // shutdown hook to close the connection and delete the lock file when the program ends
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                MyJDBC.connectionClose();
+                deleteLockFile();
+            }));
+
+            EventQueue.invokeLater(() -> new Init().setVisible(true));
+        } catch (ApplicationAlreadyRunningException e) {
+            System.err.println(e.getMessage());
+            System.exit(0);
+        }
     }
 
+    private static boolean isAppAlreadyRunning() {
+        File lockFile = new File(LOCK_FILE);
+        return lockFile.exists();
+    }
+
+    private static void createLockFile() {
+        try {
+            new File(LOCK_FILE).createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+    }
+
+    private static void deleteLockFile() {
+        File lockFile = new File(LOCK_FILE);
+        if (lockFile.exists()) {
+            lockFile.delete();
+        }
+    }
+}
+
+class ApplicationAlreadyRunningException extends Exception {
+
+    public ApplicationAlreadyRunningException(String message) {
+        super(message);
+    }
 }

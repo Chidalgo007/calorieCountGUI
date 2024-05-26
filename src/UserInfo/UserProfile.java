@@ -53,9 +53,10 @@ public class UserProfile {
         for (String st : names) {
             if (profile.containsKey(st)) {
                 String toTitle = profile.get(st);
-                String newTitleStyle=toTitle.substring(0,1).toUpperCase()+toTitle.substring(1).toLowerCase();
-                
-                profile.put(st, newTitleStyle);
+                if (!toTitle.isEmpty()) {
+                    String newTitleStyle = toTitle.substring(0, 1).toUpperCase() + toTitle.substring(1).toLowerCase();
+                    profile.put(st, newTitleStyle);
+                }
             }
         }
     }
