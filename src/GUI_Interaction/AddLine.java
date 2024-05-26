@@ -150,7 +150,7 @@ public final class AddLine implements ActionListener {
     }
 
     public void createLine() {
-        line = new JPanel(new MigLayout("wrap 6, insets 0", "[40!][50!][90!]3[5!]2[50!]2[40!]", "[][center]"));
+        line = new JPanel(new MigLayout("wrap 6, insets 0", "[40!][55!][90!]3[5!]2[50!]2[40!]", "[][center]"));
         itemID = new JLabel();
 
         Q = new JTextField(3);
@@ -219,7 +219,7 @@ public final class AddLine implements ActionListener {
         btnPanel.add(save, "width 80!, height 20!");
 
         line.add(Q, "width 40!, height 20!");
-        line.add(Qn, "width 50!, height 20!");
+        line.add(Qn, "width 55!, height 20!");
         line.add(item);
         line.add(separator);
         line.add(calorie);

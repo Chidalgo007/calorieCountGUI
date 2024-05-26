@@ -4,6 +4,7 @@
  */
 package GUI_Interaction;
 
+import Constants.Constants;
 import GUI.EnterCalories;
 import MyJBDC.MyJDBC;
 import com.formdev.flatlaf.FlatLaf;
@@ -86,7 +87,12 @@ public final class AddLineManager {
         if (line.fieldValidationQ() && line.fieldValidationItem()) {
             api.getAPIinfo(Quan, QnType, items);
             String cal = api.getCaloriesInfo().get("calories");
-            line.getCalorie().setText(cal);
+            if (Integer.parseInt(cal) > 9999) {
+                line.getCalorie().setText("9999");
+                line.getCalorie().setForeground(Constants.COLOR_Error);
+            } else {
+                line.getCalorie().setText(cal);
+            }
         }
 
         if (line.fieldValidationCalorie()) {
@@ -130,6 +136,7 @@ public final class AddLineManager {
         String Quan = line.getQ().getText();
         String QnType = line.getQn().getSelectedItem().toString();
         String calorie = line.getCalorie().getText();
+        System.out.println("calorie "+ calorie);
         String carbs = macroCal.getCarbsArray().get(macroCal.getCarbsArray().size() - 1);
         String fat = macroCal.getFatArray().get(macroCal.getFatArray().size() - 1);
         String protein = macroCal.getProteinArray().get(macroCal.getProteinArray().size() - 1);
