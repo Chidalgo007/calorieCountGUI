@@ -9,10 +9,8 @@ while various APIs are utilized to enhance data sources and functionality. This 
 a comprehensive tool to manage their dietary intake, supporting healthier lifestyle choices through </br>
 detailed tracking and clear visualizations.</br>
 <hr>
-<img width="230" alt="ct4" src="https://github.com/Chidalgo007/calorieCountGUI/assets/145306497/70a7c4da-c08b-4c5f-bb66-b5830deb705c">
-<img width="230" alt="ct3" src="https://github.com/Chidalgo007/calorieCountGUI/assets/145306497/590b1f1c-dd91-4af6-a373-271dcd0d9ba1">
-<img width="232" alt="ct2" src="https://github.com/Chidalgo007/calorieCountGUI/assets/145306497/003fc154-d345-4428-8011-2b98fc40a9e0">
-<img width="152" alt="ct1" src="https://github.com/Chidalgo007/calorieCountGUI/assets/145306497/c09209e4-e5aa-4158-a4e9-e818cf61916b">
+<img width="350" alt="ct1" src="https://github.com/Chidalgo007/calorieCountGUI/assets/145306497/bbabd0e2-1b47-4896-a770-1d7cd44e0a4f">
+
 
 The project used an API from Edamam, to review the API: </br>
 https://developer.edamam.com/edamam-docs-nutrition-api  
