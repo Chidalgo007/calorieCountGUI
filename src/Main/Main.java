@@ -10,6 +10,9 @@ import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import java.awt.EventQueue;
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -40,6 +43,8 @@ public class Main {
         } catch (ApplicationAlreadyRunningException e) {
             System.err.println(e.getMessage());
             System.exit(0);
+        } catch (SQLException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

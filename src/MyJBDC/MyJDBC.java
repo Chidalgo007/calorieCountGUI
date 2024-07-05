@@ -4,7 +4,6 @@
  */
 package MyJBDC;
 
-import com.mysql.cj.jdbc.DatabaseMetaData;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -38,7 +37,7 @@ public class MyJDBC {
     private static Connection connection = null;
 
     // start server connection
-    public static void connection() {
+    public static void connection() throws SQLException {
         if (connection != null) {
             System.out.println("Database is already connected.");
             return; // Prevents further connection attempts if already connected
@@ -48,16 +47,77 @@ public class MyJDBC {
         } catch (SQLException ex) {
             Logger.getLogger(MyJDBC.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        // Check if the schema exists and create if it doesn't
+        try (Statement stmt = connection.createStatement()){
+            stmt.execute("CREATE SCHEMA CHG");
+            System.out.println("Schema 'CHG' created.");
+            createTables();
+        } catch (SQLException e) {
+            if (e.getSQLState().equals("X0Y68")) { // SQLState for "Schema already exists"
+                System.out.println("Schema 'CHG' already exists.");
+            } else {
+                throw e;
+            }
+        }
     }
 
-    // close server connection
-    public static void connectionClose() {
+    private static void createTables(){
+         try(Statement stmt = connection.createStatement()){
+
+        // Create users table
+        stmt.execute("CREATE TABLE users ("
+                + "userID INT NOT NULL GENERATED ALWAYS AS IDENTITY, "
+                + "email VARCHAR(40) NOT NULL, "
+                + "password VARCHAR(20) NOT NULL, "
+                + "PRIMARY KEY (userID), "
+                + "UNIQUE (email))");
+
+        // Create user_profile table
+        stmt.execute("CREATE TABLE user_profile ("
+                + "userID INT NOT NULL, "
+                + "name VARCHAR(20) DEFAULT NULL, "
+                + "lastName VARCHAR(20) DEFAULT NULL, "
+                + "gender VARCHAR(6) DEFAULT NULL, "
+                + "DOB DATE DEFAULT NULL, "
+                + "weight VARCHAR(5) DEFAULT NULL, "
+                + "height VARCHAR(3) DEFAULT NULL, "
+                + "PRIMARY KEY (userID), "
+                + "CONSTRAINT user_profile_ibfk_1 FOREIGN KEY (userID) REFERENCES users (userID))");
+
+        // Create items table
+        stmt.execute("CREATE TABLE items ("
+                + "itemsID INT NOT NULL GENERATED ALWAYS AS IDENTITY, "
+                + "userID INT NOT NULL, "
+                + "date DATE NOT NULL, "
+                + "meal VARCHAR(40) NOT NULL, "
+                + "items VARCHAR(40) NOT NULL, "
+                + "quantity VARCHAR(5) DEFAULT NULL, "
+                + "qtype VARCHAR(4) DEFAULT NULL, "
+                + "calorie VARCHAR(4) NOT NULL, "
+                + "fat VARCHAR(4) NOT NULL, "
+                + "carbs VARCHAR(4) NOT NULL, "
+                + "protein VARCHAR(4) NOT NULL, "
+                + "PRIMARY KEY (itemsID), "
+                + "CONSTRAINT items_ibfk_1 FOREIGN KEY (userID) REFERENCES users (userID))");
+        
+         } catch (SQLException ex) {
+            Logger.getLogger(MyJDBC.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+// close server connection
+public static void connectionClose() {
         if (connection != null) {
             try {
                 connection.close();
                 connection = null; // Reset the connection to allow reconnection later
-            } catch (SQLException ex) {
-                Logger.getLogger(MyJDBC.class.getName()).log(Level.SEVERE, null, ex);
+
+
+} catch (SQLException ex) {
+                Logger.getLogger(MyJDBC.class  
+
+.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -76,9 +136,12 @@ public class MyJDBC {
                     insertUser.executeUpdate();
                 }
                 return true;
-            }
+
+}
         } catch (SQLException ex) {
-            Logger.getLogger(MyJDBC.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MyJDBC.class  
+
+.getName()).log(Level.SEVERE, null, ex);
         }
 
         return false;
@@ -94,11 +157,14 @@ public class MyJDBC {
             try ( ResultSet resultSet = checkUserExist.executeQuery()) {
                 if (!resultSet.next()) {
                     return false;
-                }
+
+}
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(MyJDBC.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MyJDBC.class  
+
+.getName()).log(Level.SEVERE, null, ex);
         }
 
         return true;
@@ -164,9 +230,12 @@ public class MyJDBC {
                 updateIntoProfile.setInt(7, ID);
 
                 updateIntoProfile.executeUpdate();
-            }
+
+}
         } catch (SQLException ex) {
-            Logger.getLogger(MyJDBC.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MyJDBC.class  
+
+.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -192,13 +261,16 @@ public class MyJDBC {
                                 }
                             }
                             profile.put(string, s);
-                        }
+
+}
                     }
                 }
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(MyJDBC.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MyJDBC.class  
+
+.getName()).log(Level.SEVERE, null, ex);
         }
         return profile;
     }
@@ -211,8 +283,10 @@ public class MyJDBC {
             deleteRow.setInt(1, itemsID);
             deleteRow.executeUpdate();
 
-        } catch (SQLException ex) {
-            Logger.getLogger(MyJDBC.class.getName()).log(Level.SEVERE, null, ex);
+} catch (SQLException ex) {
+            Logger.getLogger(MyJDBC.class  
+
+.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -253,15 +327,21 @@ public class MyJDBC {
                     }
                 } else {
                     throw new SQLException("Insertion failed, no rows affected.");
-                }
+
+}
 
             } catch (SQLException ex) {
-                Logger.getLogger(MyJDBC.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(MyJDBC.class  
+
+.getName()).log(Level.SEVERE, null, ex);
             }
 
             return generatedId;
-        } catch (ParseException ex) {
-            Logger.getLogger(MyJDBC.class.getName()).log(Level.SEVERE, null, ex);
+
+} catch (ParseException ex) {
+            Logger.getLogger(MyJDBC.class  
+
+.getName()).log(Level.SEVERE, null, ex);
         }
         return -1;
     }
@@ -299,10 +379,13 @@ public class MyJDBC {
                     listItems.add(itemsInfo);
 
                     dateItemsInfo.put(date, listItems);
-                }
+
+}
             }
         } catch (SQLException ex) {
-            Logger.getLogger(MyJDBC.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MyJDBC.class  
+
+.getName()).log(Level.SEVERE, null, ex);
         }
 
         return dateItemsInfo;
