@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Fri Jul 05 17:37:40 NZST 2024:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0190-8165-f3ac-00001e909a70 
+on database directory C:\Users\chg\OneDrive\AUT\SEMESTER 3\COMP603 - PROGRAM DESIGN & CONTS\ASSIGNMENT 2\ASSIGNMENT_2\dist\CalorieTracker with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@30946e09 
+Loaded from file:/C:/Users/chg/OneDrive/AUT/SEMESTER%203/COMP603%20-%20PROGRAM%20DESIGN%20&%20CONTS/ASSIGNMENT%202/ASSIGNMENT_2/dist/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=11.0.22+9-LTS-219
+user.dir=C:\Users\chg\OneDrive\AUT\SEMESTER 3\COMP603 - PROGRAM DESIGN & CONTS\ASSIGNMENT 2\ASSIGNMENT_2\dist
+os.name=Windows 11
+os.arch=amd64
+os.version=10.0
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
