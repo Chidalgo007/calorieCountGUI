@@ -39,11 +39,9 @@ For detailed instructions on setting up the environment and running the applicat
 
 ## 📂 Folder Structure
 
-📁 src/
-└── main/
-├── java/
-├── resources/
-└── ...
+📁 Folder</br>
+/calorieCountGUI
+/dist/
 
 
 ---
