@@ -29,12 +29,10 @@ This tool empowers users to make informed decisions about their diet, providing 
 
 ## 🚀 Getting Started
 
-1. Clone or download the repository.
-2. Set up the project with the required dependencies.
+1. Clone or download the repository (dist folder).
+2. Set up the project with the required dependencies (Java system).
 3. Launch the application and register an account to begin tracking calories.
    
-For detailed instructions on setting up the environment and running the application, check the **Installation Guide**.
-
 ---
 
 ## 📂 Folder Structure
